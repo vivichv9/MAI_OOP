@@ -7,6 +7,7 @@ int main() {
   std::cout << "Please enter n and m \n";
   std::cin >> n >> m;
 
+  std::cout << "Result: ";
   chocolate_division(n, m);
 
   return 0;
