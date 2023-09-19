@@ -1,16 +1,14 @@
 .PHONY: build run test clean
 
-build: clean
-	mkdir build
-	git submodule init
-	git submodule update
+build:
+	mkdir -p build
 	cd ./build; cmake ..; make all
 
 run:
 	./build/*_exe
 
 test:
-	./build/*_test
+	./build/*_unittests
 
 clean:
 	rm -rf ./build/
