@@ -55,9 +55,6 @@ if(result)
   message(FATAL_ERROR "Build step for googletest failed: ${result}")
 endif()
 
-# prevent overriding the parent project's compiler/linker on windows
-set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-
 # add googletest to build. This defines the gtest and gtest_main targets.
 add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
                  ${CMAKE_CURRENT_BINARY_DIR}/googletest-build
@@ -68,7 +65,7 @@ add_executable(${PROJECT_NAME}_unittests
                )
 
 set_target_properties(${PROJECT_NAME}_unittests PROPERTIES
-                      CXX_STANDARD 17
+                      CXX_STANDARD 20
                       CXX_STANDARD_REQUIRED YES
                       CXX_EXTENSIONS NO)
 
