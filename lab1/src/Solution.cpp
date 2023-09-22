@@ -1,6 +1,6 @@
 #include "../include/Solution.hpp"
 
-bool correctly_check(int16_t n, int16_t m) {
+bool correctly_check(int32_t n, int32_t m) {
   if (n <= 0 || m <= 0) {
     return false;
   }
@@ -8,11 +8,10 @@ bool correctly_check(int16_t n, int16_t m) {
   return true;
 }
 
-void chocolate_division(int16_t n, int16_t m) {
+int32_t chocolate_division(int32_t n, int32_t m) {
   if (correctly_check(n, m)) {
-    std::cout << (n - 1) + (m - 1) << '\n';
-    return;
+    return (n - 1) + (m - 1);
   } 
 
-  std::cout << 0 << '\n';
+  return 0;
 }

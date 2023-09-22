@@ -4,10 +4,8 @@
 #include <iostream>
 #include <utility>
 
-bool correctly_check(int16_t n, int16_t m);
+bool correctly_check(int32_t n, int32_t m);
 
-void chocolate_division(int16_t n, int16_t m);
+int32_t chocolate_division(int32_t n, int32_t m);
 
 #endif
-
-
