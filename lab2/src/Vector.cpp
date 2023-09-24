@@ -4,26 +4,26 @@
 #include <climits>
 
 template <typename T>
-lab1::Vector<T>::Vector() {
+lab2::Vector<T>::Vector() {
     size = 0;
     capacity = 1;
     array = reinterpret_cast<T*>(new int8_t[sizeof(T)]);
 }
 
 template <typename T>
-lab1::Vector<T>::Vector(size_t capacity) {
+lab2::Vector<T>::Vector(size_t capacity) {
     size = 0;
     this->capacity = capacity;
     array = reinterpret_cast<T*>(new int8_t[capacity * sizeof(T)]);
 }
 
 template <typename T>
-lab1::Vector<T>::Vector(const Vector& vec): Vector(vec.capacity) {
+lab2::Vector<T>::Vector(const Vector& vec): Vector(vec.capacity) {
     memcpy(array, vec.array, capacity * sizeof(T));
 }
 
 template <typename T>
-lab1::Vector<T>::Vector(const std::initializer_list<T>& lst) {
+lab2::Vector<T>::Vector(const std::initializer_list<T>& lst) {
     size = lst.size();
     capacity = size;
     array = new T[size];
@@ -31,7 +31,7 @@ lab1::Vector<T>::Vector(const std::initializer_list<T>& lst) {
 }
 
 template <typename T>
-lab1::Vector<T>& lab1::Vector<T>::operator=(const lab1::Vector<T>& vec) {
+lab2::Vector<T>& lab2::Vector<T>::operator=(const lab2::Vector<T>& vec) {
     if (this == &vec) {
         return *this;
     }
@@ -45,17 +45,17 @@ lab1::Vector<T>& lab1::Vector<T>::operator=(const lab1::Vector<T>& vec) {
 }
 
 template <typename T>
-T& lab1::Vector<T>::operator[](size_t index) {
+T& lab2::Vector<T>::operator[](size_t index) {
     return array[index];
 }
 
 template <typename T>
-const T& lab1::Vector<T>::operator[](size_t index) const {
+const T& lab2::Vector<T>::operator[](size_t index) const {
     return array[index];
 }
 
 template <typename T>
-lab1::Vector<T>::~Vector() {
+lab2::Vector<T>::~Vector() {
     for (size_t i = 0; i < size; ++i){
         array[i].~T();
     }
@@ -63,17 +63,17 @@ lab1::Vector<T>::~Vector() {
 }
 
 template <typename T>
-size_t lab1::Vector<T>::get_capacity() const {
+size_t lab2::Vector<T>::get_capacity() const {
     return capacity;
 }
 
 template <typename T>
-size_t lab1::Vector<T>::get_size() const {
+size_t lab2::Vector<T>::get_size() const {
     return size;
 }
 
 template <typename T>
-const T& lab1::Vector<T>::front() const {
+const T& lab2::Vector<T>::front() const {
     if (size == 0) {
         throw std::range_error("vector is empty");
     }
@@ -82,7 +82,7 @@ const T& lab1::Vector<T>::front() const {
 }
 
 template <typename T>
-T& lab1::Vector<T>::front() {
+T& lab2::Vector<T>::front() {
     if (size == 0) {
         throw std::range_error("vector is empty");
     }
@@ -91,7 +91,7 @@ T& lab1::Vector<T>::front() {
 }
 
 template <typename T>
-const T& lab1::Vector<T>::back() const {
+const T& lab2::Vector<T>::back() const {
     if (size == 0) {
         throw std::range_error("vector is empty");
     }
@@ -100,7 +100,7 @@ const T& lab1::Vector<T>::back() const {
 }
 
 template <typename T>
-T& lab1::Vector<T>::back() {
+T& lab2::Vector<T>::back() {
     if (size == 0) {
         throw std::range_error("vector is empty");
     }
@@ -109,7 +109,7 @@ T& lab1::Vector<T>::back() {
 }
 
 template <typename T>
-void lab1::Vector<T>::reserve(size_t n) {
+void lab2::Vector<T>::reserve(size_t n) {
     if (n <= size) {
         return;
     }
@@ -133,7 +133,7 @@ void lab1::Vector<T>::reserve(size_t n) {
 }
 
 template <typename T>
-void lab1::Vector<T>::resize(size_t n, const T& value) {
+void lab2::Vector<T>::resize(size_t n, const T& value) {
     if (n > capacity) {
         reserve(n);
     } 
@@ -148,7 +148,7 @@ void lab1::Vector<T>::resize(size_t n, const T& value) {
 }
 
 template <typename T>
-void lab1::Vector<T>::push_back(const T& data) {
+void lab2::Vector<T>::push_back(const T& data) {
     if (capacity == size) {
         reserve(2 * size);
     }
@@ -158,7 +158,7 @@ void lab1::Vector<T>::push_back(const T& data) {
 
 template <typename T>
 template <typename... Args>
-void lab1::Vector<T>::emplace_back(const Args& ...args) {
+void lab2::Vector<T>::emplace_back(const Args& ...args) {
     if (capacity == size) {
         reserve(2 * capacity);
     }
@@ -168,13 +168,13 @@ void lab1::Vector<T>::emplace_back(const Args& ...args) {
 }
 
 template <typename T>
-void lab1::Vector<T>::pop_back() {
+void lab2::Vector<T>::pop_back() {
     --size;
     array[size].~T();
 }
 
 template <typename T>
-T& lab1::Vector<T>::at(size_t index) {
+T& lab2::Vector<T>::at(size_t index) {
     if (index >= size) {
         throw std::range_error("Array index out of range!");
     }
@@ -182,7 +182,7 @@ T& lab1::Vector<T>::at(size_t index) {
 }
 
 template <typename T>
-const T& lab1::Vector<T>::at(size_t index) const {
+const T& lab2::Vector<T>::at(size_t index) const {
     if (index >= size) {
         throw std::range_error("Array index out of range!");
     }
@@ -190,7 +190,7 @@ const T& lab1::Vector<T>::at(size_t index) const {
 }
 
 template <typename T>
-void lab1::Vector<T>::clear() {
+void lab2::Vector<T>::clear() {
     size_t sz_copy = size;
 
     for (size_t i = 0; i < sz_copy; ++i) {
@@ -200,7 +200,7 @@ void lab1::Vector<T>::clear() {
 }
 
 template <typename T>
-void lab1::Vector<T>::shrink_to_fit() {
+void lab2::Vector<T>::shrink_to_fit() {
     if (size == 0) {
         reserve(1);
         return;
@@ -210,12 +210,12 @@ void lab1::Vector<T>::shrink_to_fit() {
 }
 
 template <typename T>
-bool lab1::Vector<T>::empty() const {
+bool lab2::Vector<T>::empty() const {
     return size;
 }
 
 template <typename T>
-bool lab1::Vector<T>::operator==(const lab1::Vector<T>& vec) const {
+bool lab2::Vector<T>::operator==(const lab2::Vector<T>& vec) const {
     if (size != vec.size) {
         return false;
     }
@@ -230,6 +230,6 @@ bool lab1::Vector<T>::operator==(const lab1::Vector<T>& vec) const {
 }
 
 template <typename T>
-bool lab1::Vector<T>::operator!=(const lab1::Vector<T>& vec) const {
+bool lab2::Vector<T>::operator!=(const lab2::Vector<T>& vec) const {
     return !this->operator==(vec);
 }

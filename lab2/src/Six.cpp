@@ -2,7 +2,7 @@
 
 #define ZERO_ASCII_CODE 48
 
-Six::Six(uint32_t n) {
+Six::Six(uint64_t n) {
   if (n == 0) {
     number.push_back('0');
   }
@@ -38,14 +38,14 @@ Six& Six::operator=(Six oth) noexcept {
 }
 
 Six& Six::operator++() noexcept {
-  for (auto it = number.begin(); it != number.end(); ++it) {
-    if (*it != '5') {
-      ++(*it);
+  for (size_t i = 0; i < number.get_size(); ++i) {
+    if (number[i] != '5') {
+      ++number[i];
       return *this;
     }
 
-    if (*it == '5') {
-      *it = '0';
+    if (number[i] == '5') {
+      number[i] = '0';
     }
   }
 
@@ -60,27 +60,27 @@ Six Six::operator++(int) noexcept {
 }
 
 Six& Six::operator--() {
-  if (number.size() == 1 && number[0] == '0') {
+  if (number.get_size() == 1 && number[0] == '0') {
     throw std::runtime_error("Decrement error. Num is 0");
   }
 
-  for (auto it = number.begin(); it != number.end(); ++it) {
-    if (*it != '0') {
-      --(*it);
-
-      if (it + 1 == number.end()) {
-        number.resize(number.size() - 1);
+  for (size_t i = 0; i < number.get_size(); ++i) {
+    if (number[i] != '0') {
+      --number[i];
+ 
+      if (&number[i] == &number[number.get_size() - 1]) {
+        number.resize(number.get_size() - 1);
       }
 
       return *this;
     }
 
-    if (*it == '0') {
-      *it = '5';
+    if (number[i] == '0') {
+      number[i] = '5';
     }
   }
 
-  number.resize(number.size() - 1);
+  number.resize(number.get_size() - 1);
   return *this;
 }
 
@@ -91,20 +91,20 @@ Six Six::operator--(int) {
 }
 
 Six Six::operator+(const Six& oth) const noexcept {
-  size_t min_size = std::min(number.size(), oth.number.size());
-  size_t max_size = std::max(number.size(), oth.number.size());
+  size_t min_size = std::min(number.get_size(), oth.number.get_size());
+  size_t max_size = std::max(number.get_size(), oth.number.get_size());
 
   Six new_obj{std::pow(10, max_size - 1)};
-  new_obj.number[new_obj.number.size() - 1] = '0';
+  new_obj.number[new_obj.number.get_size() - 1] = '0';
 
   for (size_t i = 0; i < min_size; ++i) {
     new_obj.number[i] += (number[i] + oth.number[i] - 2 * ZERO_ASCII_CODE) % 6;
     new_obj.number[i + 1] += (number[i] + oth.number[i] - 2 * ZERO_ASCII_CODE + 1) / 6;
   
-    if (oth.number.size() - max_size == 0 && 
-        number[number.size() - 1] + oth.number[oth.number.size() - 1] - 2 * ZERO_ASCII_CODE > 5) {
+    if (oth.number.get_size() - max_size == 0 && 
+        number[number.get_size() - 1] + oth.number[oth.number.get_size() - 1] - 2 * ZERO_ASCII_CODE > 5) {
 
-      new_obj.number.resize(new_obj.number.size() + 1);
+      new_obj.number.resize(new_obj.number.get_size() + 1);
     }
   }
 
@@ -112,11 +112,11 @@ Six Six::operator+(const Six& oth) const noexcept {
 }
 
 bool Six::operator==(const Six& oth) const {
-  if (number.size() != oth.number.size()) {
+  if (number.get_size() != oth.number.get_size()) {
     return false;
   }
 
-  for (size_t i = 0; i < number.size(); ++i) {
+  for (size_t i = 0; i < number.get_size(); ++i) {
     if (number[i] != oth.number[i]) {
       return false;
     }
@@ -130,11 +130,11 @@ bool Six::operator!=(const Six& oth) const {
 }
 
 bool Six::operator>(const Six& oth) const {
-  if (oth.number.size() > number.size()) {
+  if (oth.number.get_size() > number.get_size()) {
     return false;
   }
 
-  for (size_t i = 0; i < number.size(); ++i) {
+  for (int64_t i = number.get_size() - 1; i >= 0; --i) {
     if (number[i] > oth.number[i]) {
       return true;
 
@@ -147,11 +147,11 @@ bool Six::operator>(const Six& oth) const {
 }
 
 bool Six::operator<(const Six& oth) const {
-  if (oth.number.size() > number.size()) {
+  if (oth.number.get_size() > number.get_size()) {
     return true;
   }
 
-  for (size_t i = 0; i < number.size(); ++i) {
+  for (int64_t i = number.get_size() - 1; i >= 0; --i) {
     if (oth.number[i] > number[i]) {
       return true;
 
@@ -164,9 +164,17 @@ bool Six::operator<(const Six& oth) const {
 }
 
 void Six::print() const {
-  for (auto it = number.rbegin(); it != number.rend(); ++it)  {
-    std::cout << *it;
+  for (int64_t i = number.get_size() - 1; i >= 0; --i) {
+    std::cout << number[i];
   }
 
   std::cout << std::endl;
+}
+
+std::ostream& operator<< (std::ostream& stream, const Six& six) {
+  for (int64_t i = six.number.get_size() - 1; i >= 0; --i) {
+    stream << six.number[i];
+  }
+
+  return stream;
 }

@@ -1,6 +1,5 @@
 #include <gtest/gtest.h>
 #include "../include/Six.hpp"
-#include "../include/Vector.hpp"
 
 TEST(constructor_test, exception_test_overflow) {
   ASSERT_THROW(Six{199}, std::invalid_argument);
@@ -11,7 +10,7 @@ TEST(constructor_test, exception_test_without_0) {
 }
 
 TEST(constructor_test, exception_test_without_1) {
-  ASSERT_NO_THROW(Six{12345});
+  ASSERT_NO_THROW(Six{13121212121212121212});
 }
 
 TEST(print_test, test1) {
@@ -30,67 +29,95 @@ TEST(print_test, test2) {
   EXPECT_EQ(output, "0\n");
 }
 
-TEST(comparison_operator_test, zero_test) {
+TEST(comparison_operator_test, zero_true_test) {
   Six first{0};
   Six second{0};
 
   ASSERT_TRUE(first == second);
 }
 
-TEST(comparison_operator_test, normal_test_1) {
+TEST(comparison_operator_test, true_return_1) {
   Six first{12};
   Six second{12};
 
   ASSERT_TRUE(first == second);
 }
 
-TEST(comparison_operator_test, normal_test_2) {
+TEST(comparison_operator_test, true_return_2) {
   Six first{555};
   Six second{555};
 
   ASSERT_TRUE(first == second);
 }
 
-TEST(comparison_operator_test, negative_test_1) {
+TEST(comparison_operator_test, false_return_1) {
   Six first{5555};
   Six second{5554};
 
   ASSERT_FALSE(first == second);
 }
 
-TEST(comparison_operator_test, negative_test_2) {
+TEST(comparison_operator_test, false_return_2) {
   Six first{555};
   Six second{155};
 
   ASSERT_FALSE(first == second);
 }
 
-TEST(false_comparison_operator_test, normal_data_1) {
+TEST(false_comparison_operator_test, true_return) {
   Six first{1};
   Six second{0};
 
-  ASSERT_FALSE(first == second);
+  ASSERT_TRUE(first != second);
 }
 
-TEST(false_comparison_operator_test, normal_data_2) {
+TEST(false_comparison_operator_test, false_return) {
   Six first{1234};
-  Six second{12};
+  Six second{1234};
 
-  ASSERT_FALSE(first == second);
+  ASSERT_FALSE(first != second);
 }
 
-TEST(more_operator_test, normal_data_1) {
+TEST(more_operator_test, true_return_1) {
   Six first{123};
   Six second{213};
 
   EXPECT_TRUE(second > first);
 }
 
-TEST(more_operator_test, normal_data_2) {
+TEST(more_operator_test, true_return_2) {
   Six first{12435};
   Six second{213};
 
-  EXPECT_TRUE(second > first);
+  EXPECT_TRUE(first > second);
+}
+
+TEST(more_operator_test, equals_args) {
+  Six first{213};
+  Six second{213};
+
+  EXPECT_FALSE(first > second);
+}
+
+TEST(less_operator_test, false_return) {
+  Six first{21123};
+  Six second{231};
+
+  EXPECT_FALSE(first < second);
+}
+
+TEST(less_operator_test, true_return) {
+  Six first{213};
+  Six second{231};
+
+  EXPECT_TRUE(first < second);
+}
+
+TEST(less_operator_test, equals_args) {
+  Six first{213};
+  Six second{213};
+
+  EXPECT_FALSE(first < second);
 }
 
 TEST(operator_preinc_test, test1) {

@@ -1,38 +1,42 @@
-cmake_minimum_required (VERSION 3.20)
+cmake_minimum_required (VERSION 3.10)
 
 project(lab2)
 
-# set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
-# set(TEST_DIR ${CMAKE_CURRENT_SOURCE_DIR}/test)
-# set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
+add_compile_options(-Wall -g)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-# file(GLOB_RECURSE SOURCES LIST_DIRECTORIES false ${SOURCE_DIR}/*.cpp)
-# file(GLOB_RECURSE TEST_SOURCES LIST_DIRECTORIES false ${TEST_DIR}/*.cpp)
-# file(GLOB_RECURSE INCLUDES LIST_DIRECTORIES false ${INCLUDE_DIR}/*.hpp)
+set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
+set(TEST_DIR ${CMAKE_CURRENT_SOURCE_DIR}/test)
+set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+file(GLOB_RECURSE SOURCES LIST_DIRECTORIES false ${SOURCE_DIR}/*.cpp)
+file(GLOB_RECURSE TEST_SOURCES LIST_DIRECTORIES false ${TEST_DIR}/*.cpp)
+file(GLOB_RECURSE INCLUDES LIST_DIRECTORIES false ${INCLUDE_DIR}/*.hpp)
 
 #
 # library with common functions for tests and exe
 #
 add_library(${PROJECT_NAME}_lib
-            include/Vector.hpp
-            include/Six.hpp
-            src/Vector.cpp
-            src/Six.cpp)
+            ${SOURCES}
+            ${INCLUDES})            
 
 set_target_properties(${PROJECT_NAME}_lib PROPERTIES
-                      CXX_STANDARD 17
-                      CXX_STANDARD_REQUIRED YES)
+                      CXX_STANDARD 20
+                      CXX_STANDARD_REQUIRED YES
+                      CXX_EXTENSIONS NO)
 
 #
 # project itself
 #
-add_executable(${PROJECT_NAME}_exe main.cpp)
-add_dependencies(${PROJECT_NAME}_exe ${PROJECT_NAME}_lib)
+add_executable(${PROJECT_NAME}_exe
+                ${CMAKE_CURRENT_SOURCE_DIR}/main.cpp)
 
 set_target_properties(${PROJECT_NAME}_exe PROPERTIES
-                      CXX_STANDARD 17
-                      CXX_STANDARD_REQUIRED YES)
+                      CXX_STANDARD 20
+                      CXX_STANDARD_REQUIRED YES
+                      CXX_EXTENSIONS NO)
 
+add_dependencies(${PROJECT_NAME}_exe ${PROJECT_NAME}_lib)
 target_link_libraries(${PROJECT_NAME}_exe ${PROJECT_NAME}_lib)
 
 #
@@ -60,11 +64,10 @@ add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
                  EXCLUDE_FROM_ALL)
 
 add_executable(${PROJECT_NAME}_unittests
-               test/test.cpp
-               )
+               ${TEST_SOURCES})
 
 set_target_properties(${PROJECT_NAME}_unittests PROPERTIES
-                      CXX_STANDARD 17
+                      CXX_STANDARD 20
                       CXX_STANDARD_REQUIRED YES
                       CXX_EXTENSIONS NO)
 

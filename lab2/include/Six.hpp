@@ -1,15 +1,17 @@
-#pragma once
+#ifndef SIX_HPP_INCLUDED
+#define SIX_HPP_INCLUDED
 
 #include <iostream>
-#include <vector>
 #include <cmath>
+#include "Vector.hpp"
+#include "../src/Vector.cpp"
 
-class Six {
+class Six {  
 private:
-  std::vector<unsigned char> number;
+  lab2::Vector<unsigned char> number;
 
 public:
-  Six(uint32_t n);
+  Six(uint64_t n);
   Six(const Six& oth) noexcept;
   Six(Six&& oth) noexcept;
 
@@ -28,5 +30,9 @@ public:
   bool operator>(const Six& oth) const;
   bool operator<(const Six& oth) const;
 
+  friend std::ostream& operator<< (std::ostream& stream, const Six& six);
+
   void print() const;
 };
+
+#endif // SIX_HPP_INCLUDED

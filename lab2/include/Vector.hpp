@@ -1,9 +1,11 @@
-#pragma once
+#ifndef VECTOR_HPP_INCLUDED
+#define VECTOR_HPP_INCLUDED
 
 #include <iostream>
+#include <memory>
+#include <cstring>
 
-namespace lab1 {
-
+namespace lab2 {
   template<typename T>
   class Vector {
   private:
@@ -45,6 +47,7 @@ namespace lab1 {
     const T& back() const;
     const T& front() const;
   };
-} // namespace lab1
 
+} // namespace lab2
 
+#endif // VECTOR_HPP_INCLUDED

@@ -2,20 +2,22 @@ cmake_minimum_required (VERSION 3.10)
 
 project(lab2)
 
+add_compile_options(-Wall -g)
+
 set(SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 set(TEST_DIR ${CMAKE_CURRENT_SOURCE_DIR}/test)
 set(INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 file(GLOB_RECURSE SOURCES LIST_DIRECTORIES false ${SOURCE_DIR}/*.cpp)
 file(GLOB_RECURSE TEST_SOURCES LIST_DIRECTORIES false ${TEST_DIR}/*.cpp)
-file(GLOB_RECURSE INCLUDES LIST_DIRECTORIES false ${INCLUDE_DIR}/*.cpp)
+file(GLOB_RECURSE INCLUDES LIST_DIRECTORIES false ${INCLUDE_DIR}/*.hpp)
 
 #
 # library with common functions for tests and exe
 #
 add_library(${PROJECT_NAME}_lib
             ${SOURCES}
-            ${INCLUDES})
+            ${INCLUDES})            
 
 set_target_properties(${PROJECT_NAME}_lib PROPERTIES
                       CXX_STANDARD 20
