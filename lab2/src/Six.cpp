@@ -2,6 +2,17 @@
 
 #define ZERO_ASCII_CODE 48
 
+Six::Six(const std::string& str) {
+  number.reserve(str.size());
+  for (int64_t i = str.size() - 1; i >= 0; --i) {
+    if (str[i] > '5' || str[i] < '0') {
+      throw std::invalid_argument("String contains invalid element");
+    }
+
+    number.push_back(str[i]);
+  }
+}
+
 Six::Six(uint64_t n) {
   if (n == 0) {
     number.push_back('0');
@@ -94,7 +105,7 @@ Six Six::operator+(const Six& oth) const noexcept {
   size_t min_size = std::min(number.get_size(), oth.number.get_size());
   size_t max_size = std::max(number.get_size(), oth.number.get_size());
 
-  Six new_obj{std::pow(10, max_size - 1)};
+  Six new_obj{static_cast<uint64_t>(std::pow(10, max_size))};
   new_obj.number[new_obj.number.get_size() - 1] = '0';
 
   for (size_t i = 0; i < min_size; ++i) {
@@ -144,6 +155,49 @@ bool Six::operator>(const Six& oth) const {
   }
 
   return false;
+}
+
+Six Six::operator-(const Six& oth) const {
+  if (*this < oth) {
+    throw std::runtime_error("Overflow");
+  }
+
+  std::string result = "";
+  int carry = 0;
+
+  uint64_t i = 0;
+  
+  result.reserve(this->number.get_size());
+  while (i < this->number.get_size()) {
+    int bit1 = (i < this->number.get_size()) ? this->number[i] - ZERO_ASCII_CODE : 0;
+    int bit2 = (i < oth.number.get_size()) ? oth.number[i] - ZERO_ASCII_CODE : 0;
+
+    int diff = bit1 - bit2 - carry;
+
+    if (diff < 0) {
+      diff += 6;
+      carry = 1;
+    } else {
+      carry = 0;
+    }
+                      
+    result.push_back(diff + ZERO_ASCII_CODE);
+    i++;
+  }
+
+  auto last_it = --result.rend();
+  int64_t count_zeroes = 0;
+  for (auto it = result.rbegin(); it != last_it; ++it) {
+    if (*it == '0') {
+      ++count_zeroes;
+    } else {
+      break;
+    }
+  }
+
+  result.resize(result.size() - count_zeroes);
+  std::reverse(result.begin(), result.end());
+  return Six{result};
 }
 
 bool Six::operator<(const Six& oth) const {

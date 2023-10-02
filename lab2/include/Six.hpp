@@ -12,6 +12,7 @@ private:
 
 public:
   Six(uint64_t n);
+  Six(const std::string& str);
   Six(const Six& oth) noexcept;
   Six(Six&& oth) noexcept;
 
@@ -19,7 +20,7 @@ public:
   Six& operator=(Six oth) noexcept;
 
   Six operator+(const Six& oth) const noexcept;
-  Six operator-(const Six& oth) noexcept;
+  Six operator-(const Six& oth) const;
   Six& operator++() noexcept;
   Six operator++(int) noexcept;
   Six& operator--();

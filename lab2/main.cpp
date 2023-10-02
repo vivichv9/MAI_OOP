@@ -3,12 +3,9 @@
 #include "include/Six.hpp"
 
 int main() {
-  Six s{123};
-  Six a{223};
-
-  Six b{a + s};
-
-  std::cout << b << std::endl;
+  Six s{"500"};
+  Six a{500};
+  Six c{"0"};
 
   return 0;
 }

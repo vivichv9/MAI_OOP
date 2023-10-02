@@ -1,6 +1,18 @@
 #include <gtest/gtest.h>
 #include "../include/Six.hpp"
 
+TEST(string_constructor_test, exception_test) {
+  ASSERT_THROW(Six{"199"}, std::invalid_argument);
+}
+
+TEST(string_constructor_test, without_exception_test_0) {
+  ASSERT_NO_THROW(Six{"123"});
+}
+
+TEST(string_constructor_test, without_exception_test_1) {
+  ASSERT_NO_THROW(Six{"0"});
+}
+
 TEST(constructor_test, exception_test_overflow) {
   ASSERT_THROW(Six{199}, std::invalid_argument);
 }
@@ -10,7 +22,7 @@ TEST(constructor_test, exception_test_without_0) {
 }
 
 TEST(constructor_test, exception_test_without_1) {
-  ASSERT_NO_THROW(Six{13121212121212121212});
+  ASSERT_NO_THROW(Six{13121212121212});
 }
 
 TEST(print_test, test1) {
@@ -181,6 +193,31 @@ TEST(operator_postdec_test, test2) {
   test.print();
   std::string output = testing::internal::GetCapturedStdout();
   EXPECT_EQ(output, "555\n");
+}
+
+TEST(subtraction_test, test1) {
+  Six test1{"1234"};
+  Six test2{1234};
+  Six expected_result{0};
+  Six result{test1 - test2};
+
+  ASSERT_EQ(result, expected_result);
+}
+
+TEST(subtraction_test, exception_test) {
+  Six test1{"1234"};
+  Six test2{12345};
+  Six result{"0"};
+
+  ASSERT_THROW(test1 - test2, std::runtime_error);
+}
+
+TEST(subtraction_test, test2) {
+  Six test1{"5324"};
+  Six test2{2345};
+  Six result{2535};
+
+  ASSERT_TRUE(test1 - test2 == result);
 }
 
 int main(int argc, char** argv) {
