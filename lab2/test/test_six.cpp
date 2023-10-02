@@ -1,6 +1,10 @@
 #include <gtest/gtest.h>
 #include "../include/Six.hpp"
 
+//
+// TESTING SIX
+//
+
 TEST(string_constructor_test, exception_test) {
   ASSERT_THROW(Six{"199"}, std::invalid_argument);
 }

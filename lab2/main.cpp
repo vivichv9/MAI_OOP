@@ -3,9 +3,14 @@
 #include "include/Six.hpp"
 
 int main() {
-  Six s{"500"};
-  Six a{500};
-  Six c{"0"};
+  Six a{100};
+  Six b{200};
+  Six f{0};
+
+  Six c = std::move(a);
+
+  std::cout << c << ' ' << a << std::endl;
+  std::cout << f << std::endl;
 
   return 0;
 }

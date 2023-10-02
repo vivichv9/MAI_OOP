@@ -1,4 +1,4 @@
-.PHONY: build run test clean
+.PHONY: build run test-vector test-six clean
 
 build:
 	mkdir -p build
@@ -7,8 +7,11 @@ build:
 run:
 	./build/*_exe
 
-test:
-	./build/*_unittests
+test-six:
+	./build/*_test_six
+
+test-vector:
+	./build/*_test_vector
 
 clean:
 	rm -rf ./build/

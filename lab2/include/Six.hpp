@@ -8,7 +8,7 @@
 
 class Six {  
 private:
-  lab2::Vector<unsigned char> number;
+  Vector<unsigned char> number;
 
 public:
   Six(uint64_t n);

@@ -165,7 +165,7 @@ Six Six::operator-(const Six& oth) const {
   std::string result = "";
   int carry = 0;
 
-  uint64_t i = 0;
+  size_t i = 0;
   
   result.reserve(this->number.get_size());
   while (i < this->number.get_size()) {
@@ -218,6 +218,11 @@ bool Six::operator<(const Six& oth) const {
 }
 
 void Six::print() const {
+  if (number.get_size() == 0) {
+    std::cout << '0' << std::endl;
+    return;
+  }
+
   for (int64_t i = number.get_size() - 1; i >= 0; --i) {
     std::cout << number[i];
   }
@@ -226,6 +231,11 @@ void Six::print() const {
 }
 
 std::ostream& operator<< (std::ostream& stream, const Six& six) {
+  if (six.number.get_size() == 0) {
+    stream << '0';
+    return stream;
+  }
+
   for (int64_t i = six.number.get_size() - 1; i >= 0; --i) {
     stream << six.number[i];
   }
