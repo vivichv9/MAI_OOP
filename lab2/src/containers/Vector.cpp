@@ -11,15 +11,23 @@ Vector<T>::Vector() {
 }
 
 template <typename T>
-Vector<T>::Vector(size_t capacity) {
-    size = 0;
-    this->capacity = capacity;
+Vector<T>::Vector(size_t capacity): capacity(capacity), size(0) {
     array = reinterpret_cast<T*>(new int8_t[capacity * sizeof(T)]);
 }
 
 template <typename T>
-Vector<T>::Vector(const Vector<T>& vec): Vector(vec.capacity) {
-    memcpy(array, vec.array, capacity * sizeof(T));
+Vector<T>::Vector(const Vector<T>& vec) {
+    size = vec.size;
+    capacity = vec.capacity;
+    T* new_arr = reinterpret_cast<T*>(new int8_t[capacity * sizeof(T)]);
+
+    try {
+        std::uninitialized_copy(vec.array, vec.array + vec.size, new_arr);
+    } catch (...) {
+        delete[] reinterpret_cast<char *>(new_arr);
+        throw;
+    }
+    array = new_arr;
 }
 
 template <typename T>
@@ -44,24 +52,29 @@ Vector<T>& Vector<T>::operator=(Vector<T>&& oth) noexcept {
 
 template <typename T>
 Vector<T>::Vector(const std::initializer_list<T>& lst) {
+    T* new_arr = reinterpret_cast<T*>(new int8_t[lst.size() * sizeof(T)]);
+    try {
+        std::uninitialized_copy(lst.begin(), lst.end(), new_arr);
+    } catch (...) {
+        delete[] reinterpret_cast<char*>(new_arr);
+        throw;
+    }
+    array = new_arr;
+    capacity = lst.size();
     size = lst.size();
-    capacity = size;
-    array = new T[size];
-    std::copy(lst.begin(), lst.end(), array);
 }
 
 template <typename T>
 Vector<T>& Vector<T>::operator=(const Vector<T>& vec) {
-    if (this == &vec) {
-        return *this;
-    }
-
-    this->resize(vec.size);
-    for (size_t i = 0; i < this->size; ++i) {
-        this->array[i].~T();
-        new (this->array + i) T(vec[i]);
-    }
+  if (this == &vec) {
     return *this;
+  }
+
+  size = vec.size;
+  capacity = vec.capacity;
+  array = reinterpret_cast<T*>(new int8_t[capacity * sizeof(T)]);
+  std::copy(&vec.front(), &vec.back(), array);
+  return *this;
 }
 
 template <typename T>
@@ -116,7 +129,7 @@ const T& Vector<T>::back() const {
         throw std::range_error("vector is empty");
     }
 
-    return array[size - 1];
+    return array[size];
 }
 
 template <typename T>
@@ -130,7 +143,7 @@ T& Vector<T>::back() {
 
 template <typename T>
 void Vector<T>::reserve(size_t n) {
-    if (n <= size) {
+    if (n <= capacity) {
         return;
     }
 
@@ -162,9 +175,7 @@ void Vector<T>::resize(size_t n, const T& value) {
         new (array + i) T(value);
     }
 
-    if (n < size) {
-        size = n;
-    }
+    size = n;
 }
 
 template <typename T>
@@ -231,7 +242,7 @@ void Vector<T>::shrink_to_fit() {
 
 template <typename T>
 bool Vector<T>::empty() const {
-    return size;
+    return size == 0;
 }
 
 template <typename T>

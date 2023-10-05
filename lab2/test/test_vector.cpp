@@ -3,11 +3,240 @@
 #include "../include/Six.hpp"
 
 
-TEST(default_constructor_test, construct_test) {
-  Vector<Six> vec;
+TEST(constructor_test, default_constructor_test) {
+  Vector<Six> vec; // TESTED
+
   EXPECT_EQ(vec.get_capacity(), 1);
   EXPECT_EQ(vec.get_size(), 0);
   EXPECT_NO_THROW(vec[0]);
+}
+
+TEST(constructor_test, capacity_constructor_test) {
+  Vector<Six> vec(100); // TESTED
+
+  EXPECT_EQ(vec.get_capacity(), 100);
+  EXPECT_EQ(vec.get_size(), 0);
+}
+
+TEST(constructor_test, initializer_constructor_test) {
+  Vector<Six> vec{123, 123, 123, 23, 123, 2331}; // TESTED
+
+  EXPECT_EQ(vec.get_capacity(), 6);
+  EXPECT_EQ(vec.get_size(), 6);
+}
+
+TEST(constructor_test, copy_constructor_test) {
+  Vector<Six> vec{1234, 12345, 4124};
+  Vector<Six> vec1 = vec; // TESTED
+
+  EXPECT_EQ(vec1.get_size(), 3);
+  EXPECT_EQ(vec1.get_capacity(), 3);
+
+  for (size_t i = 0; i < vec.get_size(); ++i) {
+    EXPECT_EQ(vec1[i], vec[i]);
+  }
+}
+
+TEST(constructor_test, move_constructor_test) {
+  Vector<Six> vec{1234, 12345, 4124, 12345123};
+
+  Vector<Six> vec1 = std::move(vec); // TESTED
+
+  EXPECT_EQ(vec1.get_size(), 4);
+  EXPECT_EQ(vec1.get_capacity(), 4);
+  EXPECT_EQ(vec1[0], Six{1234});
+  EXPECT_EQ(vec1[1], Six{12345});
+  EXPECT_EQ(vec1[2], Six{4124});
+  EXPECT_EQ(vec1[3], Six{12345123});
+
+  EXPECT_EQ(vec.get_size(), 0);
+  EXPECT_EQ(vec.get_capacity(), 0);
+}
+
+TEST(assignment_operator_test, copy_assignment) {
+  Vector<Six> vec{1234, 12345, 4124, 12345123};
+  Vector<Six> vec1;
+
+  vec1 = vec; // TESTED
+
+  EXPECT_EQ(vec1.get_size(), 4);
+  EXPECT_EQ(vec1.get_capacity(), 4);
+
+  for (size_t i = 0; i < vec.get_size(); ++i) {
+    EXPECT_EQ(vec1[i], vec[i]);
+  }
+
+  EXPECT_TRUE(vec == vec1);
+}
+
+TEST(assignment_operator_test, move_assignment) {
+  Vector<Six> vec{1234, 12345};
+  Vector<Six> vec1;
+
+  vec1 = std::move(vec); // TESTED
+
+  EXPECT_EQ(vec1.get_size(), 2);
+  EXPECT_EQ(vec1.get_capacity(), 2);
+  EXPECT_EQ(vec1[0], Six{1234});
+  EXPECT_EQ(vec1[1], Six{12345});
+
+  EXPECT_EQ(vec.get_size(), 0);
+  EXPECT_EQ(vec.get_capacity(), 0);
+}
+
+TEST(get_size_test, empty_vector) {
+  Vector<Six> v;
+  size_t size = v.get_size(); // TESTED
+
+  EXPECT_EQ(size, 0);
+}
+
+TEST(get_size_test, non_empty_vector) {
+  Vector<Six> v{123, 412, 12451, 12345, 123, 1234, 134, 1234, 412, 14};
+  size_t size = v.get_size(); // TESTED
+
+  EXPECT_EQ(size, 10);
+}
+
+TEST(get_capacity_test, empty_vector) {
+  Vector<Six> v;
+  size_t capacity = v.get_capacity(); // TESTED
+
+  EXPECT_EQ(capacity, 1);
+}
+
+TEST(get_capacity_test, non_empty_vector) {
+  Vector<Six> v{123, 412, 12451, 12345, 123, 1234, 134, 1234, 412, 14};
+  size_t capacity = v.get_capacity(); // TESTED
+
+  EXPECT_EQ(capacity, 10);
+}
+
+TEST(empty_test, empty_vector) {
+  Vector<Six> v;
+  bool is_empty = v.empty(); // TESTED
+
+  ASSERT_TRUE(is_empty);
+}
+
+TEST(empty_test, non_empty_vector) {
+  Vector<Six> v{123, 124, 1245};
+  bool is_empty = v.empty(); // TESTED
+  
+  ASSERT_FALSE(is_empty);
+}
+
+TEST(empty_test, const_empty_vector) {
+  const Vector<Six> v;
+  bool is_empty = v.empty(); // TESTED
+
+  ASSERT_TRUE(is_empty);
+}
+
+TEST(empty_test, const_non_empty_vector) {
+  const Vector<Six> v{123, 124, 1245};
+  bool is_empty = v.empty(); // TESTED
+  
+  ASSERT_FALSE(is_empty);
+}
+
+TEST(equal_operator_test, equal_vectors) {
+  Vector<Six> v{123, 124, 1245};
+  Vector<Six> v1 = v;
+  
+  bool is_equal = v1 == v; // TESTED
+  EXPECT_TRUE(is_equal);
+}
+
+TEST(equal_operator_test, non_equal_vectors_with_non_equal_size) {
+  Vector<Six> v{123, 124, 1245};
+  Vector<Six> v1{1234, 123, 12345, 1234, 1234};
+  
+  bool is_equal = v1 == v; // TESTED
+  EXPECT_FALSE(is_equal);
+}
+
+TEST(equal_operator_test, non_equal_vectors_with_equal_size) {
+  Vector<Six> v{123, 124, 1245};
+  Vector<Six> v1{1234, 123, 12345};
+  
+  bool is_equal = v1 == v; // TESTED
+  EXPECT_FALSE(is_equal);
+}
+
+TEST(non_equal_operator_test, non_equal_vectors_with_equal_size) {
+  Vector<Six> v{123, 124, 1245};
+  Vector<Six> v1{1234, 123, 12345};
+  
+  bool is_equal = v1 != v; // TESTED
+  EXPECT_TRUE(is_equal);
+}
+
+TEST(non_equal_operator_test, non_equal_vectors_with_non_equal_size) {
+  Vector<Six> v{123, 124, 1245};
+  Vector<Six> v1{1234, 123, 12345, 1234, 1234};
+  
+  bool is_equal = v1 != v; // TESTED
+  EXPECT_TRUE(is_equal);
+}
+
+TEST(non_equal_operator_test, equal_vectors) {
+  Vector<Six> v{123, 124, 1245};
+  Vector<Six> v1 = v;
+  
+  bool is_equal = v1 != v; // TESTED
+  EXPECT_FALSE(is_equal);
+}
+
+TEST(resize_test, resize_empty_vector) {
+  Vector<Six> v;
+  size_t size = 10;
+  v.resize(size, Six{1}); // TESTED
+
+  EXPECT_EQ(v.get_capacity(), size);
+  EXPECT_EQ(v.get_size(), size);
+
+  for (size_t i = 0; i < v.get_size(); ++i) {
+    EXPECT_EQ(v[i], Six{1});
+  }
+}
+
+TEST(resize_test, non_empty_vector) {
+  Vector<Six> v{123, 1234, 1234123, 14212451};
+  size_t old_size = v.get_size();
+  size_t size = 15;
+
+  v.resize(size, Six{1}); // TESTED
+
+  EXPECT_EQ(v.get_size(), 15);
+  EXPECT_EQ(v.get_capacity(), 15);
+
+  EXPECT_EQ(v[0], Six{123});
+  EXPECT_EQ(v[1], Six{1234});
+  EXPECT_EQ(v[2], Six{1234123});
+  EXPECT_EQ(v[3], Six{14212451});
+
+  for (size_t i = old_size; i < v.get_size(); ++i) {
+    EXPECT_EQ(v[i], Six{1});
+  }
+}
+
+TEST(reserve_test, empty_vector) {
+  Vector<Six> v;
+  size_t capacity = 100;
+
+  v.reserve(capacity); // TESTED
+
+  EXPECT_EQ(v.get_capacity(), capacity);
+}
+
+TEST(reserve_test, old_capacity_more_new_capacity) {
+  Vector<Six> v(123);
+  size_t capacity = 100;
+
+  v.reserve(capacity); // TESTED
+
+  EXPECT_EQ(v.get_capacity(), 123);
 }
 
 int main(int argc, char** argv) {

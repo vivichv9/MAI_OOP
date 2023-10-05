@@ -31,7 +31,7 @@ Six::Six(uint64_t n) {
 }
 
 Six::Six(const Six& oth) noexcept {
-  this->number = oth.number;
+  number = oth.number;
 }
 
 Six::Six(Six&& oth) noexcept {
@@ -113,7 +113,7 @@ Six Six::operator+(const Six& oth) const noexcept {
     new_obj.number[i + 1] += (number[i] + oth.number[i] - 2 * ZERO_ASCII_CODE + 1) / 6;
   
     if (oth.number.get_size() - max_size == 0 && 
-        number[number.get_size() - 1] + oth.number[oth.number.get_size() - 1] - 2 * ZERO_ASCII_CODE > 5) {
+      number[number.get_size() - 1] + oth.number[oth.number.get_size() - 1] - 2 * ZERO_ASCII_CODE > 5) {
 
       new_obj.number.resize(new_obj.number.get_size() + 1);
     }
