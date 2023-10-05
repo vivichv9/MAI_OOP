@@ -3,8 +3,8 @@
 
 #include <iostream>
 #include <cmath>
-#include "Vector.hpp"
-#include "../src/Vector.cpp"
+#include "containers/Vector.hpp"
+#include "../src/containers/Vector.cpp"
 
 class Six {  
 private:
@@ -34,6 +34,9 @@ public:
   friend std::ostream& operator<< (std::ostream& stream, const Six& six);
 
   void print() const;
+
+private:
+  void remove_zeroes(std::string& str) noexcept;
 };
 
 #endif // SIX_HPP_INCLUDED

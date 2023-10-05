@@ -1,8 +1,13 @@
 #include "gtest/gtest.h"
-#include "../include/Vector.hpp"
+#include "../include/containers/Vector.hpp"
+#include "../include/Six.hpp"
 
-TEST() {
-  
+
+TEST(default_constructor_test, construct_test) {
+  Vector<Six> vec;
+  EXPECT_EQ(vec.get_capacity(), 1);
+  EXPECT_EQ(vec.get_size(), 0);
+  EXPECT_NO_THROW(vec[0]);
 }
 
 int main(int argc, char** argv) {

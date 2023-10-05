@@ -65,9 +65,9 @@ Six& Six::operator++() noexcept {
 }
 
 Six Six::operator++(int) noexcept {
-  Six* temp = this;
-  ++(*temp);
-  return *temp;
+  Six temp = *this;
+  ++*this;
+  return temp;
 }
 
 Six& Six::operator--() {
@@ -162,14 +162,13 @@ Six Six::operator-(const Six& oth) const {
     throw std::runtime_error("Overflow");
   }
 
-  std::string result = "";
+  std::string result;
   int carry = 0;
 
   size_t i = 0;
-  
-  result.reserve(this->number.get_size());
-  while (i < this->number.get_size()) {
-    int bit1 = (i < this->number.get_size()) ? this->number[i] - ZERO_ASCII_CODE : 0;
+  result.reserve(number.get_size());
+  while (i < number.get_size()) {
+    int bit1 = (i < number.get_size()) ? number[i] - ZERO_ASCII_CODE : 0;
     int bit2 = (i < oth.number.get_size()) ? oth.number[i] - ZERO_ASCII_CODE : 0;
 
     int diff = bit1 - bit2 - carry;
@@ -241,4 +240,16 @@ std::ostream& operator<< (std::ostream& stream, const Six& six) {
   }
 
   return stream;
+}
+
+void Six::remove_zeroes(std::string& str) noexcept {
+  auto last_it = --str.rend();
+  int64_t count_zeroes = 0;
+  for (auto it = str.rbegin(); it != last_it; ++it) {
+    if (*it == '0') {
+      ++count_zeroes;
+    } else {
+      break;
+    }
+  }
 }
