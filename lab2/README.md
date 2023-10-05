@@ -1,4 +1,4 @@
-# Lab Work №1
+# Lab Work №2
 
 ### Variant 7:
 ```

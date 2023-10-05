@@ -239,6 +239,57 @@ TEST(reserve_test, old_capacity_more_new_capacity) {
   EXPECT_EQ(v.get_capacity(), 123);
 }
 
+TEST(pop_back_test, non_empty_vector) {
+  Vector<Six> v{123, 145, 12345};
+  size_t size = v.get_size();
+
+  v.pop_back(); // TESTED
+
+  EXPECT_EQ(size - 1, v.get_size());
+  EXPECT_EQ(v[v.get_size() - 1], Six{145});
+}
+
+TEST(push_back_test, non_empty_vector) {
+  Vector<Six> v{123, 145, 12345};
+  size_t size = v.get_size();
+
+  v.push_back(Six{1234}); // TESTED
+
+  EXPECT_EQ(v.get_size(), size + 1);
+  EXPECT_EQ(v[v.get_size() - 1], Six{1234});
+}
+
+TEST(clear_test, empty_vector) {
+  Vector<Six> v;
+  
+  EXPECT_NO_THROW(v.clear()); // TESTED
+
+  EXPECT_EQ(v.get_size(), 0);
+  EXPECT_EQ(v.get_capacity(), 1);
+}
+
+TEST(clear_test, non_empty_vector) {
+  Vector<Six> v{14123, 123124, 1231, 1233};
+
+  EXPECT_NO_THROW(v.clear()); // TESTED
+
+  EXPECT_EQ(v.get_capacity(), 4);
+  EXPECT_EQ(v.get_size(), 0);
+  EXPECT_THROW(v.at(1), std::range_error);
+}
+
+TEST(emplace_back_test, non_empty_vector) {
+  Vector<Six> v{14123, 123124, 1231, 1233};
+  size_t size = v.get_size();
+  size_t capacity = v.get_capacity();
+
+  v.emplace_back("12312313123132312312321313123132213"); // TESTED
+
+  EXPECT_EQ(capacity * 2, v.get_capacity());
+  EXPECT_EQ(size + 1, v.get_size());
+  EXPECT_EQ(v[v.get_size() - 1], Six{"12312313123132312312321313123132213"});
+}
+ 
 int main(int argc, char** argv) {
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
