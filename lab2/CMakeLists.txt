@@ -63,20 +63,20 @@ add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
                  ${CMAKE_CURRENT_BINARY_DIR}/googletest-build
                  EXCLUDE_FROM_ALL)
 
-add_executable(${PROJECT_NAME}_test_six
-               ${CMAKE_CURRENT_SOURCE_DIR}/test/test_six.cpp)
+add_executable(${PROJECT_NAME}_test_seven
+               ${CMAKE_CURRENT_SOURCE_DIR}/test/test_seven.cpp)
 
-set_target_properties(${PROJECT_NAME}_test_six PROPERTIES
+set_target_properties(${PROJECT_NAME}_test_seven PROPERTIES
                       CXX_STANDARD 20
                       CXX_STANDARD_REQUIRED YES)
 
-target_include_directories(${PROJECT_NAME}_test_six PRIVATE
+target_include_directories(${PROJECT_NAME}_test_seven PRIVATE
                            "${PROJECT_SOURCE_DIR}/src"
                            "${CMAKE_CURRENT_BINARY_DIR}/googletest-src"
                            "${CMAKE_CURRENT_BINARY_DIR}/googletest-src/include")
 
-add_dependencies(${PROJECT_NAME}_test_six ${PROJECT_NAME}_lib)
-target_link_libraries(${PROJECT_NAME}_test_six ${PROJECT_NAME}_lib gtest_main)
+add_dependencies(${PROJECT_NAME}_test_seven ${PROJECT_NAME}_lib)
+target_link_libraries(${PROJECT_NAME}_test_seven ${PROJECT_NAME}_lib gtest_main)
 
 
 add_executable(${PROJECT_NAME}_test_vector

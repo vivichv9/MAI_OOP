@@ -1,21 +1,21 @@
-#include "include/Six.hpp"
+#include "include/Seven.hpp"
 
 int main()
 {
-  Six a{100};
-  Six f{0};
-  Six s(1243);
+  Seven a{100};
+  Seven f{0};
+  Seven s(1243);
 
-  Vector<Six> vec{123, 341, 1234};
-  Vector<Six> kuka;
+  Vector<Seven> vec{123, 341, 1234};
+  Vector<Seven> kuka;
   kuka = vec;
 
   for (size_t i = 0; i < kuka.get_size(); ++i) {
     std::cout << kuka[i] << std::endl;
   }
 
-  Six c = std::move(a);
-  Six g = s;
+  Seven c = std::move(a);
+  Seven g = s;
   f = g;
 
   std::cout << c << ' ' << a << std::endl;
