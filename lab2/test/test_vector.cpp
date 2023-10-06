@@ -289,6 +289,39 @@ TEST(emplace_back_test, non_empty_vector) {
   EXPECT_EQ(size + 1, v.get_size());
   EXPECT_EQ(v[v.get_size() - 1], Six{"12312313123132312312321313123132213"});
 }
+
+TEST(get_element_operator_test, non_empty_vector) {
+  Vector<Six> v{123, 124, 12324123, 123124123};
+
+  Six el0 = v[0]; // TESTED
+  Six el1 = v[1]; // 
+  Six el2 = v[2]; //  
+  Six el3 = v[3]; //
+
+  EXPECT_EQ(el0, Six{123});
+  EXPECT_EQ(el1, Six{124});
+  EXPECT_EQ(el2, Six{12324123});
+  EXPECT_EQ(el3, Six{123124123});
+}
+
+TEST(at_test, out_of_range_test) {
+  Vector<Six> v{123, 124, 12324123, 123124123};
+
+  EXPECT_THROW(v.at(5), std::range_error);
+}
+
+TEST(at_test, normal_test) {
+  Vector<Six> v{123, 124, 12324123, 123124123};
+
+  EXPECT_NO_THROW(v.at(3));
+  EXPECT_EQ(v.at(3), Six{"123124123"});
+}
+
+TEST(front_test, normal_test) {
+  Vector<Six> v{123, 124, 12324123, 123124123};
+
+  EXPECT_EQ(v.front(), Six{"123"});
+}
  
 int main(int argc, char** argv) {
   testing::InitGoogleTest(&argc, argv);
