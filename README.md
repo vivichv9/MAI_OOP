@@ -2,10 +2,11 @@
 
 ### Repository for laboratory works on OOP course
 
-#### Variant 7
+#### Variant 8
 
 #### labs:
 |Lab Work|
 |-|
 |[Lab1](/lab1/)|
 |[Lab2](/lab2/)|
+|[Lab3](/lab3/)|
