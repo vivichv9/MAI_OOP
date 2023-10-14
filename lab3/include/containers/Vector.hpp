@@ -2,8 +2,8 @@
 #define VECTOR_HPP_INCLUDED
 
 #include <iostream>
-#include <memory>
 #include <cstring>
+#include <memory>
 
 template <typename T>
 class Vector {

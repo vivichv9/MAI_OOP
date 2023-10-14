@@ -3,21 +3,26 @@
 
 #include "../interfaces/figure.hpp"
 
-class Triangle final : private Figure {
+class Triangle : public Figure {
 public:
-  using Figure::calculate_centre;
-  using Figure::operator double;
+  Triangle() = delete;
+  explicit Triangle(const Triangle& rhs) = default;
+  virtual ~Triangle() = default;
 
-  Triangle();
-  Triangle(const Triangle& rhs);
-  Triangle& operator=(const Triangle& rhs);
-  Triangle& operator=(Triangle&& rhs);
+  Triangle& operator=(const Triangle& rhs) = default;
+  Triangle& operator=(Triangle&& rhs) = default;
 
-  friend std::ostream& operator<<(std::ostream& os, const Triangle& obj);
-  friend std::istream& operator>>(std::istream& os, const Triangle& obj);
+  Triangle(const Point& p1, const Point& p2, const Point& p3);
+  Triangle(double x1, double y1, double x2, double y2, double x3, double y3);
 
-  size_t calculate_centre() const override;
+  friend std::ostream& operator<<(std::ostream& os, const Triangle& rhs);
+  friend std::istream& operator>>(std::istream& os, const Triangle& rhs);
+
+  Point calculate_centre() const override;
   operator double() const override;
+
+private:
+  static bool validate(/* TODO */);
 };
 
 #endif

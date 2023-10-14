@@ -1,19 +1,23 @@
 #include "../../include/figures/Octagon.hpp"
 
-Octagon::Octagon() {
-
+bool Octagon::validate(/* TODO */) {
+  // TODO
+  return true;
 }
 
-Octagon::Octagon(const Octagon& rhs) {
-  coordinates = rhs.coordinates;
+Point Octagon::calculate_centre() const {
+  double centre_x = 0;
+  double centre_y = 0;
+
+  for (size_t i = 0; i < coordinates.get_size(); ++i) {
+    centre_x += coordinates[i].x;
+    centre_y += coordinates[i].y;
+  }
+
+  return Point{centre_x / 8, centre_y / 8};
 }
 
-Octagon& Octagon::operator=(const Octagon& rhs) {
-  coordinates = rhs.coordinates;
-  return *this;
-}
-
-Octagon& Octagon::operator=(Octagon&& rhs) {
-  coordinates = std::move(rhs.coordinates);
-  return *this;
+Octagon::operator double() const {
+  // TODO
+  return 1;
 }

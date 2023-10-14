@@ -3,21 +3,33 @@
 
 #include "../interfaces/figure.hpp"
 
-class Octagon final : private Figure {
+class Octagon : public Figure {
 public:
-  using Figure::calculate_centre;
-  using Figure::operator double;
+  Octagon() = delete;
+  explicit Octagon(const Octagon& rhs) = default;
+  Octagon& operator=(const Octagon& rhs) = default;
+  Octagon& operator=(Octagon&& rhs) = default;
+  virtual ~Octagon() = default;
 
-  Octagon();
-  Octagon(const Octagon& rhs);
-  Octagon& operator=(const Octagon& rhs);
-  Octagon& operator=(Octagon&& rhs);
+  Octagon(
+    const Point& p1,
+    const Point& p2,
+    const Point& p3,
+    const Point& p4,
+    const Point& p5,
+    const Point& p6,
+    const Point& p7,
+    const Point& p8
+  );
 
-  friend std::ostream& operator<<(std::ostream& os, const Octagon& obj);
-  friend std::istream& operator>>(std::istream& os, const Octagon& obj);
+  friend std::ostream& operator<<(std::ostream& os, const Octagon& rhs);
+  friend std::istream& operator>>(std::istream& os, const Octagon& rhs);
 
-  size_t calculate_centre() const override;
+  Point calculate_centre() const override;
   operator double() const override;
+
+private:
+  static bool validate(/* TODO */);
 };
 
 #endif

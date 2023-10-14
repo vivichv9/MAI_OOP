@@ -1,19 +1,32 @@
 #include "../../include/figures/Triangle.hpp"
 
-Triangle::Triangle() {
-
+bool Triangle::validate(/* TODO */) {
+  // TODO
+  return true;
 }
 
-Triangle::Triangle(const Triangle& rhs) {
-  coordinates = rhs.coordinates;
+Triangle::Triangle(const Point& p1, const Point& p2, const Point& p3) {
+  validate(/* TODO */);
+  coordinates.reserve(3);
+  coordinates.push_back(p1);
+  coordinates.push_back(p2);
+  coordinates.push_back(p3);
 }
 
-Triangle& Triangle::operator=(const Triangle& rhs) {
-  coordinates = rhs.coordinates;
-  return *this;
+Point Triangle::calculate_centre() const {
+  double centre_x = 0;
+  double centre_y = 0;
+
+  for (size_t i = 0; i < coordinates.get_size(); ++i) {
+    centre_x += coordinates[i].x;
+    centre_y += coordinates[i].y;
+  }
+
+  return Point{centre_x / 3, centre_y / 3};
 }
 
-Triangle& Triangle::operator=(Triangle&& rhs) {
-  coordinates = std::move(rhs.coordinates);
-  return *this;
+Triangle::operator double() const {
+  // TODO
+  return 1;
 }
+

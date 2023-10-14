@@ -1,19 +1,23 @@
 #include "../../include/figures/Square.hpp"
 
-Square::Square() {
-
+bool Square::validate(/* TODO */) {
+  // TODO
+  return true;
 }
 
-Square::Square(const Square& rhs) {
-  coordinates = rhs.coordinates;
+Point Square::calculate_centre() const {
+  double centre_x = 0;
+  double centre_y = 0;
+
+  for (size_t i = 0; i < coordinates.get_size(); ++i) {
+    centre_x += coordinates[i].x;
+    centre_y += coordinates[i].y;
+  }
+
+  return Point{centre_x / 4, centre_y / 4};
 }
 
-Square& Square::operator=(const Square& rhs) {
-  coordinates = rhs.coordinates;
-  return *this;
-}
-
-Square& Square::operator=(Square&& rhs) {
-  coordinates = std::move(rhs.coordinates);
-  return *this;
+Square::operator double() const {
+  // TODO
+  return 1;
 }

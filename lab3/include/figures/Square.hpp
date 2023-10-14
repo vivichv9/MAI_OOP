@@ -3,23 +3,34 @@
 
 #include "../interfaces/figure.hpp"
 
-#include <iostream>
-
-class Square final : private Figure {
+class Square : public Figure {
 public:
-  using Figure::calculate_centre;
-  using Figure::operator double;
+  Square() = delete;
+  explicit Square(const Square& rhs) = default;
+  Square& operator=(const Square& rhs) = default;
+  Square& operator=(Square&& rhs) = default;
+  virtual ~Square() = delete;
 
-  Square();
-  Square(const Square& rhs);
-  Square& operator=(const Square& rhs);
-  Square& operator=(Square&& rhs);
+  Square(const Point& p1, const Point& p2, const Point& p3, const Point& p4);
+  Square(
+    double x1,
+    double y1,
+    double x2, 
+    double y2,
+    double x3,
+    double y3,
+    double x4,
+    double y4
+  );
 
-  friend std::ostream& operator<<(std::ostream& os, const Square& obj);
-  friend std::istream& operator>>(std::istream& os, const Square& obj);
+  friend std::ostream& operator<<(std::ostream& os, const Square& rhs);
+  friend std::istream& operator>>(std::istream& os, const Square& rhs);
 
-  size_t calculate_centre() const override;
+  Point calculate_centre() const override;
   operator double() const override;
+
+private:
+  static bool validate(/* TODO */);
 };
 
 #endif
