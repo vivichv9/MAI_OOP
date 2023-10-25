@@ -10,11 +10,11 @@ Point Square::calculate_centre() const {
   double centre_y = 0;
 
   for (size_t i = 0; i < coordinates.get_size(); ++i) {
-    centre_x += coordinates[i].x;
-    centre_y += coordinates[i].y;
+    centre_x += coordinates[i].get_x();
+    centre_y += coordinates[i].get_y();
   }
 
-  return Point{centre_x / 4, centre_y / 4};
+  return Point(centre_x / 4, centre_y / 4);
 }
 
 Square::operator double() const {

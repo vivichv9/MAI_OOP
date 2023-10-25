@@ -3,6 +3,7 @@
 
 #include "../containers/Vector.hpp"
 #include "../figures/Point.hpp"
+#include "../../src/containers/Vector.cpp"
 
 #include <iostream>
 

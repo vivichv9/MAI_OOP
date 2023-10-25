@@ -20,11 +20,11 @@ Point Octagon::calculate_centre() const {
   double centre_y = 0;
 
   for (size_t i = 0; i < coordinates.get_size(); ++i) {
-    centre_x += coordinates[i].x;
-    centre_y += coordinates[i].y;
+    centre_x += coordinates[i].get_x();
+    centre_y += coordinates[i].get_y();
   }
 
-  return Point{centre_x / 8, centre_y / 8};
+  return Point(centre_x / 8, centre_y / 8);
 }
 
 Octagon::operator double() const {

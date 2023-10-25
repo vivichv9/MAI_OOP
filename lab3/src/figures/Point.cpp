@@ -1,5 +1,7 @@
 #include "../../include/figures/Point.hpp"
 
+Point::Point(double x, double y) : x(x), y(y) {}
+
 void Point::set_x(double x) noexcept {
   this->x = x;
 }
@@ -16,14 +18,24 @@ double Point::get_y() const noexcept {
   return y;
 }
 
-static Point Point::make_point(double x, double y) {
-  return Point{x, y};
+Point Point::make_point(double x, double y) {
+  return Point(x, y);
 }
 
-friend std::ostream& operator<<(std::ostream& os, const Point& rhs) {
-  os << rhs.x << ' ' << rhs.y;
+double Point::line_len(const Point& p1, const Point& p2) {
+  double ox = std::abs(p2.get_x() - p1.get_x());
+  double oy = std::abs(p2.get_y() - p1.get_y());
+
+  double len = std::sqrt(std::pow(ox, 2) + std::pow(oy, 2));
+  return len;
 }
 
-friend std::istream& operator>>(std::istream& is, const Point& rhs) {
+std::ostream& operator<<(std::ostream& os, Point& rhs) {
+  os << '[' << rhs.x << ", " << rhs.y << ']';
+  return os;
+}
+
+std::istream& operator>>(std::istream& is, Point& rhs) {
   is >> rhs.x >> rhs.y;
+  return is;
 }
