@@ -2,17 +2,9 @@
 #define FIGURE_HPP_INCLUDED
 
 #include "../containers/Vector.hpp"
+#include "../figures/Point.hpp"
 
 #include <iostream>
-
-struct Point {
-  double x;
-  double y;
-
-  Point make_point(double x, double y) {
-    return Point{x, y};
-  }
-};
 
 class Figure {
 protected:
@@ -23,4 +15,4 @@ public:
   virtual Point calculate_centre() const = 0;
 };
 
-#endif  
+#endif // FIGURE_HPP_INCLUDED

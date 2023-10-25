@@ -1,6 +1,16 @@
 #include "../../include/figures/Octagon.hpp"
 
-bool Octagon::validate(/* TODO */) {
+bool Octagon::validate(    
+    const Point& p1,
+    const Point& p2,
+    const Point& p3,
+    const Point& p4,
+    const Point& p5,
+    const Point& p6,
+    const Point& p7,
+    const Point& p8
+  ) noexcept {
+
   // TODO
   return true;
 }

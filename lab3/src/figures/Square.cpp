@@ -1,6 +1,6 @@
 #include "../../include/figures/Square.hpp"
 
-bool Square::validate(/* TODO */) {
+bool Square::validate(const Point& p1, const Point& p2, const Point& p3, const Point& p4) noexcept {
   // TODO
   return true;
 }

@@ -17,30 +17,14 @@ file(GLOB_RECURSE INCLUDES LIST_DIRECTORIES false ${INCLUDE_DIR}/*.hpp)
 # library with common functions for tests and exe
 #
 add_library(${PROJECT_NAME}_lib
-            ${INCLUDE_DIR}/interfaces/figure.hpp
-            ${INCLUDE_DIR}/figures/Octagon.hpp
-            ${INCLUDE_DIR}/figures/Square.hpp
-            ${INCLUDE_DIR}/figures/Triangle.hpp
-            ${SOURCE_DIR}/figures/Octagon.cpp
-            ${SOURCE_DIR}/figures/Square.cpp
-            ${SOURCE_DIR}/figures/Triangle.cpp)            
+            ${SOURCES}
+            ${INCLUDES})            
 
 set_target_properties(${PROJECT_NAME}_lib PROPERTIES
                       CXX_STANDARD 20
                       CXX_STANDARD_REQUIRED YES
                       CXX_EXTENSIONS NO)
 
-add_dependencies(${PROJECT_NAME}_lib ${PROJECT_NAME}_cont_lib)
-target_link_libraries(${PROJECT_NAME}_lib ${PROJECT_NAME}_cont_lib)
-
-add_library(${PROJECT_NAME}_cont_lib
-            ${INCLUDE_DIR}/containers/Vector.hpp
-            ${SOURCE_DIR}/containers/Vector.cpp)
-
-set_target_properties(${PROJECT_NAME}_cont_lib PROPERTIES
-                      CXX_STANDARD 20
-                      CXX_STANDARD_REQUIRED YES
-                      CXX_EXTENSIONS NO)
 #
 # project itself
 #
@@ -79,34 +63,34 @@ add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
                  ${CMAKE_CURRENT_BINARY_DIR}/googletest-build
                  EXCLUDE_FROM_ALL)
 
-# add_executable(${PROJECT_NAME}_test_seven
-#                ${CMAKE_CURRENT_SOURCE_DIR}/test/test_seven.cpp)
+add_executable(${PROJECT_NAME}_test_seven
+               ${CMAKE_CURRENT_SOURCE_DIR}/test/test_seven.cpp)
 
-# set_target_properties(${PROJECT_NAME}_test_seven PROPERTIES
-#                       CXX_STANDARD 20
-#                       CXX_STANDARD_REQUIRED YES)
+set_target_properties(${PROJECT_NAME}_test_seven PROPERTIES
+                      CXX_STANDARD 20
+                      CXX_STANDARD_REQUIRED YES)
 
-# target_include_directories(${PROJECT_NAME}_test_seven PRIVATE
-#                            "${PROJECT_SOURCE_DIR}/src"
-#                            "${CMAKE_CURRENT_BINARY_DIR}/googletest-src"
-#                            "${CMAKE_CURRENT_BINARY_DIR}/googletest-src/include")
+target_include_directories(${PROJECT_NAME}_test_seven PRIVATE
+                           "${PROJECT_SOURCE_DIR}/src"
+                           "${CMAKE_CURRENT_BINARY_DIR}/googletest-src"
+                           "${CMAKE_CURRENT_BINARY_DIR}/googletest-src/include")
 
-# add_dependencies(${PROJECT_NAME}_test_seven ${PROJECT_NAME}_lib)
-# target_link_libraries(${PROJECT_NAME}_test_seven ${PROJECT_NAME}_lib gtest_main)
-
-
-# add_executable(${PROJECT_NAME}_test_vector
-#                ${CMAKE_CURRENT_SOURCE_DIR}/test/test_vector.cpp)
+add_dependencies(${PROJECT_NAME}_test_seven ${PROJECT_NAME}_lib)
+target_link_libraries(${PROJECT_NAME}_test_seven ${PROJECT_NAME}_lib gtest_main)
 
 
-# set_target_properties(${PROJECT_NAME}_test_vector PROPERTIES
-#                CXX_STANDARD 20
-#                CXX_STANDARD_REQUIRED YES)
+add_executable(${PROJECT_NAME}_test_vector
+               ${CMAKE_CURRENT_SOURCE_DIR}/test/test_vector.cpp)
 
-# target_include_directories(${PROJECT_NAME}_test_vector PRIVATE
-#                     "${PROJECT_SOURCE_DIR}/src"
-#                     "${CMAKE_CURRENT_BINARY_DIR}/googletest-src"
-#                     "${CMAKE_CURRENT_BINARY_DIR}/googletest-src/include")
 
-# add_dependencies(${PROJECT_NAME}_test_vector ${PROJECT_NAME}_lib)
-# target_link_libraries(${PROJECT_NAME}_test_vector ${PROJECT_NAME}_lib gtest_main)
+set_target_properties(${PROJECT_NAME}_test_vector PROPERTIES
+               CXX_STANDARD 20
+               CXX_STANDARD_REQUIRED YES)
+
+target_include_directories(${PROJECT_NAME}_test_vector PRIVATE
+                    "${PROJECT_SOURCE_DIR}/src"
+                    "${CMAKE_CURRENT_BINARY_DIR}/googletest-src"
+                    "${CMAKE_CURRENT_BINARY_DIR}/googletest-src/include")
+
+add_dependencies(${PROJECT_NAME}_test_vector ${PROJECT_NAME}_lib)
+target_link_libraries(${PROJECT_NAME}_test_vector ${PROJECT_NAME}_lib gtest_main)
