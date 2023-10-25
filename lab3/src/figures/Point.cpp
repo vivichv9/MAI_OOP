@@ -23,14 +23,14 @@ Point Point::make_point(double x, double y) {
 }
 
 double Point::line_len(const Point& p1, const Point& p2) {
-  double ox = std::abs(p2.get_x() - p1.get_x());
-  double oy = std::abs(p2.get_y() - p1.get_y());
+  double ox = p2.get_x() - p1.get_x();
+  double oy = p2.get_y() - p1.get_y();
 
   double len = std::sqrt(std::pow(ox, 2) + std::pow(oy, 2));
   return len;
 }
 
-std::ostream& operator<<(std::ostream& os, Point& rhs) {
+std::ostream& operator<<(std::ostream& os, const Point& rhs) {
   os << '[' << rhs.x << ", " << rhs.y << ']';
   return os;
 }

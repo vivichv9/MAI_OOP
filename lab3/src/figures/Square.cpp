@@ -9,7 +9,7 @@ Point Square::calculate_centre() const {
   double centre_x = 0;
   double centre_y = 0;
 
-  for (size_t i = 0; i < coordinates.get_size(); ++i) {
+  for (size_t i = 0; i < coordinates.size(); ++i) {
     centre_x += coordinates[i].get_x();
     centre_y += coordinates[i].get_y();
   }

@@ -4,12 +4,12 @@
 #include "../containers/Vector.hpp"
 #include "../figures/Point.hpp"
 #include "../../src/containers/Vector.cpp"
-
+#include <vector>
 #include <iostream>
 
 class Figure {
 protected:
-  Vector<Point> coordinates;
+  std::vector<Point> coordinates;
   
 public:
   virtual operator double() const = 0;

@@ -1,15 +1,17 @@
 #include "../../include/figures/Triangle.hpp"
 
 bool Triangle::validate(const Point& p1, const Point& p2, const Point& p3) noexcept {
-  double sum_x = 0;
-  double sum_y = 0;
+  double sum_x = p1.get_x() + p2.get_x() + p3.get_x();
+  double sum_y = p1.get_y() + p2.get_y() + p3.get_y();
+
+  double inaccuracy = 1e-10;
   Point centre(sum_x / 3.0, sum_y / 3.0);
 
   double len1 = Point::line_len(centre, p1);
   double len2 = Point::line_len(centre, p2);
   double len3 = Point::line_len(centre, p3);
 
-  if (len1 == len2 && len2 == len3) {
+  if (std::abs(len1 - len2) <= inaccuracy && std::abs(len2 - len3) <= inaccuracy) {
     return true;
   }
 
@@ -23,14 +25,13 @@ Triangle::Triangle(const Point& p1, const Point& p2, const Point& p3) {
     throw std::invalid_argument("Invalid points. Can not create triangle!");
   }
 
-  coordinates.reserve(3);
   coordinates.push_back(p1);
   coordinates.push_back(p2);
   coordinates.push_back(p3);
 }
 
 std::ostream& operator<<(std::ostream& os, Triangle& rhs) {
-  for (size_t i = 0; i < rhs.coordinates.get_size(); ++i) {
+  for (size_t i = 0; i < rhs.coordinates.size(); ++i) {
     os << rhs.coordinates[i];
   }
   return os;
@@ -45,12 +46,12 @@ Point Triangle::calculate_centre() const {
   double centre_x = 0;
   double centre_y = 0;
 
-  for (size_t i = 0; i < coordinates.get_size(); ++i) {
+  for (size_t i = 0; i < coordinates.size(); ++i) {
     centre_x += coordinates[i].get_x();
     centre_y += coordinates[i].get_y();
   }
 
-  return Point(centre_x / 3, centre_y / 3);
+  return Point(centre_x / 3.0, centre_y / 3.0);
 }
 
 Triangle::operator double() const {

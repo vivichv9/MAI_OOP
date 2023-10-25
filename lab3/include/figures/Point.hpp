@@ -21,7 +21,7 @@ public:
   static Point make_point(double x, double y);
   static double line_len(const Point& x, const Point& y);
 
-  friend std::ostream& operator<<(std::ostream& os, Point& rhs); 
+  friend std::ostream& operator<<(std::ostream& os, const Point& rhs); 
   friend std::istream& operator>>(std::istream& is, Point& rhs);
 };
 
