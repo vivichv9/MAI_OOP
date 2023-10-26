@@ -10,6 +10,8 @@ public:
   friend std::ostream& operator<<(std::ostream& os, Triangle& rhs);
   friend std::istream& operator>>(std::istream& os, Triangle& rhs);
 
+  friend bool operator==(const Triangle& lhs, const Triangle& rhs);
+
   Point calculate_centre() const override;
   operator double() const override;
 

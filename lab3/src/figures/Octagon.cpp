@@ -79,3 +79,24 @@ Octagon::operator double() const {
 
   return 2 * std::pow(side_len, 2) * (1 + std::sqrt(2));
 }
+
+bool operator==(const Octagon& lhs, const Octagon& rhs) {
+  bool flag = false;
+
+  for (size_t i = 0; i < lhs.coordinates.get_size(); ++i) {
+    flag = false;
+
+    for (size_t j = 0; i < rhs.coordinates.get_size(); ++i) {
+      if (lhs.coordinates[i] == rhs.coordinates[j]) {
+        flag = true;
+        continue;
+      }
+    }
+
+    if (!flag) {
+      return false;
+    }
+  }
+
+  return true;
+}

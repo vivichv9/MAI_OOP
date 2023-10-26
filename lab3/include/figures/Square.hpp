@@ -11,6 +11,8 @@ public:
   friend std::ostream& operator<<(std::ostream& os, const Square& rhs);
   friend std::istream& operator>>(std::istream& os, const Square& rhs);
 
+  friend bool operator==(const Square& lhs, const Square& rhs);
+
   Point calculate_centre() const override;
   operator double() const override;
 

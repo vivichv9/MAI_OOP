@@ -19,6 +19,7 @@ public:
 
   friend std::ostream& operator<<(std::ostream& os, const Octagon& rhs);
   friend std::istream& operator>>(std::istream& os, const Octagon& rhs);
+  friend bool operator==(const Octagon& lhs, const Octagon& rhs);
 
   Point calculate_centre() const override;
   operator double() const override;

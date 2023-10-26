@@ -52,6 +52,27 @@ Point Triangle::calculate_centre() const {
   return Point(centre_x / 3.0, centre_y / 3.0);
 }
 
+bool operator==(const Triangle& lhs, const Triangle& rhs) {
+  bool flag = false;
+
+  for (size_t i = 0; i < lhs.coordinates.get_size(); ++i) {
+    flag = false;
+
+    for (size_t j = 0; i < rhs.coordinates.get_size(); ++i) {
+      if (lhs.coordinates[i] == rhs.coordinates[j]) {
+        flag = true;
+        continue;
+      }
+    }
+
+    if (!flag) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
 Triangle::operator double() const {
   double x2x1 = coordinates[1].get_x() - coordinates[0].get_x();
   double y3y1 = coordinates[2].get_y() - coordinates[0].get_y();

@@ -56,6 +56,27 @@ Point Square::calculate_centre() const {
   return Point(centre_x / 4.0, centre_y / 4.0);
 }
 
+bool operator==(const Square& lhs, const Square& rhs) {
+  bool flag = false;
+
+  for (size_t i = 0; i < lhs.coordinates.get_size(); ++i) {
+    flag = false;
+
+    for (size_t j = 0; i < rhs.coordinates.get_size(); ++i) {
+      if (lhs.coordinates[i] == rhs.coordinates[j]) {
+        flag = true;
+        continue;
+      }
+    }
+
+    if (!flag) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
 Square::operator double() const {
   return std::pow(Point::line_len(coordinates[0], coordinates[1]), 2);
 }
