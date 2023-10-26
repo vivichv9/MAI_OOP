@@ -3,9 +3,9 @@
 bool Triangle::validate(const Point& p1, const Point& p2, const Point& p3) noexcept {
   double sum_x = p1.get_x() + p2.get_x() + p3.get_x();
   double sum_y = p1.get_y() + p2.get_y() + p3.get_y();
+  Point centre(sum_x / 3.0, sum_y / 3.0);
 
   double inaccuracy = 1e-10;
-  Point centre(sum_x / 3.0, sum_y / 3.0);
 
   double len1 = Point::line_len(centre, p1);
   double len2 = Point::line_len(centre, p2);
@@ -25,9 +25,7 @@ Triangle::Triangle(const Point& p1, const Point& p2, const Point& p3) {
     throw std::invalid_argument("Invalid points. Can not create triangle!");
   }
 
-  coordinates.push_back(p1);
-  coordinates.push_back(p2);
-  coordinates.push_back(p3);
+  coordinates = {p1, p2, p3};
 }
 
 std::ostream& operator<<(std::ostream& os, Triangle& rhs) {

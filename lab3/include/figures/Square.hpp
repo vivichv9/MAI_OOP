@@ -6,11 +6,6 @@
 class Square : public Figure {
 public:
   Square() = delete;
-  explicit Square(const Square& rhs) = default;
-  Square& operator=(const Square& rhs) = default;
-  Square& operator=(Square&& rhs) = default;
-  virtual ~Square() = delete;
-
   Square(const Point& p1, const Point& p2, const Point& p3, const Point& p4);
 
   friend std::ostream& operator<<(std::ostream& os, const Square& rhs);
