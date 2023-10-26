@@ -21,7 +21,7 @@ bool Square::validate(const Point& p1, const Point& p2, const Point& p3, const P
   
   if (std::abs(len_p1p2 - len_p1p4) < inaccuracy &&
         std::abs(len_p1p2 - len_p2p3) < inaccuracy &&
-          std::abs(len_p3p4 - len_p1p2 < inaccuracy)) {
+          std::abs(len_p3p4 - len_p1p2) < inaccuracy) {
     
     if (std::abs(len_to_p1 - len_to_p2) < inaccuracy &&
           std::abs(len_to_p2 - len_to_p3) < inaccuracy &&

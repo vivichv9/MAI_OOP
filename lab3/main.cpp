@@ -7,7 +7,7 @@
   
 int main() {
   try {
-    Triangle t(Point::make_point(0, 0), Point::make_point(5, std::sqrt(3) * 5), Point::make_point(10, 0));
+    Triangle t(Point(0, 0), Point(5, std::sqrt(3) * 5), Point(10, 0));
     std::cout << t.calculate_centre() << std::endl;
     std::cout << (double) t << std::endl;
 

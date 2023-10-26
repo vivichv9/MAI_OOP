@@ -18,7 +18,8 @@ public:
   double get_x() const noexcept;
   double get_y() const noexcept;
 
-  static Point make_point(double x, double y);
+  friend bool operator==(const Point& lhs, const Point& rhs);
+
   static double line_len(const Point& x, const Point& y);
 
   friend std::ostream& operator<<(std::ostream& os, const Point& rhs); 

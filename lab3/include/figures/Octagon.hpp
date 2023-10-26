@@ -6,11 +6,6 @@
 class Octagon : public Figure {
 public:
   Octagon() = delete;
-  explicit Octagon(const Octagon& rhs) = default;
-  Octagon& operator=(const Octagon& rhs) = default;
-  Octagon& operator=(Octagon&& rhs) = default;
-  virtual ~Octagon() = default;
-
   Octagon(
     const Point& p1,
     const Point& p2,
