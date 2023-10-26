@@ -29,7 +29,7 @@ Triangle::Triangle(const Point& p1, const Point& p2, const Point& p3) {
 }
 
 std::ostream& operator<<(std::ostream& os, Triangle& rhs) {
-  for (size_t i = 0; i < rhs.coordinates.size(); ++i) {
+  for (size_t i = 0; i < rhs.coordinates.get_size(); ++i) {
     os << rhs.coordinates[i];
   }
   return os;
@@ -44,7 +44,7 @@ Point Triangle::calculate_centre() const {
   double centre_x = 0;
   double centre_y = 0;
 
-  for (size_t i = 0; i < coordinates.size(); ++i) {
+  for (size_t i = 0; i < coordinates.get_size(); ++i) {
     centre_x += coordinates[i].get_x();
     centre_y += coordinates[i].get_y();
   }

@@ -9,7 +9,7 @@
 
 class Figure {
 protected:
-  std::vector<Point> coordinates;
+  Vector<Point> coordinates;
   
 public:
   virtual operator double() const = 0;

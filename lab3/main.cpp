@@ -4,7 +4,6 @@
 #include "include/figures/Square.hpp"
 #include "include/figures/Octagon.hpp"
 #include "include/containers/Vector.hpp"
-#include <vector>
   
 int main() {
   try {
