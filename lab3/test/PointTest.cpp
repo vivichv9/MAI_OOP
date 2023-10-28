@@ -4,7 +4,7 @@
 
 #define INACCURACY 1e-5
 
-TEST(constructor_tets, normal) {
+TEST(constructor_test, normal) {
   Point test(3, 5);
   EXPECT_EQ(test.get_x(), 3);
   EXPECT_EQ(test.get_y(), 5);

@@ -5,29 +5,35 @@
 #include <cstring>
 #include <memory>
 
-template <typename T>
+template <typename T, typename Allocator = std::allocator<T>>
 class Vector {
+  using AllocTraits = std::allocator_traits<Allocator>;
+
 private:
   size_t capacity = 0;
   size_t size = 0;
-  T* array = nullptr;
+  T* array;
+  Allocator alloc;
 
 public:
+  class iterator;
+
   Vector();   
   Vector(size_t);
+  Vector(Allocator& alloc);
   Vector(const std::initializer_list<T>&);
-  Vector(const Vector&);
-  Vector(Vector&&) noexcept;
-  Vector& operator=(const Vector<T>&);
-  Vector& operator=(Vector&&) noexcept;
+  Vector(const Vector<T, Allocator>&);
+  Vector(Vector<T, Allocator>&&) noexcept;
+  Vector<T, Allocator>& operator=(const Vector<T, Allocator>&);
+  Vector<T, Allocator>& operator=(Vector<T, Allocator>&&) noexcept;
   ~Vector();
 
   size_t get_size() const;
   size_t get_capacity() const;
 
   bool empty() const;
-  bool operator==(const Vector<T>&) const;
-  bool operator!=(const Vector<T>&) const;
+  bool operator==(const Vector<T, Allocator>&) const;
+  bool operator!=(const Vector<T, Allocator>&) const;
 
   void resize(size_t, const T& = T());
   void push_back(const T&);
@@ -47,6 +53,30 @@ public:
   const T& at(size_t) const;
   const T& back() const;
   const T& front() const;
+
+  class iterator {
+    private:
+      T* obj_ptr;
+    
+    public:
+      iterator() = delete;
+      iterator(const T& obj);
+      iterator(const iterator& rhs);
+      
+      const T& operator*() const noexcept;
+      T& operator*() noexcept;
+      iterator& operator++();
+      iterator operator++(int) const;
+      iterator operator--(int) const;
+      iterator& operator--();
+      iterator& operator+=(uint32_t steps_count);
+      iterator& operator-=(uint32_t steps_count);
+      iterator operator+(const iterator& rhs) const;
+      iterator operator-(const iterator& rhs) const;
+
+      iterator begin();
+      iterator end();
+  };  
 };
 
 #endif // VECTOR_HPP_INCLUDED
