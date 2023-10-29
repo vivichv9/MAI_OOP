@@ -9,3 +9,5 @@ set_target_properties(${PROJECT_NAME}_vector PROPERTIES
                 CXX_STANDARD_REQUIRED YES
                 CXX_EXTENSIONS NO)
 
+target_compile_options(${PROJECT_NAME}_vector PUBLIC "-Wall")
+
