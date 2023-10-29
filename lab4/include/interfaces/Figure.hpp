@@ -1,18 +1,19 @@
 #ifndef FIGURE_HPP_INCLUDED
 #define FIGURE_HPP_INCLUDED
 
-#include "../containers/Vector.hpp"
-#include "../figures/Point.hpp"
-#include "../../src/containers/Vector.cpp"
+#include "../../containers/Vector.hpp"
+#include "../Point.hpp"
+
 #include <iostream>
 
+template <typename T>
 class Figure {
 protected:
-  Vector<Point> coordinates;
+  Vector<Point<T>> coordinates;
   
 public:
   virtual operator double() const = 0;
-  virtual Point calculate_centre() const = 0;
+  virtual Point<T> calculate_centre() const = 0;
 };
 
 #endif // FIGURE_HPP_INCLUDED
