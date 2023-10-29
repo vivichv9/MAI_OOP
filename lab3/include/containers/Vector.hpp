@@ -53,8 +53,10 @@ public:
   const T& at(size_t) const;
   const T& back() const;
   const T& front() const;
-  iterator begin() const;
-  iterator end() const;
+  iterator begin();
+  iterator end();
+  const iterator cbegin() const;
+  const iterator cend() const;
 
   class iterator {
   private:
@@ -71,6 +73,10 @@ public:
     iterator operator++(int);
     iterator operator--(int);
     iterator& operator--();
+    const iterator& operator++() const;
+    const iterator operator++(int) const;
+    const iterator operator--(int) const;
+    const iterator& operator--() const;
     iterator& operator+=(uint32_t steps_count);
     iterator& operator-=(uint32_t steps_count);
     iterator operator+(uint32_t steps_count) const;
