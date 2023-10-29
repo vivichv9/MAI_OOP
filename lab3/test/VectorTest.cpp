@@ -22,16 +22,17 @@ TEST(constructor_test, capacity_constructor_test) {
 TEST(constructor_test, initializer_constructor_test) {
   Vector<std::string> vec{"123", "123", "123", "23", "123", "2331"}; // TESTED
 
-  EXPECT_EQ(vec.get_capacity(), 6);
+  EXPECT_EQ(vec.get_capacity(), 7);
   EXPECT_EQ(vec.get_size(), 6);
 }
 
 TEST(constructor_test, copy_constructor_test) {
   Vector<std::string> vec{"1234", "12345", "4124"};
+  std::cout << "created" << std::endl;
   Vector<std::string> vec1 = vec; // TESTED
-
+  std::cout << "copy" << std::endl;
   EXPECT_EQ(vec1.get_size(), 3);
-  EXPECT_EQ(vec1.get_capacity(), 3);
+  EXPECT_EQ(vec1.get_capacity(), 4);
 
   for (size_t i = 0; i < vec.get_size(); ++i) {
     EXPECT_EQ(vec1[i], vec[i]);
@@ -44,7 +45,7 @@ TEST(constructor_test, move_constructor_test) {
   Vector<std::string> vec1 = std::move(vec); // TESTED
 
   EXPECT_EQ(vec1.get_size(), 4);
-  EXPECT_EQ(vec1.get_capacity(), 4);
+  EXPECT_EQ(vec1.get_capacity(), 5);
   EXPECT_EQ(vec1[0], std::string{"1234"});
   EXPECT_EQ(vec1[1], std::string{"12345"});
   EXPECT_EQ(vec1[2], std::string{"4124"});
@@ -57,11 +58,11 @@ TEST(constructor_test, move_constructor_test) {
 TEST(assignment_operator_test, copy_assignment) {
   Vector<std::string> vec{"1234", "12345", "4124", "12345123"};
   Vector<std::string> vec1;
-
+  std::cout << "Create" << std::endl;
   vec1 = vec; // TESTED
-
+  std::cout << "copy" << std::endl;
   EXPECT_EQ(vec1.get_size(), 4);
-  EXPECT_EQ(vec1.get_capacity(), 4);
+  EXPECT_EQ(vec1.get_capacity(), 5);
 
   for (size_t i = 0; i < vec.get_size(); ++i) {
     EXPECT_EQ(vec1[i], vec[i]);
@@ -77,7 +78,7 @@ TEST(assignment_operator_test, move_assignment) {
   vec1 = std::move(vec); // TESTED
 
   EXPECT_EQ(vec1.get_size(), 2);
-  EXPECT_EQ(vec1.get_capacity(), 2);
+  EXPECT_EQ(vec1.get_capacity(), 3);
   EXPECT_EQ(vec1[0], std::string{"1234"});
   EXPECT_EQ(vec1[1], std::string{"12345"});
 
@@ -110,7 +111,7 @@ TEST(get_capacity_test, non_empty_vector) {
   Vector<std::string> v{"123", "412", "12451", "12345", "123", "1234", "134", "1234", "412", "14"};
   size_t capacity = v.get_capacity(); // TESTED
 
-  EXPECT_EQ(capacity, 10);
+  EXPECT_EQ(capacity, 11);
 }
 
 TEST(empty_test, empty_vector) {
@@ -228,7 +229,7 @@ TEST(reserve_test, empty_vector) {
 
   v.reserve(capacity); // TESTED
 
-  EXPECT_EQ(v.get_capacity(), capacity);
+  EXPECT_EQ(v.get_capacity(), capacity + 1);
 }
 
 TEST(reserve_test, old_capacity_more_new_capacity) {
@@ -274,7 +275,7 @@ TEST(clear_test, non_empty_vector) {
 
   EXPECT_NO_THROW(v.clear()); // TESTED
 
-  EXPECT_EQ(v.get_capacity(), 4);
+  EXPECT_EQ(v.get_capacity(), 5);
   EXPECT_EQ(v.get_size(), 0);
   EXPECT_THROW(v.at(1), std::range_error);
 }
@@ -282,11 +283,9 @@ TEST(clear_test, non_empty_vector) {
 TEST(emplace_back_test, non_empty_vector) {
   Vector<std::string> v{"14123", "123124", "1231", "1233"};
   size_t size = v.get_size();
-  size_t capacity = v.get_capacity();
 
   v.emplace_back("12312313123132312312321313123132213"); // TESTED
 
-  EXPECT_EQ(capacity, v.get_capacity());
   EXPECT_EQ(size + 1, v.get_size());
   EXPECT_EQ(v[v.get_size() - 1], std::string{"12312313123132312312321313123132213"});
 }

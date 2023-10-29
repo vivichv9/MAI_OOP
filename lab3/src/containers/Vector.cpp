@@ -12,8 +12,14 @@ Vector<T, Allocator>::Vector(Allocator& alloc): capacity(1), size(0), array(Allo
 template <typename T, typename Allocator>
 Vector<T, Allocator>::Vector(const Vector<T, Allocator>& vec): capacity(vec.capacity), size(vec.size), alloc(vec.alloc) {
   T* new_arr = AllocTraits::allocate(alloc, capacity);
-  std::uninitialized_copy(vec.array, vec.array + vec.size, new_arr);
+  try {
+    std::uninitialized_copy(vec.begin(), vec.end(), new_arr);
 
+  } catch(...) {
+    delete[] new_arr;
+    throw;
+  }
+  
   array = new_arr;
 }
 
@@ -31,8 +37,8 @@ Vector<T, Allocator>& Vector<T, Allocator>::operator=(Vector<T, Allocator>&& oth
     return *this;
   }
 
-  this->clear();
-  delete[] array;
+  clear();
+  AllocTraits::deallocate(alloc, array, capacity);
 
   capacity = oth.capacity;
   size = oth.size;
@@ -41,6 +47,7 @@ Vector<T, Allocator>& Vector<T, Allocator>::operator=(Vector<T, Allocator>&& oth
 
   oth.capacity = 0;
   oth.size = 0;
+  oth.array = nullptr;
 
   return *this;
 }
@@ -49,7 +56,12 @@ template <typename T, typename Allocator>
 Vector<T, Allocator>::Vector(const std::initializer_list<T>& lst) {
   T* new_arr = AllocTraits::allocate(alloc, lst.size() + 1);
 
-  std::uninitialized_copy(lst.begin(), lst.end(), new_arr);
+  try {
+    std::uninitialized_copy(lst.begin(), lst.end(), new_arr);
+  } catch(...) {
+    delete[] new_arr;
+    throw;
+  }
 
   array = new_arr;
   capacity = lst.size() + 1;
@@ -62,10 +74,20 @@ Vector<T, Allocator>& Vector<T, Allocator>::operator=(const Vector<T, Allocator>
     return *this;
   }
 
+  clear();
+  AllocTraits::deallocate(alloc, array, capacity);
+
   size = vec.size;
   capacity = vec.capacity;
   array = AllocTraits::allocate(alloc, capacity);
-  std::copy(vec.array, vec.array + size, array);
+
+  try {
+    std::uninitialized_copy(vec.begin(), vec.end(), array);
+  } catch(...) {
+    delete[] array;
+    throw;
+  }
+
   return *this;
 }
 
@@ -141,7 +163,12 @@ void Vector<T, Allocator>::reserve(size_t n) {
   }
 
   T* newArr = AllocTraits::allocate(alloc, n + 1);
-  std::uninitialized_copy(array, array + size, newArr);
+  try {
+    std::uninitialized_copy(begin(), end(), newArr);
+  } catch(...) {
+    delete[] newArr;
+    throw;
+  }
 
   for (size_t i = 0; i < size; ++i) {
     array[i].~T();
@@ -171,7 +198,7 @@ void Vector<T, Allocator>::push_back(const T& data) {
     reserve(2 * size);
   }
 
-  AllocTraits::construct(alloc, array + size, data);
+  AllocTraits::construct(alloc, array + size, std::move_if_noexcept(data));
   ++size;
 }
 
@@ -182,7 +209,7 @@ void Vector<T, Allocator>::emplace_back(const Args& ...args) {
     reserve(2 * size);
   }
 
-  AllocTraits::construct(alloc, array + size, args...);
+  AllocTraits::construct(alloc, array + size, std::forward(args...));
   ++size;
 }
 
@@ -255,7 +282,7 @@ bool Vector<T, Allocator>::operator!=(const Vector<T, Allocator>& vec) const {
 }
 
 template <typename T, typename Allocator>
-Vector<T, Allocator>::iterator::iterator(const T& obj): obj_ptr(&obj) {}
+Vector<T, Allocator>::iterator::iterator(T* obj): obj_ptr(obj) {}
 
 template <typename T, typename Allocator>
 Vector<T, Allocator>::iterator::iterator(const iterator& rhs): obj_ptr(rhs.obj_ptr) {}
@@ -284,54 +311,52 @@ typename Vector<T, Allocator>::iterator& Vector<T, Allocator>::iterator::operato
 
 template <typename T, typename Allocator>
 typename Vector<T, Allocator>::iterator& Vector<T, Allocator>::iterator::operator++() {
-  *this += 1;
+  this->obj_ptr += 1;
   return *this;
 }
 
 template <typename T, typename Allocator>
 typename Vector<T, Allocator>::iterator& Vector<T, Allocator>::iterator::operator--() {
-  *this -= 1;
+  this->obj_ptr -= 1;
   return *this;
 }
 
 template <typename T, typename Allocator>
 typename Vector<T, Allocator>::iterator Vector<T, Allocator>::iterator::operator++(int) {
-  iterator temp(*this);
-  *this += 1;
-  return *this;
+  iterator temp(this->obj_ptr);
+  this->obj_ptr += 1;
+  return *temp;
 }
 
 template <typename T, typename Allocator>
 typename Vector<T, Allocator>::iterator Vector<T, Allocator>::iterator::operator--(int) {
-  iterator temp(*this);
-  *this -= 1;
+  iterator temp(this->obj_ptr);
+  this->obj_ptr -= 1;
   return *temp;
 }
 
 template <typename T, typename Allocator>
 typename Vector<T, Allocator>::iterator Vector<T, Allocator>::iterator::operator-(uint32_t steps_count) const {
-  iterator temp(*this);
-  temp -= steps_count;
+  iterator temp(this->obj_ptr);
+  temp->obj_ptr -= steps_count;
   return temp;
 }
 
 template <typename T, typename Allocator>
 typename Vector<T, Allocator>::iterator Vector<T, Allocator>::iterator::operator+(uint32_t steps_count) const {
-  iterator temp(*this);
-  temp += steps_count;
+  iterator temp(this->obj_ptr);
+  temp->obj_ptr += steps_count;
   return temp;
 }
 
 template <typename T, typename Allocator>
-typename Vector<T, Allocator>::iterator Vector<T, Allocator>::begin() {
-  return iterator(array[0]);
+typename Vector<T, Allocator>::iterator Vector<T, Allocator>::begin() const {
+  return iterator(&array[0]);
 }
 
 template <typename T, typename Allocator>
-typename Vector<T, Allocator>::iterator Vector<T, Allocator>::end() {
-  iterator back(array[size - 1]);
-  back.obj_ptr += 1;
-  return back;
+typename Vector<T, Allocator>::iterator Vector<T, Allocator>::end() const {
+  return iterator(&array[size]);
 }
 
 template <typename T, typename Allocator>

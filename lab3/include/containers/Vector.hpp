@@ -53,31 +53,31 @@ public:
   const T& at(size_t) const;
   const T& back() const;
   const T& front() const;
-  iterator begin();
-  iterator end();
+  iterator begin() const;
+  iterator end() const;
 
   class iterator {
-    private:
-      T* obj_ptr;
+  private:
+    T* obj_ptr;
+  
+  public:
+    iterator() = delete;
+    iterator(T* obj);
+    iterator(const iterator& rhs);
     
-    public:
-      iterator() = delete;
-      iterator(const T& obj);
-      iterator(const iterator& rhs);
-      
-      const T& operator*() const noexcept;
-      T& operator*() noexcept;
-      iterator& operator++();
-      iterator operator++(int);
-      iterator operator--(int);
-      iterator& operator--();
-      iterator& operator+=(uint32_t steps_count);
-      iterator& operator-=(uint32_t steps_count);
-      iterator operator+(uint32_t steps_count) const;
-      iterator operator-(uint32_t steps_count) const;
+    const T& operator*() const noexcept;
+    T& operator*() noexcept;
+    iterator& operator++();
+    iterator operator++(int);
+    iterator operator--(int);
+    iterator& operator--();
+    iterator& operator+=(uint32_t steps_count);
+    iterator& operator-=(uint32_t steps_count);
+    iterator operator+(uint32_t steps_count) const;
+    iterator operator-(uint32_t steps_count) const;
 
-      bool operator==(const Vector<T, Allocator>::iterator& rhs) const;
-      bool operator!=(const Vector<T, Allocator>::iterator& rhs) const;
+    bool operator==(const Vector<T, Allocator>::iterator& rhs) const;
+    bool operator!=(const Vector<T, Allocator>::iterator& rhs) const;
   };
 };
 
