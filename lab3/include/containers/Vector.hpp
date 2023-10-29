@@ -53,6 +53,8 @@ public:
   const T& at(size_t) const;
   const T& back() const;
   const T& front() const;
+  iterator begin();
+  iterator end();
 
   class iterator {
     private:
@@ -66,17 +68,17 @@ public:
       const T& operator*() const noexcept;
       T& operator*() noexcept;
       iterator& operator++();
-      iterator operator++(int) const;
-      iterator operator--(int) const;
+      iterator operator++(int);
+      iterator operator--(int);
       iterator& operator--();
       iterator& operator+=(uint32_t steps_count);
       iterator& operator-=(uint32_t steps_count);
-      iterator operator+(const iterator& rhs) const;
-      iterator operator-(const iterator& rhs) const;
+      iterator operator+(uint32_t steps_count) const;
+      iterator operator-(uint32_t steps_count) const;
 
-      iterator begin();
-      iterator end();
-  };  
+      bool operator==(const Vector<T, Allocator>::iterator& rhs) const;
+      bool operator!=(const Vector<T, Allocator>::iterator& rhs) const;
+  };
 };
 
 #endif // VECTOR_HPP_INCLUDED

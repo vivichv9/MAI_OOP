@@ -261,51 +261,91 @@ template <typename T, typename Allocator>
 Vector<T, Allocator>::iterator::iterator(const iterator& rhs): obj_ptr(rhs.obj_ptr) {}
 
 template <typename T, typename Allocator>
-const T& Vector<T, Allocator>::iterator::operator*() const {
+const T& Vector<T, Allocator>::iterator::operator*() const noexcept {
   return *obj_ptr;
 }
 
 template <typename T, typename Allocator>
-T& Vector<T, Allocator>::iterator::operator*() {
+T& Vector<T, Allocator>::iterator::operator*() noexcept {
   return *obj_ptr;
 }
 
 template <typename T, typename Allocator>
-iterator& Vector<T, Allocator>::iterator::operator+=(uint32_t steps_count) {
+typename Vector<T, Allocator>::iterator& Vector<T, Allocator>::iterator::operator+=(uint32_t steps_count) {
   this->obj_ptr += 5;
   return *this;
 }
 
 template <typename T, typename Allocator>
-iterator& Vector<T, Allocator>::iterator::operator-=(uint32_t steps_count) {
+typename Vector<T, Allocator>::iterator& Vector<T, Allocator>::iterator::operator-=(uint32_t steps_count) {
   this->obj_ptr -= 5;
   return *this;
 }
 
 template <typename T, typename Allocator>
-iterator& Vector<T, Allocator>::iterator::operator++() {
+typename Vector<T, Allocator>::iterator& Vector<T, Allocator>::iterator::operator++() {
   *this += 1;
   return *this;
 }
 
 template <typename T, typename Allocator>
-iterator& Vector<T, Allocator>::iterator::operator--() {
+typename Vector<T, Allocator>::iterator& Vector<T, Allocator>::iterator::operator--() {
   *this -= 1;
   return *this;
 }
 
 template <typename T, typename Allocator>
-iterator Vector<T, Allocator>::iterator::operator++(int) {
+typename Vector<T, Allocator>::iterator Vector<T, Allocator>::iterator::operator++(int) {
+  iterator temp(*this);
   *this += 1;
   return *this;
 }
 
 template <typename T, typename Allocator>
-iterator Vector<T, Allocator>::iterator::operator--(int) {
-  iterator temp = *this;
-  
-  return *this;
+typename Vector<T, Allocator>::iterator Vector<T, Allocator>::iterator::operator--(int) {
+  iterator temp(*this);
+  *this -= 1;
+  return *temp;
 }
+
+template <typename T, typename Allocator>
+typename Vector<T, Allocator>::iterator Vector<T, Allocator>::iterator::operator-(uint32_t steps_count) const {
+  iterator temp(*this);
+  temp -= steps_count;
+  return temp;
+}
+
+template <typename T, typename Allocator>
+typename Vector<T, Allocator>::iterator Vector<T, Allocator>::iterator::operator+(uint32_t steps_count) const {
+  iterator temp(*this);
+  temp += steps_count;
+  return temp;
+}
+
+template <typename T, typename Allocator>
+typename Vector<T, Allocator>::iterator Vector<T, Allocator>::begin() {
+  return iterator(array[0]);
+}
+
+template <typename T, typename Allocator>
+typename Vector<T, Allocator>::iterator Vector<T, Allocator>::end() {
+  iterator back(array[size - 1]);
+  back.obj_ptr += 1;
+  return back;
+}
+
+template <typename T, typename Allocator>
+bool Vector<T, Allocator>::iterator::operator==(const iterator& rhs) const {
+  return obj_ptr == rhs.obj_ptr ? true : false;
+}
+
+template <typename T, typename Allocator>
+bool Vector<T, Allocator>::iterator::operator!=(const iterator& rhs) const {
+  return obj_ptr == rhs.obj_ptr ? false : true;
+}
+
+
+
 
 
 
