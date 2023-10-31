@@ -25,6 +25,19 @@ TEST(operator_double_test, normal) {
   EXPECT_TRUE(std::abs(square - 4) < INACCURACY);
 }
 
+TEST(compare_operator_test, true_test) {
+  Square test(Point(1, 1), Point(1, 3), Point(3, 3), Point(3, 1));
+  Square test1(Point(1, 1), Point(1, 3), Point(3, 3), Point(3, 1));
+
+  EXPECT_TRUE(test == test1);
+}
+
+TEST(compare_operator_test, false_test) {
+  Square test(Point(1, 1), Point(1, 3), Point(3, 3), Point(3, 1));
+  Square test1(Point(2, 2), Point(2, 4), Point(4, 4), Point(4, 2));
+
+  EXPECT_FALSE(test == test1);
+}
 
 int main(int argc, char** argv) {
   testing::InitGoogleTest(&argc, argv);

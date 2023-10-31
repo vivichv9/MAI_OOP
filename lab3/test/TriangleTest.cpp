@@ -27,6 +27,20 @@ TEST(operator_double_test, normal) {
   EXPECT_TRUE((static_cast<double>(test) - 43.30127) < INACCURACY);
 }
 
+TEST(compare_operator_test, true_test) {
+  Triangle test(Point(2, 2), Point(7, 2 + std::sqrt(3) * 5), Point(12, 2));
+  Triangle test1(Point(2, 2), Point(7, 2 + std::sqrt(3) * 5), Point(12, 2));
+
+  EXPECT_TRUE(test == test1);
+}
+
+TEST(compare_operator_test, false_test) {
+  Triangle test(Point(3, 3), Point(8, 3 + std::sqrt(3) * 5), Point(13, 3));
+  Triangle test1(Point(2, 2), Point(7, 2 + std::sqrt(3) * 5), Point(12, 2));
+
+  EXPECT_FALSE(test == test1);
+}
+
 int main(int argc, char** argv) {
   testing::InitGoogleTest(&argc, argv);
   return RUN_ALL_TESTS();
