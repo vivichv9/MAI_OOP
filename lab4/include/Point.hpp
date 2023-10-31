@@ -13,6 +13,7 @@ private:
 
 public:
   Point(const T& x, const T& y);
+  virtual ~Point() = default;
 
   void set_x(const T& x) noexcept;
   void set_y(const T& x) noexcept;
@@ -20,13 +21,16 @@ public:
   T& get_y() noexcept;
   const T& get_x() const noexcept;
   const T& get_y() const noexcept;
-
+  
   friend bool operator==(const Point<T>& lhs, const Point<T>& rhs);
 
   static double line_len(const Point<T>& x, const Point<T>& y);
 
-  friend std::ostream& operator<<(std::ostream& os, const Point<T>& rhs); 
-  friend std::istream& operator>>(std::istream& is, Point<T>& rhs);
+  template <typename U>
+  friend std::ostream& operator<<(std::ostream& os, const Point<U>& rhs);
+
+  template <typename U>
+  friend std::istream& operator>>(std::istream& is, Point<U>& rhs);
 };
 
 #endif // POINT_HPP_INCLUDED

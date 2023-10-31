@@ -18,11 +18,11 @@ public:
     const Point<T>& p8
   );
 
-  friend std::ostream& operator<<(std::ostream& os, const Octagon<T>& rhs);
-  friend std::istream& operator>>(std::istream& os, const Octagon<T>& rhs);
+  virtual ~Octagon() = default;
+
   friend bool operator==(const Octagon<T>& lhs, const Octagon<T>& rhs);
 
-  Point calculate_centre() const override;
+  Point<T> calculate_centre() const override;
   operator double() const override;
 
 private:

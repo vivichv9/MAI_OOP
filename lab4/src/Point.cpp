@@ -1,7 +1,7 @@
 #include "../include/Point.hpp"
 
 template <typename T>
-Point<T>::Point(const T& x, const T& y) : x(x), y(y) {}
+Point<T>::Point(const T& x, const T& y): x(x), y(y) {}
 
 template <typename T>
 void Point<T>::set_x(const T& x) noexcept {
@@ -29,6 +29,11 @@ T& Point<T>::get_y() noexcept {
 }
 
 template <typename T>
+const T& Point<T>::get_y() const noexcept {
+  return y;
+}
+
+template <typename T>
 double Point<T>::line_len(const Point<T>& p1, const Point<T>& p2) {
   double ox = p2.get_x() - p1.get_x();
   double oy = p2.get_y() - p1.get_y();
@@ -46,14 +51,14 @@ bool operator==(const Point<T>& lhs, const Point<T>& rhs) {
   return false;
 }
 
-template <typename T>
-std::ostream& operator<<(std::ostream& os, const Point<T>& rhs) {
+template <typename U>
+std::ostream& operator<<(std::ostream& os, const Point<U>& rhs) {
   os << '[' << rhs.x << ", " << rhs.y << ']';
   return os;
 }
 
-template <typename T>
-std::istream& operator>>(std::istream& is, Point<T>& rhs) {
+template <typename U>
+std::istream& operator>>(std::istream& is, Point<U>& rhs) {
   is >> rhs.x >> rhs.y;
   return is;
 }

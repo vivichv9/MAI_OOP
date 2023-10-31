@@ -57,7 +57,12 @@ Vector<T, Allocator>::Vector(const std::initializer_list<T>& lst) {
   T* new_arr = AllocTraits::allocate(alloc, lst.size() + 1);
 
   try {
-    std::uninitialized_copy(lst.begin(), lst.end(), new_arr);
+    if (std::is_copy_constructible<T>::value) {
+      std::uninitialized_copy(lst.begin(), lst.end(), new_arr);
+    } else {
+      std::uninitialized_move(lst.begin(), lst.end(), new_arr);
+    }
+
   } catch(...) {
     delete[] new_arr;
     throw;
@@ -198,7 +203,7 @@ void Vector<T, Allocator>::push_back(const T& data) {
     reserve(2 * size);
   }
 
-  AllocTraits::construct(alloc, array + size, std::move_if_noexcept(data));
+  AllocTraits::construct(alloc, array + size, std::move(data));
   ++size;
 }
 
@@ -209,7 +214,7 @@ void Vector<T, Allocator>::emplace_back(const Args& ...args) {
     reserve(2 * size);
   }
 
-  AllocTraits::construct(alloc, array + size, std::forward(args...));
+  AllocTraits::construct(alloc, array + size, std::move_if_noexcept(args...));
   ++size;
 }
 

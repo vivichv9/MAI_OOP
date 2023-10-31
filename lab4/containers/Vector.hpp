@@ -26,7 +26,7 @@ public:
   Vector(Vector<T, Allocator>&&) noexcept;
   Vector<T, Allocator>& operator=(const Vector<T, Allocator>&);
   Vector<T, Allocator>& operator=(Vector<T, Allocator>&&) noexcept;
-  ~Vector();
+  virtual ~Vector();
 
   size_t get_size() const;
   size_t get_capacity() const;
