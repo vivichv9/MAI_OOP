@@ -22,7 +22,7 @@ public:
   const T& get_x() const noexcept;
   const T& get_y() const noexcept;
   
-  friend bool operator==(const Point<T>& lhs, const Point<T>& rhs);
+  bool operator==(const Point<T>& rhs) const;
 
   static double line_len(const Point<T>& x, const Point<T>& y);
 

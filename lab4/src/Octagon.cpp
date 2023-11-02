@@ -85,14 +85,14 @@ Octagon<T>::operator double() const {
 }
 
 template <typename T>
-bool operator==(const Octagon<T>& lhs, const Octagon<T>& rhs) {
+bool Octagon<T>::operator==(const Octagon<T>& rhs) const {
   bool flag = false;
 
-  for (size_t i = 0; i < lhs.coordinates.get_size(); ++i) {
+  for (size_t i = 0; i < this->coordinates.get_size(); ++i) {
     flag = false;
 
     for (size_t j = 0; i < rhs.coordinates.get_size(); ++i) {
-      if (lhs.coordinates[i] == rhs.coordinates[j]) {
+      if (this->coordinates[i] == rhs.coordinates[j]) {
         flag = true;
         continue;
       }

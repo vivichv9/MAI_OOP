@@ -16,7 +16,7 @@ Vector<T, Allocator>::Vector(const Vector<T, Allocator>& vec): capacity(vec.capa
     std::uninitialized_copy(vec.begin(), vec.end(), new_arr);
 
   } catch(...) {
-    delete[] new_arr;
+    AllocTraits::deallocate(alloc, new_arr, capacity);
     throw;
   }
   
@@ -64,7 +64,7 @@ Vector<T, Allocator>::Vector(const std::initializer_list<T>& lst) {
     }
 
   } catch(...) {
-    delete[] new_arr;
+    AllocTraits::deallocate(alloc, new_arr, lst.size() + 1);
     throw;
   }
 
@@ -89,7 +89,7 @@ Vector<T, Allocator>& Vector<T, Allocator>::operator=(const Vector<T, Allocator>
   try {
     std::uninitialized_copy(vec.begin(), vec.end(), array);
   } catch(...) {
-    delete[] array;
+    AllocTraits::deallocate(alloc, array, capacity);
     throw;
   }
 
@@ -171,7 +171,7 @@ void Vector<T, Allocator>::reserve(size_t n) {
   try {
     std::uninitialized_copy(begin(), end(), newArr);
   } catch(...) {
-    delete[] newArr;
+    AllocTraits::deallocate(alloc, newArr, n + 1);
     throw;
   }
 

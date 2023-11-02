@@ -43,8 +43,8 @@ double Point<T>::line_len(const Point<T>& p1, const Point<T>& p2) {
 }
 
 template <typename T>
-bool operator==(const Point<T>& lhs, const Point<T>& rhs) {
-  if (lhs.get_x() == rhs.get_x() && lhs.get_y() == rhs.get_y()) {
+bool Point<T>::operator==(const Point<T>& rhs) const {
+  if (get_x() == rhs.get_x() && get_y() == rhs.get_y()) {
     return true;
   }
 

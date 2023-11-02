@@ -10,10 +10,13 @@ public:
   Triangle(const Point<T>& p1, const Point<T>& p2, const Point<T>& p3);
   virtual ~Triangle() = default;
 
-  friend std::ostream& operator<<(std::ostream& os, Triangle<T>& rhs);
-  friend std::istream& operator>>(std::istream& os, Triangle<T>& rhs);
+  template <typename U>
+  friend std::ostream& operator<<(std::ostream& os, Triangle<U>& rhs);
+  
+  template <typename U>
+  friend std::istream& operator>>(std::istream& os, Triangle<U>& rhs);
 
-  friend bool operator==(const Triangle<T>& lhs, const Triangle<T>& rhs);
+  bool operator==(const Triangle<T>& rhs) const;
 
   Point<T> calculate_centre() const override;
   operator double() const override;

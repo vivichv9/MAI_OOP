@@ -60,7 +60,7 @@ Point<T> Square<T>::calculate_centre() const {
 }
 
 template <typename T>
-bool Square<T>::operator==(const Square<T>& rhs) {
+bool Square<T>::operator==(const Square<T>& rhs) const {
   bool flag = false;
 
   for (size_t i = 0; i < this->coordinates.get_size(); ++i) {

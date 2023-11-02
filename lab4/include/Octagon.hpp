@@ -20,7 +20,7 @@ public:
 
   virtual ~Octagon() = default;
 
-  friend bool operator==(const Octagon<T>& lhs, const Octagon<T>& rhs);
+  bool operator==(const Octagon<T>& rhs) const;
 
   Point<T> calculate_centre() const override;
   operator double() const override;

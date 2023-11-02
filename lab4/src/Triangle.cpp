@@ -58,14 +58,14 @@ Point<T> Triangle<T>::calculate_centre() const {
 }
 
 template <typename T>
-bool operator==(const Triangle<T>& lhs, const Triangle<T>& rhs) {
+bool Triangle<T>::operator==(const Triangle<T>& rhs) const {
   bool flag = false;
 
-  for (size_t i = 0; i < lhs.coordinates.get_size(); ++i) {
+  for (size_t i = 0; i < this->coordinates.get_size(); ++i) {
     flag = false;
 
     for (size_t j = 0; i < rhs.coordinates.get_size(); ++i) {
-      if (lhs.coordinates[i] == rhs.coordinates[j]) {
+      if (this->coordinates[i] == rhs.coordinates[j]) {
         flag = true;
         continue;
       }
