@@ -1,7 +1,7 @@
 #ifndef TRIANGLE_HPP_INCLUDED
 #define TRIANGLE_HPP_INCLUDED
 
-#include "interfaces/Figure.hpp"
+#include "Figure.h"
 
 template <typename T>
 class Triangle : public Figure<T> {

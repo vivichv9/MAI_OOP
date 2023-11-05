@@ -1,16 +1,15 @@
-cmake_minimum_required (VERSION 3.2)
+cmake_minimum_required (VERSION 3.22)
 
 add_library(${PROJECT_NAME}_vector 
-                Vector.cpp
-                Vector.hpp)
+                src/Vector.cpp)
 
 set_target_properties(${PROJECT_NAME}_vector PROPERTIES
                 CXX_STANDARD 20
-                CXX_STANDARD_REQUIRED YES
-                CXX_EXTENSIONS NO)
+                CXX_STANDARD_REQUIRED ON
+                CXX_EXTENSIONS ON)
 
 target_include_directories(${PROJECT_NAME}_vector PRIVATE
-              "${PROJECT_SOURCE_DIR}/containers")
+              "${PROJECT_SOURCE_DIR}/containers/include")
 
-target_compile_options(${PROJECT_NAME}_vector PUBLIC "-Wall")
-
+target_compile_options(${PROJECT_NAME}_vector PRIVATE "-Wall")
+  

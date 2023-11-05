@@ -1,7 +1,7 @@
 #ifndef SQUARE_HPP_INCLUDED
 #define SQUARE_HPP_INCLUDED
 
-#include "interfaces/Figure.hpp"
+#include "Figure.h"
 
 template <typename T>
 class Square : public Figure<T> {

@@ -1,4 +1,4 @@
-#include "../include/Octagon.hpp"
+#include "Octagon.h"
 
 template <typename T>
 bool Octagon<T>::validate(    

@@ -2,8 +2,8 @@
 #define POINT_HPP_INCLUDED 
 
 #include <cmath>
-#include <ostream>
 #include <istream>
+#include <ostream>
 
 template <typename T>
 class Point {
@@ -13,6 +13,7 @@ private:
 
 public:
   Point(const T& x, const T& y);
+  Point(T& x, T& y);
   virtual ~Point() = default;
 
   void set_x(const T& x) noexcept;

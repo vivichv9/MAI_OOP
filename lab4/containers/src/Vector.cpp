@@ -1,4 +1,6 @@
-#include "Vector.hpp"
+#include "Vector.h"
+
+using namespace mystd;
 
 template <typename T, typename Allocator>
 Vector<T, Allocator>::Vector(): capacity(1), size(0), array(AllocTraits::allocate(alloc, 1)) {}

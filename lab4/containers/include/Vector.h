@@ -5,8 +5,10 @@
 #include <cstring>
 #include <memory>
 
+namespace mystd {
+
 template <typename T, typename Allocator = std::allocator<T>>
-class Vector {
+class Vector final {
   using AllocTraits = std::allocator_traits<Allocator>;
 
 private:
@@ -26,7 +28,7 @@ public:
   Vector(Vector<T, Allocator>&&) noexcept;
   Vector<T, Allocator>& operator=(const Vector<T, Allocator>&);
   Vector<T, Allocator>& operator=(Vector<T, Allocator>&&) noexcept;
-  virtual ~Vector();
+  ~Vector();
 
   size_t get_size() const;
   size_t get_capacity() const;
@@ -81,4 +83,5 @@ public:
   };
 };
 
+}
 #endif // VECTOR_HPP_INCLUDED

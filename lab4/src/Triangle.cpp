@@ -1,4 +1,4 @@
-#include "../include/Triangle.hpp"
+#include "Triangle.h"
 
 template <typename T>
 bool Triangle<T>::validate(const Point<T>& p1, const Point<T>& p2, const Point<T>& p3) noexcept {

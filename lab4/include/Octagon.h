@@ -1,7 +1,7 @@
 #ifndef OCTAGON_HPP_INCLUDED
 #define OCTAGON_HPP_INCLUDED
 
-#include "interfaces/Figure.hpp"
+#include "Figure.h"
 
 template <typename T>
 class Octagon : public Figure<T> {

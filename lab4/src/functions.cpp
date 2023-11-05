@@ -1,6 +1,6 @@
-#include "../include/functions.hpp"
+#include "functions.h"
 
-double calculate_all_area(Vector<std::shared_ptr<Figure<double>>>& vec) {
+inline double calculate_all_area(mystd::Vector<std::shared_ptr<Figure<double>>>& vec) {
   double area = 0;
   for (auto& el : vec) {
     area += static_cast<double>(*el);
@@ -9,7 +9,7 @@ double calculate_all_area(Vector<std::shared_ptr<Figure<double>>>& vec) {
   return area;
 }
 
-void print_all_areas(Vector<std::shared_ptr<Figure<double>>>& vec) {
+inline void print_all_areas(mystd::Vector<std::shared_ptr<Figure<double>>>& vec) {
   std::cout << "areas of all figures: " << std::endl;
   
   for (auto& el : vec) {
@@ -19,7 +19,7 @@ void print_all_areas(Vector<std::shared_ptr<Figure<double>>>& vec) {
   std::cout << std::endl;
 }
 
-void print_all_centres(Vector<std::shared_ptr<Figure<double>>>& vec) {
+inline void print_all_centres(mystd::Vector<std::shared_ptr<Figure<double>>>& vec) {
   std::cout << "centres of all figures: " << std::endl;
 
   for (auto& el : vec) {
