@@ -2,12 +2,14 @@
 #define LIST_H_INCLUDED
 
 #include <memory>
+#include <iostream>
 
 namespace mystd {
 
 template <typename T, typename Allocator = std::allocator<T>>
 class list final {
 public:
+  class iterator;
   using value_type = T;
   using allocator_type = Allocator;
   using size_type = size_t;
@@ -28,24 +30,23 @@ private:
   size_type size = 0;
 
 public:
-  class iterator;
+  using pointer = typename AllocTraits::pointer;
+  using const_pointer = typename AllocTraits::const_pointer;
 
-  using pointer = AllocTraits::pointer;
-  using const_pointer =	AllocTraits::const_pointer;
-
+  list() = default;
   list(std::initializer_list<value_type>& lst);
   list(const allocator_type& alloc);
-  list(const_reference obj);
   list(const list<value_type, allocator_type>& rhs);
   list(list<value_type, allocator_type>&& rhs) noexcept;
-  list& operator=(const list<value_type, allocator_type>& rhs);
-  list& operator=(list<value_type, allocator_type>&& rhs) noexcept;
+  list<value_type, allocator_type>& operator=(const list<value_type, allocator_type>& rhs);
+  list<value_type, allocator_type>& operator=(list<value_type, allocator_type>&& rhs) noexcept;
   ~list();
 
   bool operator==(const list<value_type, allocator_type>& rhs) const noexcept;
   bool operator!=(const list<value_type, allocator_type>& rhs) const noexcept;
   bool empty() const;
-  bool max_size() const;
+
+  size_type max_size() const;
 
   reference front();
   const_reference front() const;
@@ -56,8 +57,15 @@ public:
   void pop_back();
   void pop_front();
 
+  reference operator[](size_type index);
+  const_reference operator[](size_type index) const;
+
+  iterator before_begin();
+  const iterator cbefore_begin() const;
+
   iterator begin();
   const iterator cbegin() const;
+
   iterator end();
   const iterator cend() const;
 
@@ -70,6 +78,7 @@ private:
     Node(const T& value, Node* next);
   };
 
+public:
   class iterator {
   private:
     Node* ptr;
@@ -85,16 +94,11 @@ private:
 
     iterator& operator++();
     const iterator& operator++() const;
-    iterator& operator--();
-    const iterator& operator--() const;
 
     iterator& operator+=(size_t rhs);
     const iterator& operator+=(size_t rhs) const;
-    iterator& operator-=(size_t rhs);
-    const iterator& operator-=(size_t rhs) const;
 
     iterator operator+(size_t rhs) const;
-    iterator operator-(size_t rhs) const;
     
     reference operator*();
     const reference operator*() const;
@@ -105,6 +109,5 @@ private:
 };
   
 } // namespace mystd
-
 
 #endif // LIST_H_INCLUDED
