@@ -67,17 +67,17 @@ bool mystd::list<T, Allocator>::empty() const {
 }
 
 template <typename T, typename Allocator>
-mystd::list<T, Allocator>::size_type mystd::list<T, Allocator>::max_size() const {
+typename mystd::list<T, Allocator>::size_type mystd::list<T, Allocator>::max_size() const {
   return size;
 }
 
 template <typename T, typename Allocator>
-mystd::list<T, Allocator>::reference mystd::list<T, Allocator>::front() {
+typename mystd::list<T, Allocator>::reference mystd::list<T, Allocator>::front() {
   // TODO
 }
 
 template <typename T, typename Allocator>
-mystd::list<T, Allocator>::const_reference mystd::list<T, Allocator>::front() const {
+typename mystd::list<T, Allocator>::const_reference mystd::list<T, Allocator>::front() const {
   // TODO
 }
 
@@ -107,42 +107,42 @@ void mystd::list<T, Allocator>::pop_front() {
 }
 
 template <typename T, typename Allocator>
-mystd::list<T, Allocator>::reference mystd::list<T, Allocator>::operator[](size_type index) {
+typename mystd::list<T, Allocator>::reference mystd::list<T, Allocator>::operator[](size_type index) {
   // TODO
 }
 
 template <typename T, typename Allocator>
-mystd::list<T, Allocator>::const_reference mystd::list<T, Allocator>::operator[](size_type index) const {
+typename mystd::list<T, Allocator>::const_reference mystd::list<T, Allocator>::operator[](size_type index) const {
   // TODO
 }
 
 template <typename T, typename Allocator>
-mystd::list<T, Allocator>::iterator mystd::list<T, Allocator>::before_begin() {
+typename mystd::list<T, Allocator>::iterator mystd::list<T, Allocator>::before_begin() {
   // TODO
 }
 
 template <typename T, typename Allocator>
-const mystd::list<T, Allocator>::iterator mystd::list<T, Allocator>::cbefore_begin() const {
+const typename mystd::list<T, Allocator>::iterator mystd::list<T, Allocator>::cbefore_begin() const {
   // TODO
 }
 
 template <typename T, typename Allocator>
-mystd::list<T, Allocator>::iterator mystd::list<T, Allocator>::begin() {
+typename mystd::list<T, Allocator>::iterator mystd::list<T, Allocator>::begin() {
   // TODO
 }
 
 template <typename T, typename Allocator>
-const mystd::list<T, Allocator>::iterator mystd::list<T, Allocator>::cbegin() const {
+const typename mystd::list<T, Allocator>::iterator mystd::list<T, Allocator>::cbegin() const {
   // TODO
 }
 
 template <typename T, typename Allocator>
-mystd::list<T, Allocator>::iterator mystd::list<T, Allocator>::end() {
+typename mystd::list<T, Allocator>::iterator mystd::list<T, Allocator>::end() {
   // TODO
 }
 
 template <typename T, typename Allocator>
-const mystd::list<T, Allocator>::iterator mystd::list<T, Allocator>::cend() const {
+const typename mystd::list<T, Allocator>::iterator mystd::list<T, Allocator>::cend() const {
   // TODO
 }
 
@@ -187,22 +187,22 @@ typename mystd::list<T, Allocator>::iterator mystd::list<T, Allocator>::iterator
 }
 
 template <typename T, typename Allocator>
-mystd::list<T, Allocator>::iterator::reference mystd::list<T, Allocator>::iterator::operator*() {
+typename mystd::list<T, Allocator>::iterator::reference mystd::list<T, Allocator>::iterator::operator*() {
+  // TODO
+}
+
+// template <typename T, typename Allocator>
+// const typename mystd::list<T, Allocator>::iterator::reference mystd::list<T, Allocator>::iterator::operator*() const {
+//   // TODO
+// }
+
+template <typename T, typename Allocator>
+typename mystd::list<T, Allocator>::iterator::pointer mystd::list<T, Allocator>::iterator::operator->() {
   // TODO
 }
 
 template <typename T, typename Allocator>
-const mystd::list<T, Allocator>::iterator::reference mystd::list<T, Allocator>::iterator::operator*() const {
-  // TODO
-}
-
-template <typename T, typename Allocator>
-mystd::list<T, Allocator>::iterator::pointer mystd::list<T, Allocator>::iterator::operator->() {
-  // TODO
-}
-
-template <typename T, typename Allocator>
-const mystd::list<T, Allocator>::iterator::pointer mystd::list<T, Allocator>::iterator::operator->() const {
+const typename mystd::list<T, Allocator>::iterator::pointer mystd::list<T, Allocator>::iterator::operator->() const {
   // TODO
 }
 
