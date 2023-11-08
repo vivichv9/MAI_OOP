@@ -6,23 +6,24 @@
 
 namespace mystd {
 
-template <typename T, size_t CAP = 1>
+template <typename T, size_t CAP>
 class allocator {
 private:
   std::vector<T> data;
+  size_t data_controller; 
 
 public:
+  allocator();
   T* allocate(size_t n);
   void deallocate(T* ptr, size_t n);
 
   template <typename... Args>
-  void construct(Args... args);
+  void construct(T* ptr, Args... args);
 
-  template <typename... Args>
-  void destroy(T* ptr, Args... args);
+  void destroy(T* ptr);
 };
 
 } // namespace mystd
 
 
-#endif
+#endif // ALLOCATOR_H_INCLUDED
