@@ -3,6 +3,7 @@
 
 #include <memory>
 #include <iostream>
+#include <initializer_list>
 
 namespace mystd {
 
@@ -13,8 +14,8 @@ public:
   using value_type = T;
   using allocator_type = Allocator;
   using size_type = size_t;
-  using reference = value_type&;
-  using const_reference = const reference;
+  using reference = T&;
+  using const_reference = const T&;
 
 private:
   struct Node;
@@ -26,7 +27,6 @@ private:
 
   node_pointer head = nullptr;
   node_pointer block_elem_ptr = AllocTraits::allocate(alloc, 1);
-  node_pointer before_begin_ptr = AllocTraits::allocate(alloc, 1);
   size_type size = 0;
 
 public:
@@ -34,7 +34,7 @@ public:
   using const_pointer = typename AllocTraits::const_pointer;
 
   list() = default;
-  list(std::initializer_list<value_type>& lst);
+  list(std::initializer_list<T>& lst) noexcept;
   list(const allocator_type& alloc);
   list(const list<value_type, allocator_type>& rhs);
   list(list<value_type, allocator_type>&& rhs) noexcept;
@@ -52,16 +52,10 @@ public:
   const_reference front() const;
 
   void clear();
-  void push_back(const_reference obj);
+  void insert_after(const_reference obj, const iterator& it);
+  void erase_after(const_reference obj, const iterator& it);
   void push_front(const_reference obj);
-  void pop_back();
   void pop_front();
-
-  reference operator[](size_type index);
-  const_reference operator[](size_type index) const;
-
-  iterator before_begin();
-  const iterator cbefore_begin() const;
 
   iterator begin();
   const iterator cbegin() const;
@@ -101,10 +95,13 @@ public:
     iterator operator+(size_t rhs) const;
     
     reference operator*();
-    const reference operator*() const;
+    const_reference operator*() const;
 
     pointer operator->();
     const pointer operator->() const;
+
+    bool operator==(const iterator& rhs) const;
+    bool operator!=(const iterator& rhs) const;
   };
 };
   

@@ -8,7 +8,6 @@ file(GLOB_RECURSE SOURCES LIST_DIRECTORIES FALSE ${PROJECT_SOURCE_DIR}/src/*.cpp
 
 # Project main lib
 add_library(${PROJECT_NAME}_lib ${SOURCES})
-# add_library(${PROJECT_NAME}_lib src/allocator.cpp src/list.cpp)
 
 set_target_properties(${PROJECT_NAME}_lib PROPERTIES 
                       CXX_STANDARD 20

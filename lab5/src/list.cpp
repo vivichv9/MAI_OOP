@@ -1,27 +1,46 @@
 #include "list.h"
 
 template <typename T, typename Allocator>
-mystd::list<T, Allocator>::list(std::initializer_list<value_type>& lst) {
-  // TODO
+mystd::list<T, Allocator>::list(std::initializer_list<value_type>& lst) noexcept {
+  head = block_elem_ptr;
+
+  auto last = lst.end() - 1;
+  for (auto it = last; it != lst.begin(); --it) {
+    push_front(*it);
+  }
 }
 
 template <typename T, typename Allocator>
 mystd::list<T, Allocator>::list(const allocator_type& alloc): alloc(alloc) {}
 
 template <typename T, typename Allocator>
-mystd::list<T, Allocator>::list(const list<value_type, allocator_type>& rhs): alloc(rhs.alloc), block_elem_ptr(AllocTraits::allocate(alloc, 1)), before_begin_ptr(AllocTraits::allocate(alloc, 1)) {
- // TODO
+mystd::list<T, Allocator>::list(const list<value_type, allocator_type>& rhs): alloc(rhs.alloc), block_elem_ptr(AllocTraits::allocate(alloc, 1)) {
+  head = block_elem_ptr;
+  size = rhs.size;
+
+  if (size != 0) {
+    Node* ptr = AllocTraits::allocate(alloc, rhs.size);
+
+    head = ptr;
+    for (auto it = rhs.cbegin(); it != rhs.cend(); ++it) {
+      std::cout << *it << std::endl;
+      AllocTraits::construct(alloc, ptr++, *it, ptr);
+    }
+
+    --ptr;
+    ptr = block_elem_ptr;
+  }
 }
 
 template <typename T, typename Allocator>
-mystd::list<T, Allocator>::list(list<value_type, allocator_type>&& rhs) noexcept {
+mystd::list<T, Allocator>::list(list<value_type, allocator_type>&& rhs) noexcept : block_elem_ptr(nullptr)  {
   alloc = std::move(rhs.alloc);
 
   head = rhs.head;
-  rhs.head = nullptr;
+  rhs.head = rhs.block_elem_ptr;
 
-  block_elem_ptr = AllocTraits::allocate(alloc, 1);
-  before_begin_ptr = AllocTraits::allocate(alloc, 1);
+  block_elem_ptr = rhs.block_elem_ptr;
+  rhs.block_elem_ptr = nullptr;
 
   size = rhs.size;
   rhs.size = 0;
@@ -29,7 +48,25 @@ mystd::list<T, Allocator>::list(list<value_type, allocator_type>&& rhs) noexcept
 
 template <typename T, typename Allocator>
 mystd::list<T, Allocator>& mystd::list<T, Allocator>::operator=(const list<value_type, allocator_type>& rhs) {
-  // TODO
+  clear();
+
+  head = block_elem_ptr;
+  size = rhs.size;
+
+  if (size != 0) {
+    Node* ptr = AllocTraits::allocate(alloc, rhs.size);
+
+    head = ptr;
+    for (auto it = rhs.cbegin(); it != rhs.cend(); ++it) {
+      std::cout << *it << std::endl;
+      AllocTraits::construct(alloc, ptr++, *it, ptr);
+    }
+
+    --ptr;
+    ptr = block_elem_ptr;
+  }
+
+  return *this;
 }
 
 template <typename T, typename Allocator>
@@ -43,22 +80,37 @@ mystd::list<T, Allocator>& mystd::list<T, Allocator>::operator=(list<value_type,
 
   size = rhs.size;
   rhs.size = 0;
+
+  return *this;
 }
 
 template <typename T, typename Allocator>
 mystd::list<T, Allocator>::~list() {
-  std::cout << "magic" << std::endl;
-  // TODO
+  clear();
+  AllocTraits::deallocate(alloc, block_elem_ptr, 1);
 }
 
 template <typename T, typename Allocator>
 bool mystd::list<T, Allocator>::operator==(const list<value_type, allocator_type>& rhs) const noexcept {
-  // TODO
+  if (size != rhs.size) {
+    return false;
+  }
+
+  auto it_rhs = rhs.begin();
+  for (auto it = begin(); it != end; ++it) {
+    if (*it != *it_rhs) {
+      return false;
+    }
+
+    ++it_rhs;
+  }
+
+  return true;
 }
 
 template <typename T, typename Allocator>
 bool mystd::list<T, Allocator>::operator!=(const list<value_type, allocator_type>& rhs) const noexcept {
-  // TODO
+  return !(*this == rhs);
 }
 
 template <typename T, typename Allocator>
@@ -73,136 +125,151 @@ typename mystd::list<T, Allocator>::size_type mystd::list<T, Allocator>::max_siz
 
 template <typename T, typename Allocator>
 typename mystd::list<T, Allocator>::reference mystd::list<T, Allocator>::front() {
-  // TODO
+  if (size != 0) {
+    return head->obj;
+  }
+
+  throw std::range_error("List is empty!");
 }
 
 template <typename T, typename Allocator>
 typename mystd::list<T, Allocator>::const_reference mystd::list<T, Allocator>::front() const {
-  // TODO
+  if (size != 0) {
+    return head->obj;
+  }
+
+  throw std::range_error("List is empty!");
 }
 
 template <typename T, typename Allocator>
 void mystd::list<T, Allocator>::clear() {
-  // TODO
-}
+  for (size_t i = 0; i < size; ++i) {
+    Node* temp = head;
+    head = head->next;
 
-template <typename T, typename Allocator>
-void mystd::list<T, Allocator>::push_back(const_reference obj) {
-  // TODO
+    AllocTraits::destroy(alloc, temp);
+    AllocTraits::deallocate(alloc, temp, 1);
+  }
+
+  head = block_elem_ptr;
+  size = 0;
 }
 
 template <typename T, typename Allocator>
 void mystd::list<T, Allocator>::push_front(const_reference obj) {
-  // TODO
-}
-
-template <typename T, typename Allocator>
-void mystd::list<T, Allocator>::pop_back() {
-  // TODO
+  ++size;
+  Node* ptr = AllocTraits::allocate(alloc, 1);
+  AllocTraits::construct(alloc, ptr, obj, head);
+  head = ptr;
 }
 
 template <typename T, typename Allocator>
 void mystd::list<T, Allocator>::pop_front() {
-  // TODO
-}
+  if (size == 0) {
+    throw std::range_error("List is empty");
+  }
+  
+  Node* temp_head = head;
+  head = head->next;
 
-template <typename T, typename Allocator>
-typename mystd::list<T, Allocator>::reference mystd::list<T, Allocator>::operator[](size_type index) {
-  // TODO
-}
-
-template <typename T, typename Allocator>
-typename mystd::list<T, Allocator>::const_reference mystd::list<T, Allocator>::operator[](size_type index) const {
-  // TODO
-}
-
-template <typename T, typename Allocator>
-typename mystd::list<T, Allocator>::iterator mystd::list<T, Allocator>::before_begin() {
-  // TODO
-}
-
-template <typename T, typename Allocator>
-const typename mystd::list<T, Allocator>::iterator mystd::list<T, Allocator>::cbefore_begin() const {
-  // TODO
+  AllocTraits::destroy(alloc, temp_head);
+  AllocTraits::deallocate(alloc, temp_head, 1);
+  --size;
 }
 
 template <typename T, typename Allocator>
 typename mystd::list<T, Allocator>::iterator mystd::list<T, Allocator>::begin() {
-  // TODO
+  return iterator(head);
 }
 
 template <typename T, typename Allocator>
 const typename mystd::list<T, Allocator>::iterator mystd::list<T, Allocator>::cbegin() const {
-  // TODO
+  return iterator(head);
 }
 
 template <typename T, typename Allocator>
 typename mystd::list<T, Allocator>::iterator mystd::list<T, Allocator>::end() {
-  // TODO
+  return iterator(block_elem_ptr);
 }
 
 template <typename T, typename Allocator>
 const typename mystd::list<T, Allocator>::iterator mystd::list<T, Allocator>::cend() const {
-  // TODO
+  return iterator(block_elem_ptr);
 }
 
 template <typename T, typename Allocator>
-mystd::list<T, Allocator>::Node::Node(const T& value) {
-  // TODO
-}
+mystd::list<T, Allocator>::Node::Node(const T& value) : obj(value) {}
 
 template <typename T, typename Allocator>
-mystd::list<T, Allocator>::Node::Node(const T& value, Node* next) {
-  // TODO
-}
+mystd::list<T, Allocator>::Node::Node(const T& value, Node* next) : obj(value), next(next) {}
 
 template <typename T, typename Allocator>
-mystd::list<T, Allocator>::iterator::iterator(Node* ptr) {
-  // TODO
-}
+mystd::list<T, Allocator>::iterator::iterator(Node* ptr) : ptr(ptr) {}
 
 template <typename T, typename Allocator>
 typename mystd::list<T, Allocator>::iterator& mystd::list<T, Allocator>::iterator::operator++() {
-  // TODO
+  this->ptr = this->ptr->next;
+  return *this;
 }
 
 template <typename T, typename Allocator>
 const typename mystd::list<T, Allocator>::iterator& mystd::list<T, Allocator>::iterator::operator++() const {
-  // TODO
+  this->ptr = this->ptr->next;
+  return *this;
 }
 
 template <typename T, typename Allocator>
 typename mystd::list<T, Allocator>::iterator& mystd::list<T, Allocator>::iterator::operator+=(size_t rhs) {
-  // TODO
+  for (size_t i = 0; i < rhs; ++i) {
+    ++*this;
+  }
+
+  return *this;
 }
 
 template <typename T, typename Allocator>
 const typename mystd::list<T, Allocator>::iterator& mystd::list<T, Allocator>::iterator::operator+=(size_t rhs) const {
-  // TODO
+  for (size_t i = 0; i < rhs; ++i) {
+    ++*this;
+  }
+
+  return *this;
 }
 
 template <typename T, typename Allocator>
 typename mystd::list<T, Allocator>::iterator mystd::list<T, Allocator>::iterator::operator+(size_t rhs) const {
-  // TODO
+  iterator temp = *this;
+  temp += rhs;
+
+  return temp;
 }
 
 template <typename T, typename Allocator>
-typename mystd::list<T, Allocator>::iterator::reference mystd::list<T, Allocator>::iterator::operator*() {
-  // TODO
+typename mystd::list<T, Allocator>::reference mystd::list<T, Allocator>::iterator::operator*() {
+  return this->ptr->obj;
 }
 
-// template <typename T, typename Allocator>
-// const typename mystd::list<T, Allocator>::iterator::reference mystd::list<T, Allocator>::iterator::operator*() const {
-//   // TODO
-// }
+template <typename T, typename Allocator>
+typename mystd::list<T, Allocator>::const_reference mystd::list<T, Allocator>::iterator::operator*() const {
+  return this->ptr->obj;
+}
 
 template <typename T, typename Allocator>
 typename mystd::list<T, Allocator>::iterator::pointer mystd::list<T, Allocator>::iterator::operator->() {
-  // TODO
+  return this->ptr;
 }
 
 template <typename T, typename Allocator>
 const typename mystd::list<T, Allocator>::iterator::pointer mystd::list<T, Allocator>::iterator::operator->() const {
-  // TODO
+  return this->ptr;
 }
 
+template <typename T, typename Allocator>
+bool mystd::list<T, Allocator>::iterator::operator==(const iterator& rhs) const {
+  return ptr == rhs.ptr ? true : false;
+}
+
+template <typename T, typename Allocator>
+bool mystd::list<T, Allocator>::iterator::operator!=(const iterator& rhs) const {
+  return !(*this == rhs);
+}
