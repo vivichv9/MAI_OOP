@@ -1,13 +1,9 @@
 #include "list.h"
 
 template <typename T, typename Allocator>
-mystd::list<T, Allocator>::list(std::initializer_list<value_type>& lst) noexcept {
+mystd::list<T, Allocator>::list() {
   head = block_elem_ptr;
-
-  auto last = lst.end() - 1;
-  for (auto it = last; it != lst.begin(); --it) {
-    push_front(*it);
-  }
+  size = 0;
 }
 
 template <typename T, typename Allocator>
@@ -23,11 +19,10 @@ mystd::list<T, Allocator>::list(const list<value_type, allocator_type>& rhs): al
 
     head = ptr;
     for (auto it = rhs.cbegin(); it != rhs.cend(); ++it) {
-      std::cout << *it << std::endl;
       AllocTraits::construct(alloc, ptr++, *it, ptr);
     }
 
-    --ptr;
+    // --ptr;
     ptr = block_elem_ptr;
   }
 }
@@ -37,7 +32,7 @@ mystd::list<T, Allocator>::list(list<value_type, allocator_type>&& rhs) noexcept
   alloc = std::move(rhs.alloc);
 
   head = rhs.head;
-  rhs.head = rhs.block_elem_ptr;
+  rhs.head = nullptr;
 
   block_elem_ptr = rhs.block_elem_ptr;
   rhs.block_elem_ptr = nullptr;
@@ -58,7 +53,6 @@ mystd::list<T, Allocator>& mystd::list<T, Allocator>::operator=(const list<value
 
     head = ptr;
     for (auto it = rhs.cbegin(); it != rhs.cend(); ++it) {
-      std::cout << *it << std::endl;
       AllocTraits::construct(alloc, ptr++, *it, ptr);
     }
 
@@ -72,11 +66,15 @@ mystd::list<T, Allocator>& mystd::list<T, Allocator>::operator=(const list<value
 template <typename T, typename Allocator>
 mystd::list<T, Allocator>& mystd::list<T, Allocator>::operator=(list<value_type, allocator_type>&& rhs) noexcept {
   clear();
+  AllocTraits::deallocate(alloc, block_elem_ptr, 1);
 
   alloc = std::move(rhs.alloc);
 
   head = rhs.head;
   rhs.head = nullptr;
+
+  block_elem_ptr = rhs.block_elem_ptr;
+  rhs.block_elem_ptr = nullptr;
 
   size = rhs.size;
   rhs.size = 0;
@@ -96,8 +94,8 @@ bool mystd::list<T, Allocator>::operator==(const list<value_type, allocator_type
     return false;
   }
 
-  auto it_rhs = rhs.begin();
-  for (auto it = begin(); it != end; ++it) {
+  auto it_rhs = rhs.cbegin();
+  for (auto it = cbegin(); it != cend(); ++it) {
     if (*it != *it_rhs) {
       return false;
     }
@@ -115,7 +113,7 @@ bool mystd::list<T, Allocator>::operator!=(const list<value_type, allocator_type
 
 template <typename T, typename Allocator>
 bool mystd::list<T, Allocator>::empty() const {
-  return static_cast<bool>(size);
+  return size > 0 ? false : true;
 }
 
 template <typename T, typename Allocator>
@@ -153,6 +151,41 @@ void mystd::list<T, Allocator>::clear() {
 
   head = block_elem_ptr;
   size = 0;
+}
+
+template <typename T, typename Allocator>
+void mystd::list<T, Allocator>::insert_after(const_reference obj, const iterator& it) {
+  if (size == 0) {
+    push_front(obj);
+    return;
+  }
+
+  mystd::list<T, Allocator>::iterator iter = this->begin();
+  for (; iter != it; ++iter) {}
+
+  Node* temp = iter.ptr->next;
+  iter.ptr->next = AllocTraits::allocate(alloc, obj, temp);
+}
+
+template <typename T, typename Allocator>
+void mystd::list<T, Allocator>::erase_after(const iterator& it) {
+  if (size == 0) {
+    throw std::range_error("List is empty");
+  }
+
+  if (it + 1 == end()) {
+    throw std::range_error("Erase after last element");
+  }
+
+  mystd::list<T, Allocator>::iterator iter = this->begin();
+  for (; iter != it; ++iter) {}
+
+  Node* temp = iter.ptr->next->next;
+
+  AllocTraits::destroy(alloc, iter.ptr->next);
+  AllocTraits::deallocate(alloc, iter.ptr->next, 1);
+
+  iter.ptr->next = temp;
 }
 
 template <typename T, typename Allocator>
@@ -246,7 +279,11 @@ typename mystd::list<T, Allocator>::iterator mystd::list<T, Allocator>::iterator
 
 template <typename T, typename Allocator>
 typename mystd::list<T, Allocator>::reference mystd::list<T, Allocator>::iterator::operator*() {
-  return this->ptr->obj;
+  if (this->ptr != nullptr) {
+    return this->ptr->obj;
+  }
+  
+  throw std::runtime_error("denomination of invalid iterator");
 }
 
 template <typename T, typename Allocator>

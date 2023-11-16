@@ -5,6 +5,8 @@
 #include <iostream>
 #include <initializer_list>
 
+#define DEBUG // DEBUG or RELEASE for test use DEBUG
+
 namespace mystd {
 
 template <typename T, typename Allocator = std::allocator<T>>
@@ -17,11 +19,18 @@ public:
   using reference = T&;
   using const_reference = const T&;
 
+#ifdef RELEASE
 private:
+#endif // ifdef RELEASE
+
+#ifdef DEBUG
+public:
+#endif // ifdef DEBUG
+
   struct Node;
   using node_pointer = Node*; 
 
-  using Alloc = typename std::allocator_traits<Allocator>::rebind_alloc<Node>;
+  using Alloc = typename std::allocator_traits<Allocator>::template rebind_alloc<Node>;
   Alloc alloc;
   using AllocTraits = std::allocator_traits<Alloc>;
 
@@ -33,8 +42,7 @@ public:
   using pointer = typename AllocTraits::pointer;
   using const_pointer = typename AllocTraits::const_pointer;
 
-  list() = default;
-  list(std::initializer_list<T>& lst) noexcept;
+  list();
   list(const allocator_type& alloc);
   list(const list<value_type, allocator_type>& rhs);
   list(list<value_type, allocator_type>&& rhs) noexcept;
@@ -53,7 +61,7 @@ public:
 
   void clear();
   void insert_after(const_reference obj, const iterator& it);
-  void erase_after(const_reference obj, const iterator& it);
+  void erase_after(const iterator& it);
   void push_front(const_reference obj);
   void pop_front();
 
@@ -63,7 +71,13 @@ public:
   iterator end();
   const iterator cend() const;
 
+#ifdef RELEASE
 private:
+#endif // ifdef RELEASE
+
+#ifdef DEBUG
+public:
+#endif // ifdef DEBUG
   struct Node {
     T obj;
     Node* next = nullptr;
@@ -107,4 +121,4 @@ public:
   
 } // namespace mystd
 
-#endif // LIST_H_INCLUDED
+#endif // ifndef LIST_H_INCLUDED
