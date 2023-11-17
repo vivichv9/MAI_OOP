@@ -159,12 +159,14 @@ void mystd::list<T, Allocator>::insert_after(const_reference obj, const iterator
     push_front(obj);
     return;
   }
-
+  
   mystd::list<T, Allocator>::iterator iter = this->begin();
   for (; iter != it; ++iter) {}
 
-  Node* temp = iter.ptr->next;
-  iter.ptr->next = AllocTraits::allocate(alloc, obj, temp);
+  Node* temp = iter.get_ptr()->next;
+  iter.get_ptr()->next = AllocTraits::allocate(alloc, 1);
+  AllocTraits::construct(alloc, iter.get_ptr()->next, obj, temp);
+  ++size;
 }
 
 template <typename T, typename Allocator>
@@ -177,15 +179,16 @@ void mystd::list<T, Allocator>::erase_after(const iterator& it) {
     throw std::range_error("Erase after last element");
   }
 
-  mystd::list<T, Allocator>::iterator iter = this->begin();
-  for (; iter != it; ++iter) {}
+  // mystd::list<T, Allocator>::iterator iter = this->begin();
+  // for (; iter != it; ++iter) {}
 
-  Node* temp = iter.ptr->next->next;
+  Node* temp = it.get_ptr()->next->next;
 
-  AllocTraits::destroy(alloc, iter.ptr->next);
-  AllocTraits::deallocate(alloc, iter.ptr->next, 1);
+  AllocTraits::destroy(alloc, it.get_ptr()->next);
+  AllocTraits::deallocate(alloc, it.get_ptr()->next, 1);
 
-  iter.ptr->next = temp;
+  it.get_ptr()->next = temp;
+  --size;
 }
 
 template <typename T, typename Allocator>
@@ -283,7 +286,7 @@ typename mystd::list<T, Allocator>::reference mystd::list<T, Allocator>::iterato
     return this->ptr->obj;
   }
   
-  throw std::runtime_error("denomination of invalid iterator");
+  throw std::runtime_error("dereferencing of invalid iterator");
 }
 
 template <typename T, typename Allocator>
@@ -293,12 +296,12 @@ typename mystd::list<T, Allocator>::const_reference mystd::list<T, Allocator>::i
 
 template <typename T, typename Allocator>
 typename mystd::list<T, Allocator>::iterator::pointer mystd::list<T, Allocator>::iterator::operator->() {
-  return this->ptr;
+  return &this->ptr->obj;
 }
 
 template <typename T, typename Allocator>
 const typename mystd::list<T, Allocator>::iterator::pointer mystd::list<T, Allocator>::iterator::operator->() const {
-  return this->ptr;
+  return &this->ptr->obj;
 }
 
 template <typename T, typename Allocator>
@@ -309,4 +312,9 @@ bool mystd::list<T, Allocator>::iterator::operator==(const iterator& rhs) const 
 template <typename T, typename Allocator>
 bool mystd::list<T, Allocator>::iterator::operator!=(const iterator& rhs) const {
   return !(*this == rhs);
+}
+
+template <typename T, typename Allocator>
+typename mystd::list<T, Allocator>::Node* mystd::list<T, Allocator>::iterator::get_ptr() const {
+  return ptr;
 }

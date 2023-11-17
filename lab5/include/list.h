@@ -116,6 +116,8 @@ public:
 
     bool operator==(const iterator& rhs) const;
     bool operator!=(const iterator& rhs) const;
+
+    Node* get_ptr() const;
   };
 };
   
