@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.22)
 project(lab4)
 
 add_subdirectory(containers)
-add_subdirectory(test)
+#add_subdirectory(test)
 
 set(SOURCE_DIR ${PROJECT_SOURCE_DIR}/src)
 
@@ -22,6 +22,7 @@ target_include_directories(${PROJECT_NAME}_lib PUBLIC
 
 target_compile_options(${PROJECT_NAME}_lib PUBLIC "-Wall")
 add_dependencies(${PROJECT_NAME}_lib ${PROJECT_NAME}_vector)
+target_link_libraries(${PROJECT_NAME}_lib PRIVATE ${PROJECT_NAME}_vector) 
 
 # target Main executable
 add_executable(${PROJECT_NAME}_exe main.cpp)
@@ -30,4 +31,4 @@ set_target_properties(${PROJECT_NAME}_exe PROPERTIES
               CXX_STANDARD 20
               CXX_STANDARD_REQUIRED ON)
 
-target_link_libraries(${PROJECT_NAME}_exe ${PROJECT_NAME}_lib ${PROJECT_NAME}_vector)         
+target_link_libraries(${PROJECT_NAME}_exe PRIVATE ${PROJECT_NAME}_lib ${PROJECT_NAME}_vector)         

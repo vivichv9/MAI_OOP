@@ -37,11 +37,11 @@ const T& Point<T>::get_y() const noexcept {
 }
 
 template <typename T>
-double Point<T>::line_len(const Point<T>& p1, const Point<T>& p2) {
-  double ox = p2.get_x() - p1.get_x();
-  double oy = p2.get_y() - p1.get_y();
+T Point<T>::line_len(const Point<T>& p1, const Point<T>& p2) {
+  T ox = p2.get_x() - p1.get_x();
+  T oy = p2.get_y() - p1.get_y();
 
-  double len = std::sqrt(std::pow(ox, 2) + std::pow(oy, 2));
+  T len = std::sqrt(std::pow(ox, 2) + std::pow(oy, 2));
   return len;
 }
 

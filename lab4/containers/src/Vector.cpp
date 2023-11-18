@@ -1,18 +1,16 @@
 #include "Vector.h"
 
-using namespace mystd;
+template <typename T, typename Allocator>
+mystd::Vector<T, Allocator>::Vector(): capacity(1), size(0), array(AllocTraits::allocate(alloc, 1)) {}
 
 template <typename T, typename Allocator>
-Vector<T, Allocator>::Vector(): capacity(1), size(0), array(AllocTraits::allocate(alloc, 1)) {}
+mystd::Vector<T, Allocator>::Vector(size_t capacity): capacity(capacity), size(0), array(AllocTraits::allocate(alloc, capacity + 1)) {}
 
 template <typename T, typename Allocator>
-Vector<T, Allocator>::Vector(size_t capacity): capacity(capacity), size(0), array(AllocTraits::allocate(alloc, capacity + 1)) {}
+mystd::Vector<T, Allocator>::Vector(Allocator& alloc): capacity(1), size(0), array(AllocTraits::allocate(alloc, 1)), alloc(alloc) {}
 
 template <typename T, typename Allocator>
-Vector<T, Allocator>::Vector(Allocator& alloc): capacity(1), size(0), array(AllocTraits::allocate(alloc, 1)), alloc(alloc) {}
-
-template <typename T, typename Allocator>
-Vector<T, Allocator>::Vector(const Vector<T, Allocator>& vec): capacity(vec.capacity), size(vec.size), alloc(vec.alloc) {
+mystd::Vector<T, Allocator>::Vector(const Vector<T, Allocator>& vec): capacity(vec.capacity), size(vec.size), alloc(vec.alloc) {
   T* new_arr = AllocTraits::allocate(alloc, capacity);
   try {
     std::uninitialized_copy(vec.begin(), vec.end(), new_arr);
@@ -26,7 +24,7 @@ Vector<T, Allocator>::Vector(const Vector<T, Allocator>& vec): capacity(vec.capa
 }
 
 template <typename T, typename Allocator>
-Vector<T, Allocator>::Vector(Vector<T, Allocator>&& oth) noexcept : capacity(oth.capacity), size(oth.size), array(oth.array) {
+mystd::Vector<T, Allocator>::Vector(Vector<T, Allocator>&& oth) noexcept : capacity(oth.capacity), size(oth.size), array(oth.array) {
   oth.capacity = 0;
   oth.size = 0;
   oth.array = nullptr;
@@ -34,7 +32,7 @@ Vector<T, Allocator>::Vector(Vector<T, Allocator>&& oth) noexcept : capacity(oth
 }
 
 template <typename T, typename Allocator>
-Vector<T, Allocator>& Vector<T, Allocator>::operator=(Vector<T, Allocator>&& oth) noexcept {
+mystd::Vector<T, Allocator>& mystd::Vector<T, Allocator>::operator=(Vector<T, Allocator>&& oth) noexcept {
   if (this == &oth) {
     return *this;
   }
@@ -55,7 +53,7 @@ Vector<T, Allocator>& Vector<T, Allocator>::operator=(Vector<T, Allocator>&& oth
 }
 
 template <typename T, typename Allocator>
-Vector<T, Allocator>::Vector(const std::initializer_list<T>& lst) {
+mystd::Vector<T, Allocator>::Vector(const std::initializer_list<T>& lst) {
   T* new_arr = AllocTraits::allocate(alloc, lst.size() + 1);
 
   try {
@@ -76,7 +74,7 @@ Vector<T, Allocator>::Vector(const std::initializer_list<T>& lst) {
 }
 
 template <typename T, typename Allocator>
-Vector<T, Allocator>& Vector<T, Allocator>::operator=(const Vector<T, Allocator>& vec) {
+mystd::Vector<T, Allocator>& mystd::Vector<T, Allocator>::operator=(const Vector<T, Allocator>& vec) {
   if (this == &vec) {
     return *this;
   }
@@ -99,17 +97,17 @@ Vector<T, Allocator>& Vector<T, Allocator>::operator=(const Vector<T, Allocator>
 }
 
 template <typename T, typename Allocator>
-T& Vector<T, Allocator>::operator[](size_t index) {
+T& mystd::Vector<T, Allocator>::operator[](size_t index) {
   return array[index];
 }
 
 template <typename T, typename Allocator>
-const T& Vector<T, Allocator>::operator[](size_t index) const {
+const T& mystd::Vector<T, Allocator>::operator[](size_t index) const {
   return array[index];
 }
 
 template <typename T, typename Allocator>
-Vector<T, Allocator>::~Vector() {
+mystd::Vector<T, Allocator>::~Vector() {
   for (size_t i = 0; i < size; ++i) {
     array[i].~T();
   }
@@ -118,17 +116,17 @@ Vector<T, Allocator>::~Vector() {
 }
 
 template <typename T, typename Allocator>
-size_t Vector<T, Allocator>::get_capacity() const {
+size_t mystd::Vector<T, Allocator>::get_capacity() const {
   return capacity;
 }
 
 template <typename T, typename Allocator>
-size_t Vector<T, Allocator>::get_size() const {
+size_t mystd::Vector<T, Allocator>::get_size() const {
   return size;
 }
 
 template <typename T, typename Allocator>
-const T& Vector<T, Allocator>::front() const {
+const T& mystd::Vector<T, Allocator>::front() const {
   if (size == 0) {
     throw std::range_error("vector is empty");
   }
@@ -137,7 +135,7 @@ const T& Vector<T, Allocator>::front() const {
 }
 
 template <typename T, typename Allocator>
-T& Vector<T, Allocator>::front() {
+T& mystd::Vector<T, Allocator>::front() {
   if (size == 0) {
     throw std::range_error("vector is empty");
   }
@@ -146,7 +144,7 @@ T& Vector<T, Allocator>::front() {
 }
 
 template <typename T, typename Allocator>
-const T& Vector<T, Allocator>::back() const {
+const T& mystd::Vector<T, Allocator>::back() const {
   if (size == 0) {
     throw std::range_error("Array is empty");
   }
@@ -155,7 +153,7 @@ const T& Vector<T, Allocator>::back() const {
 }
 
 template <typename T, typename Allocator>
-T& Vector<T, Allocator>::back() {
+T& mystd::Vector<T, Allocator>::back() {
   if (size == 0) {
     throw std::range_error("Array is empty");
   }
@@ -164,7 +162,7 @@ T& Vector<T, Allocator>::back() {
 }
 
 template <typename T, typename Allocator>
-void Vector<T, Allocator>::reserve(size_t n) {
+void mystd::Vector<T, Allocator>::reserve(size_t n) {
   if (n <= capacity) {
     return;
   }
@@ -187,7 +185,7 @@ void Vector<T, Allocator>::reserve(size_t n) {
 }
 
 template <typename T, typename Allocator>
-void Vector<T, Allocator>::resize(size_t n, const T& value) {
+void mystd::Vector<T, Allocator>::resize(size_t n, const T& value) {
   if (n > capacity) {
     reserve(n);
   }
@@ -200,7 +198,7 @@ void Vector<T, Allocator>::resize(size_t n, const T& value) {
 }
 
 template <typename T, typename Allocator>
-void Vector<T, Allocator>::push_back(const T& data) {
+void mystd::Vector<T, Allocator>::push_back(const T& data) {
   if (capacity - 1 == size) {
     reserve(2 * size);
   }
@@ -211,7 +209,7 @@ void Vector<T, Allocator>::push_back(const T& data) {
 
 template <typename T, typename Allocator>
 template <typename... Args>
-void Vector<T, Allocator>::emplace_back(const Args& ...args) {
+void mystd::Vector<T, Allocator>::emplace_back(const Args& ...args) {
   if (capacity - 1 == size) {
     reserve(2 * size);
   }
@@ -221,13 +219,13 @@ void Vector<T, Allocator>::emplace_back(const Args& ...args) {
 }
 
 template <typename T, typename Allocator>
-void Vector<T, Allocator>::pop_back() {
+void mystd::Vector<T, Allocator>::pop_back() {
   --size;
   array[size].~T();
 }
 
 template <typename T, typename Allocator>
-T& Vector<T, Allocator>::at(size_t index) {
+T& mystd::Vector<T, Allocator>::at(size_t index) {
   if (index >= size) {
     throw std::range_error("Array index out of range!");
   }
@@ -236,7 +234,7 @@ T& Vector<T, Allocator>::at(size_t index) {
 }
 
 template <typename T, typename Allocator>
-const T& Vector<T, Allocator>::at(size_t index) const {
+const T& mystd::Vector<T, Allocator>::at(size_t index) const {
   if (index >= size) {
     throw std::range_error("Array index out of range!");
   }
@@ -245,7 +243,7 @@ const T& Vector<T, Allocator>::at(size_t index) const {
 }
 
 template <typename T, typename Allocator>
-void Vector<T, Allocator>::clear() {
+void mystd::Vector<T, Allocator>::clear() {
   for (size_t i = 0; i < size; ++i) {
     array[i].~T();
   }
@@ -254,7 +252,7 @@ void Vector<T, Allocator>::clear() {
 }
 
 template <typename T, typename Allocator>
-void Vector<T, Allocator>::shrink_to_fit() {
+void mystd::Vector<T, Allocator>::shrink_to_fit() {
   if (size == 0) {
     reserve(1);
     return;
@@ -264,12 +262,12 @@ void Vector<T, Allocator>::shrink_to_fit() {
 }
 
 template <typename T, typename Allocator>
-bool Vector<T, Allocator>::empty() const {
+bool mystd::Vector<T, Allocator>::empty() const {
   return size == 0;
 }
 
 template <typename T, typename Allocator>
-bool Vector<T, Allocator>::operator==(const Vector<T, Allocator>& vec) const {
+bool mystd::Vector<T, Allocator>::operator==(const Vector<T, Allocator>& vec) const {
   if (size != vec.size) {
     return false;
   }
@@ -284,95 +282,95 @@ bool Vector<T, Allocator>::operator==(const Vector<T, Allocator>& vec) const {
 }
 
 template <typename T, typename Allocator>
-bool Vector<T, Allocator>::operator!=(const Vector<T, Allocator>& vec) const {
+bool mystd::Vector<T, Allocator>::operator!=(const Vector<T, Allocator>& vec) const {
   return !this->operator==(vec);
 }
 
 template <typename T, typename Allocator>
-Vector<T, Allocator>::iterator::iterator(T* obj): obj_ptr(obj) {}
+mystd::Vector<T, Allocator>::iterator::iterator(T* obj): obj_ptr(obj) {}
 
 template <typename T, typename Allocator>
-Vector<T, Allocator>::iterator::iterator(const iterator& rhs): obj_ptr(rhs.obj_ptr) {}
+mystd::Vector<T, Allocator>::iterator::iterator(const iterator& rhs): obj_ptr(rhs.obj_ptr) {}
 
 template <typename T, typename Allocator>
-const T& Vector<T, Allocator>::iterator::operator*() const noexcept {
+const T& mystd::Vector<T, Allocator>::iterator::operator*() const noexcept {
   return *obj_ptr;
 }
 
 template <typename T, typename Allocator>
-T& Vector<T, Allocator>::iterator::operator*() noexcept {
+T& mystd::Vector<T, Allocator>::iterator::operator*() noexcept {
   return *obj_ptr;
 }
 
 template <typename T, typename Allocator>
-typename Vector<T, Allocator>::iterator& Vector<T, Allocator>::iterator::operator+=(uint32_t steps_count) {
+typename mystd::Vector<T, Allocator>::iterator& mystd::Vector<T, Allocator>::iterator::operator+=(uint32_t steps_count) {
   this->obj_ptr += 5;
   return *this;
 }
 
 template <typename T, typename Allocator>
-typename Vector<T, Allocator>::iterator& Vector<T, Allocator>::iterator::operator-=(uint32_t steps_count) {
+typename mystd::Vector<T, Allocator>::iterator& mystd::Vector<T, Allocator>::iterator::operator-=(uint32_t steps_count) {
   this->obj_ptr -= 5;
   return *this;
 }
 
 template <typename T, typename Allocator>
-typename Vector<T, Allocator>::iterator& Vector<T, Allocator>::iterator::operator++() {
+typename mystd::Vector<T, Allocator>::iterator& mystd::Vector<T, Allocator>::iterator::operator++() {
   this->obj_ptr += 1;
   return *this;
 }
 
 template <typename T, typename Allocator>
-typename Vector<T, Allocator>::iterator& Vector<T, Allocator>::iterator::operator--() {
+typename mystd::Vector<T, Allocator>::iterator& mystd::Vector<T, Allocator>::iterator::operator--() {
   this->obj_ptr -= 1;
   return *this;
 }
 
 template <typename T, typename Allocator>
-typename Vector<T, Allocator>::iterator Vector<T, Allocator>::iterator::operator++(int) {
+typename mystd::Vector<T, Allocator>::iterator mystd::Vector<T, Allocator>::iterator::operator++(int) {
   iterator temp(this->obj_ptr);
   this->obj_ptr += 1;
   return *temp;
 }
 
 template <typename T, typename Allocator>
-typename Vector<T, Allocator>::iterator Vector<T, Allocator>::iterator::operator--(int) {
+typename mystd::Vector<T, Allocator>::iterator mystd::Vector<T, Allocator>::iterator::operator--(int) {
   iterator temp(this->obj_ptr);
   this->obj_ptr -= 1;
   return *temp;
 }
 
 template <typename T, typename Allocator>
-typename Vector<T, Allocator>::iterator Vector<T, Allocator>::iterator::operator-(uint32_t steps_count) const {
+typename mystd::Vector<T, Allocator>::iterator mystd::Vector<T, Allocator>::iterator::operator-(uint32_t steps_count) const {
   iterator temp(this->obj_ptr);
   temp->obj_ptr -= steps_count;
   return temp;
 }
 
 template <typename T, typename Allocator>
-typename Vector<T, Allocator>::iterator Vector<T, Allocator>::iterator::operator+(uint32_t steps_count) const {
+typename mystd::Vector<T, Allocator>::iterator mystd::Vector<T, Allocator>::iterator::operator+(uint32_t steps_count) const {
   iterator temp(this->obj_ptr);
   temp->obj_ptr += steps_count;
   return temp;
 }
 
 template <typename T, typename Allocator>
-typename Vector<T, Allocator>::iterator Vector<T, Allocator>::begin() const {
+typename mystd::Vector<T, Allocator>::iterator mystd::Vector<T, Allocator>::begin() const {
   return iterator(&array[0]);
 }
 
 template <typename T, typename Allocator>
-typename Vector<T, Allocator>::iterator Vector<T, Allocator>::end() const {
+typename mystd::Vector<T, Allocator>::iterator mystd::Vector<T, Allocator>::end() const {
   return iterator(&array[size]);
 }
 
 template <typename T, typename Allocator>
-bool Vector<T, Allocator>::iterator::operator==(const iterator& rhs) const {
+bool mystd::Vector<T, Allocator>::iterator::operator==(const iterator& rhs) const {
   return obj_ptr == rhs.obj_ptr ? true : false;
 }
 
 template <typename T, typename Allocator>
-bool Vector<T, Allocator>::iterator::operator!=(const iterator& rhs) const {
+bool mystd::Vector<T, Allocator>::iterator::operator!=(const iterator& rhs) const {
   return obj_ptr == rhs.obj_ptr ? false : true;
 }
 

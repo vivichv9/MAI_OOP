@@ -2,15 +2,15 @@
 
 template <typename T>
 bool Triangle<T>::validate(const Point<T>& p1, const Point<T>& p2, const Point<T>& p3) noexcept {
-  double sum_x = p1.get_x() + p2.get_x() + p3.get_x();
-  double sum_y = p1.get_y() + p2.get_y() + p3.get_y();
+  T sum_x = p1.get_x() + p2.get_x() + p3.get_x();
+  T sum_y = p1.get_y() + p2.get_y() + p3.get_y();
   Point<T> centre(sum_x / 3.0, sum_y / 3.0);
 
-  double inaccuracy = 1e-10;
+  T inaccuracy = 1e-10;
 
-  double len1 = Point<T>::line_len(centre, p1);
-  double len2 = Point<T>::line_len(centre, p2);
-  double len3 = Point<T>::line_len(centre, p3);
+  T len1 = Point<T>::line_len(centre, p1);
+  T len2 = Point<T>::line_len(centre, p2);
+  T len3 = Point<T>::line_len(centre, p3);
 
   if (std::abs(len1 - len2) <= inaccuracy && std::abs(len2 - len3) <= inaccuracy) {
     return true;
@@ -46,8 +46,8 @@ std::istream& operator>>(std::istream& is, Triangle<U>& rhs) {
 
 template <typename T>
 Point<T> Triangle<T>::calculate_centre() const {
-  double centre_x = 0;
-  double centre_y = 0;
+  T centre_x = 0;
+  T centre_y = 0;
 
   for (size_t i = 0; i < this->coordinates.get_size(); ++i) {
     centre_x += this->coordinates[i].get_x();
@@ -81,12 +81,12 @@ bool Triangle<T>::operator==(const Triangle<T>& rhs) const {
 
 template <typename T>
 Triangle<T>::operator double() const {
-  double x2x1 = this->coordinates[1].get_x() - this->coordinates[0].get_x();
-  double y3y1 = this->coordinates[2].get_y() - this->coordinates[0].get_y();
-  double x3x1 = this->coordinates[2].get_x() - this->coordinates[0].get_x();
-  double y2y1 = this->coordinates[1].get_y() - this->coordinates[0].get_y();
+  T x2x1 = this->coordinates[1].get_x() - this->coordinates[0].get_x();
+  T y3y1 = this->coordinates[2].get_y() - this->coordinates[0].get_y();
+  T x3x1 = this->coordinates[2].get_x() - this->coordinates[0].get_x();
+  T y2y1 = this->coordinates[1].get_y() - this->coordinates[0].get_y();
 
-  double square = std::abs(x2x1 * y3y1 - x3x1 * y2y1) * 0.5;
+  T square = std::abs(x2x1 * y3y1 - x3x1 * y2y1) * 0.5;
 
   return square;
 }

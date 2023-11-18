@@ -12,21 +12,21 @@ bool Octagon<T>::validate(
     const Point<T>& p8
   ) noexcept {
     
-  double sum_x = p1.get_x() + p2.get_x() + p3.get_x() + p4.get_x() + p5.get_x() + p6.get_x() + p7.get_x() + p8.get_x();
-  double sum_y = p1.get_y() + p2.get_y() + p3.get_y() + p4.get_y() + p5.get_y() + p6.get_y() + p7.get_y() + p8.get_y();
+  T sum_x = p1.get_x() + p2.get_x() + p3.get_x() + p4.get_x() + p5.get_x() + p6.get_x() + p7.get_x() + p8.get_x();
+  T sum_y = p1.get_y() + p2.get_y() + p3.get_y() + p4.get_y() + p5.get_y() + p6.get_y() + p7.get_y() + p8.get_y();
   Point<T> centre(sum_x / 8.0, sum_y / 8.0);
 
   double inaccuracy = 1e-10;
 
   // straight lines from center to corner
-  double len_to_p1 = Point<T>::line_len(centre, p1);
-  double len_to_p2 = Point<T>::line_len(centre, p2);
-  double len_to_p3 = Point<T>::line_len(centre, p3);
-  double len_to_p4 = Point<T>::line_len(centre, p4);
-  double len_to_p5 = Point<T>::line_len(centre, p5);
-  double len_to_p6 = Point<T>::line_len(centre, p6);
-  double len_to_p7 = Point<T>::line_len(centre, p7);
-  double len_to_p8 = Point<T>::line_len(centre, p8);
+  T len_to_p1 = Point<T>::line_len(centre, p1);
+  T len_to_p2 = Point<T>::line_len(centre, p2);
+  T len_to_p3 = Point<T>::line_len(centre, p3);
+  T len_to_p4 = Point<T>::line_len(centre, p4);
+  T len_to_p5 = Point<T>::line_len(centre, p5);
+  T len_to_p6 = Point<T>::line_len(centre, p6);
+  T len_to_p7 = Point<T>::line_len(centre, p7);
+  T len_to_p8 = Point<T>::line_len(centre, p8);
 
   if (
     std::abs(len_to_p1 - len_to_p2) < inaccuracy &&
@@ -66,8 +66,8 @@ Octagon<T>::Octagon(
 
 template <typename T>
 Point<T> Octagon<T>::calculate_centre() const {
-  double centre_x = 0;
-  double centre_y = 0;
+  T centre_x = 0;
+  T centre_y = 0;
 
   for (size_t i = 0; i < this->coordinates.get_size(); ++i) {
     centre_x += this->coordinates[i].get_x();
@@ -79,7 +79,7 @@ Point<T> Octagon<T>::calculate_centre() const {
 
 template <typename T>
 Octagon<T>::operator double() const {
-  double side_len = Point<T>::line_len(this->coordinates[0], this->coordinates[1]);
+  T side_len = Point<T>::line_len(this->coordinates[0], this->coordinates[1]);
 
   return 2 * std::pow(side_len, 2) * (1 + std::sqrt(2));
 }

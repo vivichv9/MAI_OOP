@@ -25,7 +25,7 @@ public:
   
   bool operator==(const Point<T>& rhs) const;
 
-  static double line_len(const Point<T>& x, const Point<T>& y);
+  static T line_len(const Point<T>& x, const Point<T>& y);
 
   template <typename U>
   friend std::ostream& operator<<(std::ostream& os, const Point<U>& rhs);
