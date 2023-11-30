@@ -6,6 +6,7 @@
 #include "src/list.cpp"
 #include <chrono>
 
+//BEBRA
 int main() {
   std::map<int, int, std::less<int>, mystd::allocator<int, 1000>> m;
 
@@ -17,7 +18,7 @@ int main() {
     std::cout << '{' << e.first << ", " << e.second << "}, ";
   }
 
-  //SLAWA BEBROW AND MORGENSHTERN
+  //SLAWA BEBROW AND MORGENSHTERN 
   std::cout << std::endl;
   mystd::list<int, mystd::allocator<int, 1000>> lst;
   mystd::list<int, mystd::allocator<int, 1000>> a;
