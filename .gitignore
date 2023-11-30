@@ -33,6 +33,7 @@
 
 #Vscode
 .vscode
+.idea
 
 #building
-*build
+*build*

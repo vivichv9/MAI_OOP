@@ -2,7 +2,6 @@
 #define NPC_FACTORY_H_INCLUDED
 
 #include <memory>
-
 #include "enums/npc_type.h"
 #include "npc/include/druid.h"
 #include "npc/include/squirrel.h"

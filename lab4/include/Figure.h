@@ -14,6 +14,7 @@ protected:
 public:
   virtual operator double() const = 0;
   virtual Point<T> calculate_centre() const = 0;
+  
   virtual ~Figure() = default;
 };
 

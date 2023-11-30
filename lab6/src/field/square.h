@@ -13,8 +13,8 @@ private:
 public:
   Square(double x, double y);
 
-  double get_x() const noexcept;
-  double get_y() const noexcept;
+  [[nodiscard]] double get_x() const noexcept;
+  [[nodiscard]] double get_y() const noexcept;
   void set_x(double x) noexcept;
   void set_y(double y) noexcept;
 };

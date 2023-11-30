@@ -13,7 +13,7 @@ private:
   std::ofstream file;
 
 public:
-  Logger(const std::string& output_file_name);
+  explicit Logger(const std::string& output_file_name);
   virtual ~Logger();
 
   void create_log(LOGType log_type, const std::string& log_signature);

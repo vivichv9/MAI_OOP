@@ -8,14 +8,14 @@
 namespace lab6 {
 
 class NPC {
-private: 
+private:
   std::string name;
   Square npc_field;
   size_t attack_range;
   NPCStatus state;
 
 public:
-  NPC(const std::string& name, const Square& npc_field, size_t atack_range, NPCStatus state = NPCStatus::ORDINARY);
+  NPC(std::string  name, const Square& npc_field, size_t attack_range, NPCStatus state = NPCStatus::ORDINARY);
   virtual void attack() = 0;
 };
 

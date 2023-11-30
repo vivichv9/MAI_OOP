@@ -22,8 +22,8 @@ public:
 
   bool operator==(const Octagon<T>& rhs) const;
 
-  Point<T> calculate_centre() const override;
-  operator double() const override;
+  virtual Point<T> calculate_centre() const override;
+  virtual operator double() const override;
 
 private:
   static bool validate(    

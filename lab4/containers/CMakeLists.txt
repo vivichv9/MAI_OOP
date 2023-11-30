@@ -5,8 +5,7 @@ add_library(${PROJECT_NAME}_vector
 
 set_target_properties(${PROJECT_NAME}_vector PROPERTIES
                 CXX_STANDARD 20
-                CXX_STANDARD_REQUIRED ON
-                CXX_EXTENSIONS ON)
+                CXX_STANDARD_REQUIRED ON)
 
 target_include_directories(${PROJECT_NAME}_vector PRIVATE
               "${PROJECT_SOURCE_DIR}/containers/include")
