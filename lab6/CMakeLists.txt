@@ -2,20 +2,27 @@ cmake_minimum_required(VERSION 3.14)
 
 project(lab6)
 
-add_subdirectory(tests)
+# add_subdirectory(tests)
 
-file(GLOB_RECURSE SOURCES LIST_DIRECTORIES FALSE ${PROJECT_SOURCE_DIR}/src/*.cpp)
+# file(GLOB_RECURSE SOURCES LIST_DIRECTORIES FALSE ${PROJECT_SOURCE_DIR}/src/*/*.cpp)
 
 # Project lib
-add_library(${PROJECT_NAME}_lib ${SOURCES}
+add_library(${PROJECT_NAME}_lib
+            src/field/square.cpp
+            src/game_manager/game_manager.cpp
         src/npc/druid.cpp
-        src/npc/werewolf.cpp
-        src/npc/squirrel.cpp
-        src/npc/include/npc.h
-        src/game_manager/game_manager.h
-        src/game_manager/game_manager.cpp
-        src/observer/observer.h
-        src/observer/observer.cpp)
+            src/npc/npc.cpp
+            src/npc/squirrel.cpp
+            src/npc/werewolf.cpp
+        src/observer/interface/IObserver.h
+        src/observer/interface/IObservable.h
+        src/logs/interface/Log.h
+        src/logs/file_logger.h
+        src/logs/file_logger.cpp
+        src/logs/console_logger.h
+        src/logs/console_logger.cpp
+        src/logs/npc_logger.h
+        src/logs/npc_logger.cpp)
 
 target_include_directories(${PROJECT_NAME}_lib PRIVATE ${PROJECT_SOURCE_DIR}/src)
 target_compile_options(${PROJECT_NAME}_lib PRIVATE "-g" "-Wall" "-fsanitize=undefined" "-fsanitize=address")

@@ -3,10 +3,10 @@
 
 #include <unordered_map>
 #include <memory>
-#include "npc/include/npc.h"
-#include "logs/logger.h"
-#include "field/square.h"
-#include "factory/NPCFactory.h"
+#include "../npc/include/npc.h"
+#include "../logs/logger.h"
+#include "../field/square.h"
+#include "../factory/NPCFactory.h"
 
 namespace lab6 {
 

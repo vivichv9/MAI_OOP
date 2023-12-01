@@ -5,7 +5,7 @@
 
 namespace lab6 {
 
-class Werewolf : NPC {
+class Werewolf : public NPC {
 public:
   Werewolf(const std::string& name, const Square& npc_field, size_t atack_range, NPCStatus state = NPCStatus::ORDINARY);
 
