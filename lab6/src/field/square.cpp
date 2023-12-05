@@ -1,3 +1,4 @@
+#include <complex>
 #include "square.h"
 
 using namespace lab6;
@@ -33,6 +34,10 @@ void Square::set_y(double oth_y) noexcept {
   }
 
   this->y = oth_y;
+}
+
+double Square::len(const Square &s1, const Square &s2) {
+  return std::sqrt(std::pow(s2.x - s1.x, 2) + std::pow(s2.y - s1.y, 2));
 }
 
 

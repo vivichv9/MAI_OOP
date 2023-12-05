@@ -1,0 +1,11 @@
+[ INFO ]: MURDER: lola killed by zola
+[ INFO ]: MURDER: rura killed by zola
+[ INFO ]: MURDER: zxc killed by zola
+[ INFO ]: MURDER: zzz killed by zola
+[ INFO ]: MURDER: qwer killed by zola
+[ INFO ]: MURDER: bebra killed by zola
+[ INFO ]: MURDER: kuka killed by zola
+[ INFO ]: MURDER: name killed by zola
+name rura created
+[ INFO ]: NPC Squirrel with name lola created
+[ INFO ]: NPC Squirrel with name zola created

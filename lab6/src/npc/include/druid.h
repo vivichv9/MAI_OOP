@@ -5,9 +5,11 @@
 
 namespace lab6 {
 
-class Druid : public NPC {
+class Druid final : public NPC {
 public:
-  Druid(const std::string& name, const Square& npc_field, size_t atack_range, NPCStatus state = NPCStatus::ORDINARY);
+  Druid(const std::string& name, const lab6::Square& npc_field,
+        NPCType type, NPCStatus state = LIVE);
+
   void attack() override;
 };
 

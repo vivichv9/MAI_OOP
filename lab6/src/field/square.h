@@ -17,6 +17,8 @@ public:
   [[nodiscard]] double get_y() const noexcept;
   void set_x(double x) noexcept;
   void set_y(double y) noexcept;
+
+  static double len(const Square& s1, const Square& s2);
 };
 
 }

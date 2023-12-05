@@ -4,8 +4,7 @@
 namespace lab6 {
   
 enum NPCStatus {
-  ORDINARY, 
-  COMBAT,
+  LIVE,
   DEAD
 };
 

@@ -1,12 +1,12 @@
 #ifndef LAB6_FILE_LOGGER_H
 #define LAB6_FILE_LOGGER_H
 
-#include "logs/interface/Log.h"
+#include "interface/Log.h"
 #include "fstream"
 
 namespace lab6 {
 
-class FileLogger : virtual public Log {
+class FileLogger : public Log {
 private:
   std::ofstream file;
 

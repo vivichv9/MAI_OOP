@@ -3,7 +3,7 @@
 
 #include "console_logger.h"
 #include "file_logger.h"
-#include "observer/interface/IObserver.h"
+#include "../observer/interface/IObserver.h"
 
 namespace lab6 {
 
@@ -13,7 +13,14 @@ private:
   ConsoleLogger console_logger;
 
 public:
-  void update(lab6::NPCStatus status) override;
+  explicit NPCLogger(const std::string& file_name);
+  void update(const std::string& name, NPCStatus status) override;
+  void kill(const std::string& killer, const std::string& victim) override;
+  void create(const std::string& name, NPCType type) override;
+
+  void system_log(LOGType type, const std::string& context);
+
+  virtual ~NPCLogger() = default;
 };
 
 }

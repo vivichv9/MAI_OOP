@@ -5,9 +5,11 @@
 
 namespace lab6 {
 
-class Squirrel : public NPC {
+class Squirrel final : public NPC {
 public:
-  Squirrel(const std::string& name, const Square& npc_field, size_t atack_range, NPCStatus state = NPCStatus::ORDINARY);
+  Squirrel(const std::string& name, const lab6::Square& npc_field,
+           NPCType type, NPCStatus state = LIVE);
+
   void attack() override;
 };
 

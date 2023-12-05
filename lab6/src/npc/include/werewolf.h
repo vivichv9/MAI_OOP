@@ -5,9 +5,10 @@
 
 namespace lab6 {
 
-class Werewolf : public NPC {
+class Werewolf final : public NPC {
 public:
-  Werewolf(const std::string& name, const Square& npc_field, size_t atack_range, NPCStatus state = NPCStatus::ORDINARY);
+  Werewolf(const std::string& name, const lab6::Square& npc_field,
+           NPCType type, NPCStatus state = LIVE);
 
   void attack() override;
 };

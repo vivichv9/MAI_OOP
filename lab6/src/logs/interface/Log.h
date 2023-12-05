@@ -2,7 +2,7 @@
 #define LAB6_LOG_H
 
 #include <string>
-#include "enums/log_type.h"
+#include "../../enums/log_type.h"
 
 namespace lab6 {
 
