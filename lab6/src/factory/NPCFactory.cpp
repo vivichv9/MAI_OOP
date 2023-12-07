@@ -26,7 +26,8 @@ std::shared_ptr<NPC> NPCFactory::create_npc(std::function<void(LOGType, const st
   }
 }
 
-void NPCFactory::create_npc_from_file(const std::string& file_path, std::unordered_set<std::shared_ptr<NPC>>& npc_table,
+void NPCFactory::create_npc_from_file(const std::string& file_path,
+                                      std::unordered_map<std::string, std::shared_ptr<NPC>>& npc_table,
                                       std::function<void(LOGType, const std::string&)>& log) {
   std::ifstream file(file_path);
   std::string delimiter = ",";
@@ -47,24 +48,45 @@ void NPCFactory::create_npc_from_file(const std::string& file_path, std::unorder
 
     if (parsed_str[0] == "WEREWOLF") {
       try {
-        auto ptr = create_npc(log, WEREWOLF, parsed_str[1], Square(std::stod(parsed_str[2]), std::stod(parsed_str[3])));
-        npc_table.insert(ptr);
+        auto it = npc_table.find(parsed_str[1]);
+        if (it == npc_table.end()) {
+          auto ptr = create_npc(log, WEREWOLF, parsed_str[1], Square(std::stod(parsed_str[2]), std::stod(parsed_str[3])));
+          npc_table.insert({parsed_str[1], ptr});
+
+        } else {
+          log(WARNING, "NPC with name " + parsed_str[1] + " already exist");
+        }
+
       } catch (...) {
         log(ERROR, "Exception in func NPCFactory::create_npc_from_file WEREWOLF handler");
       }
 
     } else if (parsed_str[0] == "SQUIRREL") {
       try {
-        auto ptr = create_npc(log, SQUIRREL, parsed_str[1], Square(std::stod(parsed_str[2]), std::stod(parsed_str[3])));
-        npc_table.insert(ptr);
+        auto it = npc_table.find(parsed_str[1]);
+        if (it == npc_table.end()) {
+          auto ptr = create_npc(log, SQUIRREL, parsed_str[1], Square(std::stod(parsed_str[2]), std::stod(parsed_str[3])));
+          npc_table.insert({parsed_str[1], ptr});
+
+        } else {
+          log(WARNING, "NPC with name " + parsed_str[1] + " already exist");
+        }
+
       } catch (...) {
         log(ERROR, "Exception in func NPCFactory::create_npc_from_file SQUIRREL handler");
       }
 
     } else if (parsed_str[0] == "DRUID") {
       try {
-        auto ptr = create_npc(log, DRUID, parsed_str[1], Square(std::stod(parsed_str[2]), std::stod(parsed_str[3])));
-        npc_table.insert(ptr);
+        auto it = npc_table.find(parsed_str[1]);
+        if (it == npc_table.end()) {
+          auto ptr = create_npc(log, DRUID, parsed_str[1], Square(std::stod(parsed_str[2]), std::stod(parsed_str[3])));
+          npc_table.insert({parsed_str[1], ptr});
+
+        } else {
+          log(WARNING, "NPC with name " + parsed_str[1] + " already exist");
+        }
+
       } catch (...) {
         log(ERROR, "Exception in func NPCFactory::create_npc_from_file DRUID handler");
       }

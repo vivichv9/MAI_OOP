@@ -3,15 +3,15 @@
 void lab6::FileLogger::create_log(lab6::LOGType log_type, const std::string& log_signature) {
   switch (log_type) {
     case INFO:
-      file << "[ INFO ]: " << log_signature << std::endl;
+      file << "[INFO]: " << log_signature << std::endl;
       break;
 
     case WARNING:
-      file << "[ WARNING ]: " << log_signature << std::endl;
+      file << "[WARNING]: " << log_signature << std::endl;
       break;
 
     case ERROR:
-      file << "[ ERROR ]: " << log_signature << std::endl;
+      file << "[ERROR]: " << log_signature << std::endl;
       break;
 
     default:

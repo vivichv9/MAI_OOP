@@ -3,6 +3,7 @@
 
 #include "Log.h"
 #include "fstream"
+#include "termcolor/termcolor.hpp"
 
 namespace lab6 {
 

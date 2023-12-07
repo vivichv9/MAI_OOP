@@ -3,7 +3,7 @@
 
 #include <memory>
 #include "fstream"
-#include "unordered_set"
+#include "unordered_map"
 #include "enums/npc_type.h"
 #include "npc/include/druid.h"
 #include "npc/include/squirrel.h"
@@ -20,7 +20,7 @@ public:
                                   NPCType npc_type, const std::string& name, const Square& npc_field,
                                   NPCStatus state = NPCStatus::LIVE);
 
-  void create_npc_from_file(const std::string& file_path, std::unordered_set<std::shared_ptr<NPC>>& npc_table,
+  void create_npc_from_file(const std::string& file_path, std::unordered_map<std::string, std::shared_ptr<NPC>>& npc_table,
                             std::function<void(LOGType, const std::string&)>& log);
 };
 

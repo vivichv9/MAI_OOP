@@ -23,7 +23,7 @@ void GameManager::attack_cycle(double attack_range) {
   for (auto& i: npc_table) {
     for (auto& j: npc_table) {
       if (i != j) {
-        i->attack(&v, j.get(), attack_range, log);
+        i.second->attack(&v, j.second.get(), attack_range, log);
       }
     }
   }

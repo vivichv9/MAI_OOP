@@ -6,3 +6,8 @@ SQUIRREL,zebra,12,12
 WEREWOLF,mouse,12,12
 SQUIRREL,kilka,12,12
 DRUID,zak,12,12
+DRUID,kilka,12,12
+
+
+
+

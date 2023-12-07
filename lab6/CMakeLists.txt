@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.14)
 project(lab6)
 
 add_subdirectory(tests)
+add_subdirectory(third_party/termcolor)
 
 # Project lib
 add_library(${PROJECT_NAME}_lib
@@ -14,7 +15,7 @@ add_library(${PROJECT_NAME}_lib
             src/npc/werewolf.cpp
             src/observer/interface/IObserver.h
             src/observer/interface/IObservable.h
-        src/logs/Log.h
+            src/logs/Log.h
             src/logs/file_logger.h
             src/logs/file_logger.cpp
             src/logs/console_logger.h
@@ -23,12 +24,13 @@ add_library(${PROJECT_NAME}_lib
             src/factory/NPCFactory.h
             src/visitor/visitor.cpp
             src/visitor/visitor.h
-        src/logs/Log.cpp
+            src/logs/Log.cpp
 )
 
 target_include_directories(${PROJECT_NAME}_lib PUBLIC ${PROJECT_SOURCE_DIR}/src)
 target_compile_options(${PROJECT_NAME}_lib PUBLIC "-g" "-Wall" "-fsanitize=undefined" "-fsanitize=address")
 target_link_options(${PROJECT_NAME}_lib PUBLIC "-fsanitize=undefined" "-fsanitize=address")
+target_link_libraries(${PROJECT_NAME}_lib PUBLIC termcolor)
 
 set_target_properties(${PROJECT_NAME}_lib PROPERTIES 
                       CXX_STANDARD 20
