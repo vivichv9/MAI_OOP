@@ -12,8 +12,10 @@ private:
 
 public:
   explicit FileLogger(const std::string& file_name);
+
   virtual ~FileLogger();
-  void create_log(lab6::LOGType log_type, const std::string &signature) override;
+
+  void create_log(lab6::LOGType log_type, const std::string& signature) override;
 };
 
 }

@@ -20,7 +20,7 @@ double Square::get_y() const noexcept {
   return y;
 }
 
-void Square::set_x(double oth_x) noexcept {
+void Square::set_x(double oth_x) {
   if (oth_x > 500 || oth_x < 0) {
     throw std::range_error("square::set_x, valid x is a 0 <= x <= 500");
   }
@@ -28,7 +28,7 @@ void Square::set_x(double oth_x) noexcept {
   this->x = oth_x;
 }
 
-void Square::set_y(double oth_y) noexcept {
+void Square::set_y(double oth_y) {
   if (oth_y > 500 || oth_y < 0) {
     throw std::range_error("square::set_y, valid y is a 0 <= y <= 500");
   }
@@ -36,7 +36,7 @@ void Square::set_y(double oth_y) noexcept {
   this->y = oth_y;
 }
 
-double Square::len(const Square &s1, const Square &s2) {
+double Square::len(const Square& s1, const Square& s2) {
   return std::sqrt(std::pow(s2.x - s1.x, 2) + std::pow(s2.y - s1.y, 2));
 }
 

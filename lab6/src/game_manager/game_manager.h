@@ -11,15 +11,15 @@ namespace lab6 {
 
 class GameManager {
 private:
-  NPCFactory factory;
   NPCLogger logger;
-
+  NPCFactory factory;
   std::unordered_set<std::shared_ptr<NPC>> npc_table;
 
-  void attack(NPC* npc1, NPC* npc2);
+  void attack_cycle(double attack_range);
 
 public:
   explicit GameManager(const std::string& log_file_name);
+
   void game_controller();
 };
 

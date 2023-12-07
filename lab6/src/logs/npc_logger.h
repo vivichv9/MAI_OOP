@@ -14,8 +14,11 @@ private:
 
 public:
   explicit NPCLogger(const std::string& file_name);
+
   void update(const std::string& name, NPCStatus status) override;
+
   void kill(const std::string& killer, const std::string& victim) override;
+
   void create(const std::string& name, NPCType type) override;
 
   void system_log(LOGType type, const std::string& context);

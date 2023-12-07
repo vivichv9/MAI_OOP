@@ -1,11 +1,19 @@
-[ INFO ]: MURDER: lola killed by zola
-[ INFO ]: MURDER: rura killed by zola
-[ INFO ]: MURDER: zxc killed by zola
-[ INFO ]: MURDER: zzz killed by zola
-[ INFO ]: MURDER: qwer killed by zola
-[ INFO ]: MURDER: bebra killed by zola
-[ INFO ]: MURDER: kuka killed by zola
-[ INFO ]: MURDER: name killed by zola
-name rura created
-[ INFO ]: NPC Squirrel with name lola created
-[ INFO ]: NPC Squirrel with name zola created
+[ INFO ]: NPC Werewolf with name name created
+[ INFO ]: NPC Werewolf with name name1 created
+[ INFO ]: NPC Werewolf with name name2 created
+[ INFO ]: NPC Werewolf with name name3 created
+[ INFO ]: NPC Squirrel with name name4 created
+[ INFO ]: NPC Werewolf with name name5 created
+[ INFO ]: NPC Werewolf with name name6 created
+[ INFO ]: NPC Druid with name name7 created
+[ INFO ]: NPC Werewolf with name name8 created
+[ INFO ]: NPC Werewolf with name name9 created
+[ INFO ]: MURDER: name8 killed by name9
+[ INFO ]: MURDER: name7 killed by name9
+[ INFO ]: MURDER: name6 killed by name9
+[ INFO ]: MURDER: name5 killed by name9
+[ INFO ]: MURDER: name9 killed by name4
+[ INFO ]: MURDER: name3 killed by name4
+[ INFO ]: MURDER: name2 killed by name4
+[ INFO ]: MURDER: name1 killed by name4
+[ INFO ]: MURDER: name killed by name4

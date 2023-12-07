@@ -8,10 +8,10 @@ namespace lab6 {
 
 class ConsoleLogger : public Log {
 public:
-  void create_log(lab6::LOGType log_type, const std::string &signature) override;
+  void create_log(lab6::LOGType log_type, const std::string& signature) override;
 
 };
 }
 
 
-#endif //LAB6_CONSOLE_LOGGER_H
+#endif // LAB6_CONSOLE_LOGGER_H

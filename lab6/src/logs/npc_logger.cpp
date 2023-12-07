@@ -21,7 +21,7 @@ void NPCLogger::update(const std::string& name, NPCStatus status) {
 
 NPCLogger::NPCLogger(const std::string& file_name) : file_logger(file_name) {}
 
-void NPCLogger::create(const std::string &name, NPCType type) {
+void NPCLogger::create(const std::string& name, NPCType type) {
   switch (type) {
     case SQUIRREL:
       console_logger.create_log(INFO, "NPC Squirrel with name " + name + " created");
@@ -34,8 +34,8 @@ void NPCLogger::create(const std::string &name, NPCType type) {
       break;
 
     case DRUID:
-      console_logger.create_log(INFO, "NPC Squirrel with name " + name + " created");
-      file_logger.create_log(INFO, "NPC Squirrel with name " + name + " created");
+      console_logger.create_log(INFO, "NPC Druid with name " + name + " created");
+      file_logger.create_log(INFO, "NPC Druid with name " + name + " created");
       break;
 
     default:
@@ -44,7 +44,7 @@ void NPCLogger::create(const std::string &name, NPCType type) {
   }
 }
 
-void NPCLogger::system_log(LOGType type, const std::string &context) {
+void NPCLogger::system_log(LOGType type, const std::string& context) {
   console_logger.create_log(type, context);
   file_logger.create_log(type, context);
 }

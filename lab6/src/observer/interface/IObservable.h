@@ -12,6 +12,7 @@ protected:
 
 public:
   virtual void add_observer(IObserver* o) = 0;
+
   virtual void remove_observer(IObserver* o) = 0;
 
   virtual void notify(const std::string& name, NPCStatus status) = 0;
@@ -19,4 +20,4 @@ public:
 
 }
 
-#endif //LAB6_IOBSERVABLE_H
+#endif

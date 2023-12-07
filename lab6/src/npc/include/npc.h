@@ -6,6 +6,7 @@
 #include "../../observer/interface/IObservable.h"
 #include "../../observer/interface/IObserver.h"
 #include "../../enums/npc_type.h"
+#include "../../logs/npc_logger.h"
 #include "../../visitor/visitor.h"
 
 #include <string>
@@ -14,41 +15,39 @@
 
 namespace lab6 {
 
+class Visitor;
+
 class NPC : public IObservable {
 protected:
   std::string name;
   Square npc_field;
-  double attack_range = 15.0;
   NPCStatus state;
   NPCType type;
 
 public:
-  NPC(std::string  name, const Square& npc_field, NPCType type, NPCStatus state = NPCStatus::LIVE);
+  NPC(std::string name, const Square& npc_field, NPCType type, NPCStatus state = NPCStatus::LIVE);
 
-  // virtual void accept(Visitor& visitor);
+  virtual void attack(Visitor* v, NPC* npc, double attack_range, NPCLogger& logger);
 
   void add_observer(IObserver* o) override;
+
   void remove_observer(IObserver* o) override;
+
   void notify(const std::string& name, NPCStatus status) override;
-  virtual void attack() = 0;
 
-  const std::string &getName() const;
+  [[nodiscard]] const std::string& getName() const;
 
-  void setName(const std::string &name);
+  void setName(const std::string& name);
 
-  const Square &getNpcField() const;
+  [[nodiscard]] const Square& getNpcField() const;
 
-  void setNpcField(const Square &npcField);
+  void setNpcField(const Square& npcField);
 
-  double getAttackRange() const;
-
-  void setAttackRange(size_t attackRange);
-
-  NPCStatus getState() const;
+  [[nodiscard]] NPCStatus getState() const;
 
   void setState(NPCStatus state);
 
-  NPCType getType() const;
+  [[nodiscard]] NPCType getType() const;
 
   void setType(NPCType type);
 };

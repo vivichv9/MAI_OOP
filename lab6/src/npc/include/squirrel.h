@@ -10,7 +10,6 @@ public:
   Squirrel(const std::string& name, const lab6::Square& npc_field,
            NPCType type, NPCStatus state = LIVE);
 
-  void attack() override;
 };
 
 }

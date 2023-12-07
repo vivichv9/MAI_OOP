@@ -1,15 +1,21 @@
-#ifndef VISITOR_H_INCLUDED
-#define VISITOR_H_INCLUDED
+#ifndef LAB6_VISITOR_H
+#define LAB6_VISITOR_H
 
-#include "../npc/include/npc.h"
+#include "../logs/npc_logger.h"
+#include "npc/include/npc.h"
 
 namespace lab6 {
-  
+
+class NPC;
+
 class Visitor {
 public:
-  // void visit(NPC* npc);
+  Visitor() = default;
+  virtual ~Visitor() = default;
+
+  virtual void visit(NPC* npc1, NPC* npc2, double attack_range, NPCLogger& logger);
 };
 
-} // namespace lab6 
+}
 
-#endif
+#endif //LAB6_VISITOR_H
