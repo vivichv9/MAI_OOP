@@ -11,7 +11,6 @@ public:
            NPCType type, NPCStatus state = LIVE);
 
 };
-
 }
 
 #endif

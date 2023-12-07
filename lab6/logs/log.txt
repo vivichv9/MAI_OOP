@@ -1,19 +1,64 @@
-[ INFO ]: NPC Werewolf with name name created
-[ INFO ]: NPC Werewolf with name name1 created
-[ INFO ]: NPC Werewolf with name name2 created
-[ INFO ]: NPC Werewolf with name name3 created
-[ INFO ]: NPC Squirrel with name name4 created
-[ INFO ]: NPC Werewolf with name name5 created
-[ INFO ]: NPC Werewolf with name name6 created
-[ INFO ]: NPC Druid with name name7 created
-[ INFO ]: NPC Werewolf with name name8 created
-[ INFO ]: NPC Werewolf with name name9 created
-[ INFO ]: MURDER: name8 killed by name9
-[ INFO ]: MURDER: name7 killed by name9
-[ INFO ]: MURDER: name6 killed by name9
-[ INFO ]: MURDER: name5 killed by name9
-[ INFO ]: MURDER: name9 killed by name4
-[ INFO ]: MURDER: name3 killed by name4
-[ INFO ]: MURDER: name2 killed by name4
-[ INFO ]: MURDER: name1 killed by name4
-[ INFO ]: MURDER: name killed by name4
+[ INFO ]: npc WEREWOLF with name: anton created!
+[ INFO ]: npc WEREWOLF with name: zuhra created!
+[ INFO ]: npc DRUID with name: bayan created!
+[ INFO ]: npc WEREWOLF with name: bebra created!
+[ INFO ]: npc SQUIRREL with name: zebra created!
+[ INFO ]: npc WEREWOLF with name: mouse created!
+[ INFO ]: npc SQUIRREL with name: kilka created!
+[ INFO ]: npc DRUID with name: zak created!
+[ INFO ]: Attack cycle with attack range: 100.000000 started
+[ INFO ]: MURDER: zak killed by kilka
+[ INFO ]: MURDER: mouse killed by kilka
+[ INFO ]: MURDER: zebra killed by kilka
+[ INFO ]: MURDER: bebra killed by kilka
+[ INFO ]: MURDER: bayan killed by kilka
+[ INFO ]: MURDER: zuhra killed by kilka
+[ INFO ]: MURDER: anton killed by kilka
+[ INFO ]: npc WEREWOLF with name: anton created!
+[ INFO ]: npc WEREWOLF with name: zuhra created!
+[ INFO ]: npc DRUID with name: bayan created!
+[ INFO ]: npc WEREWOLF with name: bebra created!
+[ INFO ]: npc SQUIRREL with name: zebra created!
+[ INFO ]: npc WEREWOLF with name: mouse created!
+[ INFO ]: npc SQUIRREL with name: kilka created!
+[ INFO ]: npc DRUID with name: zak created!
+[ INFO ]: Attack cycle with attack range: 200.000000 started
+[ INFO ]: MURDER: zak killed by kilka
+[ INFO ]: MURDER: mouse killed by kilka
+[ INFO ]: MURDER: zebra killed by kilka
+[ INFO ]: MURDER: bebra killed by kilka
+[ INFO ]: MURDER: bayan killed by kilka
+[ INFO ]: MURDER: zuhra killed by kilka
+[ INFO ]: MURDER: anton killed by kilka
+[ INFO ]: npc WEREWOLF with name: anton created!
+[ INFO ]: npc WEREWOLF with name: zuhra created!
+[ INFO ]: npc DRUID with name: bayan created!
+[ INFO ]: npc WEREWOLF with name: bebra created!
+[ INFO ]: npc SQUIRREL with name: zebra created!
+[ INFO ]: npc WEREWOLF with name: mouse created!
+[ INFO ]: npc SQUIRREL with name: kilka created!
+[ INFO ]: npc DRUID with name: zak created!
+[ INFO ]: Attack cycle with attack range: 11100.000000 started
+[ INFO ]: MURDER: zak killed by kilka
+[ INFO ]: MURDER: mouse killed by kilka
+[ INFO ]: MURDER: zebra killed by kilka
+[ INFO ]: MURDER: bebra killed by kilka
+[ INFO ]: MURDER: bayan killed by kilka
+[ INFO ]: MURDER: zuhra killed by kilka
+[ INFO ]: MURDER: anton killed by kilka
+[ INFO ]: npc WEREWOLF with name: anton created!
+[ INFO ]: npc WEREWOLF with name: zuhra created!
+[ INFO ]: npc DRUID with name: bayan created!
+[ INFO ]: npc WEREWOLF with name: bebra created!
+[ INFO ]: npc SQUIRREL with name: zebra created!
+[ INFO ]: npc WEREWOLF with name: mouse created!
+[ INFO ]: npc SQUIRREL with name: kilka created!
+[ INFO ]: npc DRUID with name: zak created!
+[ INFO ]: Attack cycle with attack range: 101230.000000 started
+[ INFO ]: MURDER: zak killed by kilka
+[ INFO ]: MURDER: mouse killed by kilka
+[ INFO ]: MURDER: zebra killed by kilka
+[ INFO ]: MURDER: bebra killed by kilka
+[ INFO ]: MURDER: bayan killed by kilka
+[ INFO ]: MURDER: zuhra killed by kilka
+[ INFO ]: MURDER: anton killed by kilka

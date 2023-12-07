@@ -1,4 +1,3 @@
-#include <complex>
 #include "square.h"
 
 using namespace lab6;

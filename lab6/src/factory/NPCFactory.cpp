@@ -2,32 +2,32 @@
 
 using namespace lab6;
 
-std::shared_ptr<NPC> NPCFactory::create_npc(NPCType npc_type,
+std::shared_ptr<NPC> NPCFactory::create_npc(std::function<void(LOGType, const std::string&)>& log,
+                                            NPCType npc_type,
                                             const std::string& name,
                                             const Square& npc_field,
                                             NPCStatus state) {
   switch (npc_type) {
     case DRUID:
-      logger.create(name, npc_type);
+      log(INFO, "npc DRUID with name: " + name + " created!");
       return std::static_pointer_cast<NPC>(std::make_shared<Druid>(name, npc_field, npc_type, state));
 
     case SQUIRREL:
-      logger.create(name, npc_type);
+      log(INFO, "npc SQUIRREL with name: " + name + " created!");
       return std::static_pointer_cast<NPC>(std::make_shared<Squirrel>(name, npc_field, npc_type, state));
 
     case WEREWOLF:
-      logger.create(name, npc_type);
+      log(INFO, "npc WEREWOLF with name: " + name + " created!");
       return std::static_pointer_cast<NPC>(std::make_shared<Werewolf>(name, npc_field, npc_type, state));
 
     default:
+      log(ERROR, "lab6::factory::create_npc, invalid NPCType");
       throw std::invalid_argument("lab6::factory::create_npc, invalid NPCType");
   }
 }
 
-NPCFactory::NPCFactory(NPCLogger& logger) : logger(logger) {}
-
-void
-NPCFactory::create_npc_from_file(const std::string& file_path, std::unordered_set<std::shared_ptr<NPC>>& npc_table) {
+void NPCFactory::create_npc_from_file(const std::string& file_path, std::unordered_set<std::shared_ptr<NPC>>& npc_table,
+                                      std::function<void(LOGType, const std::string&)>& log) {
   std::ifstream file(file_path);
   std::string delimiter = ",";
 
@@ -47,31 +47,30 @@ NPCFactory::create_npc_from_file(const std::string& file_path, std::unordered_se
 
     if (parsed_str[0] == "WEREWOLF") {
       try {
-        auto ptr = create_npc(WEREWOLF, parsed_str[1], Square(std::stod(parsed_str[2]), std::stod(parsed_str[3])));
+        auto ptr = create_npc(log, WEREWOLF, parsed_str[1], Square(std::stod(parsed_str[2]), std::stod(parsed_str[3])));
         npc_table.insert(ptr);
       } catch (...) {
-        logger.system_log(ERROR, "Exception in func NPCFactory::create_npc_from_file WEREWOLF handler");
+        log(ERROR, "Exception in func NPCFactory::create_npc_from_file WEREWOLF handler");
       }
 
     } else if (parsed_str[0] == "SQUIRREL") {
       try {
-        auto ptr = create_npc(SQUIRREL, parsed_str[1], Square(std::stod(parsed_str[2]), std::stod(parsed_str[3])));
+        auto ptr = create_npc(log, SQUIRREL, parsed_str[1], Square(std::stod(parsed_str[2]), std::stod(parsed_str[3])));
         npc_table.insert(ptr);
       } catch (...) {
-        logger.system_log(ERROR, "Exception in func NPCFactory::create_npc_from_file SQUIRREL handler");
+        log(ERROR, "Exception in func NPCFactory::create_npc_from_file SQUIRREL handler");
       }
 
     } else if (parsed_str[0] == "DRUID") {
       try {
-        auto ptr = create_npc(DRUID, parsed_str[1], Square(std::stod(parsed_str[2]), std::stod(parsed_str[3])));
+        auto ptr = create_npc(log, DRUID, parsed_str[1], Square(std::stod(parsed_str[2]), std::stod(parsed_str[3])));
         npc_table.insert(ptr);
       } catch (...) {
-        logger.system_log(ERROR, "Exception in func NPCFactory::create_npc_from_file DRUID handler");
+        log(ERROR, "Exception in func NPCFactory::create_npc_from_file DRUID handler");
       }
 
     } else {
-      logger.system_log(ERROR, "Undefined NPC type in func NPCFactory::create_npc_from_file");
-      continue;
+      log(ERROR, "Undefined NPC type in func NPCFactory::create_npc_from_file");
     }
   }
 }

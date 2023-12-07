@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.14)
 
 project(lab6)
 
-# add_subdirectory(tests)
+add_subdirectory(tests)
 
 # Project lib
 add_library(${PROJECT_NAME}_lib
@@ -14,17 +14,16 @@ add_library(${PROJECT_NAME}_lib
             src/npc/werewolf.cpp
             src/observer/interface/IObserver.h
             src/observer/interface/IObservable.h
-            src/logs/interface/Log.h
+        src/logs/Log.h
             src/logs/file_logger.h
             src/logs/file_logger.cpp
             src/logs/console_logger.h
             src/logs/console_logger.cpp
-            src/logs/npc_logger.h
-            src/logs/npc_logger.cpp
             src/factory/NPCFactory.cpp
             src/factory/NPCFactory.h
-        src/visitor/visitor.cpp
-        src/visitor/visitor.h
+            src/visitor/visitor.cpp
+            src/visitor/visitor.h
+        src/logs/Log.cpp
 )
 
 target_include_directories(${PROJECT_NAME}_lib PUBLIC ${PROJECT_SOURCE_DIR}/src)

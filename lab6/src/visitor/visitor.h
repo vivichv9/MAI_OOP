@@ -1,7 +1,7 @@
 #ifndef LAB6_VISITOR_H
 #define LAB6_VISITOR_H
 
-#include "../logs/npc_logger.h"
+#include <functional>
 #include "npc/include/npc.h"
 
 namespace lab6 {
@@ -13,7 +13,7 @@ public:
   Visitor() = default;
   virtual ~Visitor() = default;
 
-  virtual void visit(NPC* npc1, NPC* npc2, double attack_range, NPCLogger& logger);
+  virtual void visit(NPC* npc1, NPC* npc2, double attack_range, std::function<void(LOGType, const std::string&)>& log);
 };
 
 }

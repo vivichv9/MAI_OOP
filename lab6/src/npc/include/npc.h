@@ -1,13 +1,12 @@
 #ifndef NPC_H_INCLUDED
 #define NPC_H_INCLUDED
 
-#include "../../field/square.h"
-#include "../../enums/npc_status.h"
-#include "../../observer/interface/IObservable.h"
-#include "../../observer/interface/IObserver.h"
-#include "../../enums/npc_type.h"
-#include "../../logs/npc_logger.h"
-#include "../../visitor/visitor.h"
+#include "field/square.h"
+#include "enums/npc_status.h"
+#include "observer/interface/IObservable.h"
+#include "observer/interface/IObserver.h"
+#include "enums/npc_type.h"
+#include "visitor/visitor.h"
 
 #include <string>
 #include <memory>
@@ -17,7 +16,7 @@ namespace lab6 {
 
 class Visitor;
 
-class NPC : public IObservable {
+class NPC {
 protected:
   std::string name;
   Square npc_field;
@@ -27,13 +26,7 @@ protected:
 public:
   NPC(std::string name, const Square& npc_field, NPCType type, NPCStatus state = NPCStatus::LIVE);
 
-  virtual void attack(Visitor* v, NPC* npc, double attack_range, NPCLogger& logger);
-
-  void add_observer(IObserver* o) override;
-
-  void remove_observer(IObserver* o) override;
-
-  void notify(const std::string& name, NPCStatus status) override;
+  virtual void attack(Visitor* v, NPC* npc, double attack_range, std::function<void(LOGType, const std::string&)>& log);
 
   [[nodiscard]] const std::string& getName() const;
 

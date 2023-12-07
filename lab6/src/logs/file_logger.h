@@ -1,7 +1,7 @@
 #ifndef LAB6_FILE_LOGGER_H
 #define LAB6_FILE_LOGGER_H
 
-#include "interface/Log.h"
+#include "Log.h"
 #include "fstream"
 
 namespace lab6 {

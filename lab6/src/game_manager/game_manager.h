@@ -3,22 +3,28 @@
 
 #include <unordered_set>
 #include <memory>
-#include "../npc/include/npc.h"
-#include "../field/square.h"
-#include "../factory/NPCFactory.h"
+#include "npc/include/npc.h"
+#include "field/square.h"
+#include "factory/NPCFactory.h"
 
 namespace lab6 {
 
-class GameManager {
+class GameManager : public IObservable {
 private:
-  NPCLogger logger;
   NPCFactory factory;
   std::unordered_set<std::shared_ptr<NPC>> npc_table;
+  std::vector<IObserver*> observers;
 
   void attack_cycle(double attack_range);
 
 public:
-  explicit GameManager(const std::string& log_file_name);
+  GameManager() = default;
+
+  void add_observer(IObserver* o) override;
+
+  void remove_observer(IObserver* o) override;
+
+  void notify(LOGType log_type, const std::string& signature) override;
 
   void game_controller();
 };
