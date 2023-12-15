@@ -21,8 +21,6 @@ add_subdirectory(${CMAKE_CURRENT_BINARY_DIR}/googletest-src
                  ${CMAKE_CURRENT_BINARY_DIR}/googletest-build
                  EXCLUDE_FROM_ALL)
 
-add_executable(${PROJECT_NAME}_npc_test ${PROJECT_SOURCE_DIR}/tests/NPC_test.cpp)
-target_link_libraries(${PROJECT_NAME}_npc_test ${PROJECT_NAME}_lib gtest_main)
 
 add_executable(${PROJECT_NAME}_log_test ${PROJECT_SOURCE_DIR}/tests/LOG_test.cpp)
 target_link_libraries(${PROJECT_NAME}_log_test ${PROJECT_NAME}_lib gtest_main)

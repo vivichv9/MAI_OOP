@@ -1,0 +1,5 @@
+WEREWOLF,anton,12,12
+WEREWOLF,aasnton,12,12
+WEREWOLF,asd,12,12
+WEREWOLF,antdon,12,12
+

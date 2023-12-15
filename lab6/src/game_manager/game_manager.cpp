@@ -15,7 +15,7 @@ void GameManager::attack_cycle(double attack_range) {
 
   std::function<void(LOGType, const std::string&)> log([this](LOGType log_type, const std::string& signature) {
     notify(log_type, signature);
-  }); // 💪💪💪
+  });
 
   npc_table.clear();
   factory.create_npc_from_file("/home/kirill/Desktop/study/MAI_OOP/lab6/data/npc.txt", npc_table, log);
